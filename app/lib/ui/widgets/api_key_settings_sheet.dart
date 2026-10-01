@@ -25,6 +25,7 @@ class ApiKeySettingsSheet extends StatefulWidget {
 class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
   late final Map<LLMProviderType, TextEditingController> _controllers;
   final Set<LLMProviderType> _revealed = {};
+  bool _isSaving = false;
 
   @override
   void initState() {
@@ -57,18 +58,25 @@ class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
   Future<void> _saveAll() async {
     final settings = context.read<SettingsNotifier>();
     final messenger = ScaffoldMessenger.of(context);
-    final navigator = Navigator.of(context);
-
-    for (final entry in _controllers.entries) {
-      await settings.setApiKey(entry.key, entry.value.text.trim());
+    setState(() => _isSaving = true);
+    try {
+      await settings.setApiKeys({
+        for (final entry in _controllers.entries) entry.key: entry.value.text.trim(),
+      });
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      messenger.showSnackBar(const SnackBar(content: Text('API keys saved.')));
+    } catch (error) {
+      if (!mounted) return;
+      messenger.showSnackBar(SnackBar(content: Text('Could not save API keys: $error')));
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
     }
-
-    navigator.pop();
-    messenger.showSnackBar(const SnackBar(content: Text('API keys saved.')));
   }
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.watch<SettingsNotifier>();
     return Padding(
       padding: EdgeInsets.fromLTRB(
         16,
@@ -96,9 +104,17 @@ class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
               ],
             ),
             const Text(
-              'Keys are stored locally on this device.',
+              'Keys from .env are bundled with this prototype and can be extracted from an installed app. '
+              'Use dedicated, low-limit research keys.',
               style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
+            if (settings.loadError != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                settings.loadError!,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+            ],
             const Divider(height: 24),
             for (final provider in LLMProviderType.values)
               Padding(
@@ -110,6 +126,11 @@ class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
                   enableSuggestions: false,
                   decoration: InputDecoration(
                     labelText: '${provider.displayName} API key',
+                    helperText: settings.usesBuiltInApiKey(provider)
+                        ? 'Using the built-in .env key. Saving replaces this default.'
+                        : settings.getApiKey(provider).isEmpty
+                            ? 'No key configured.'
+                            : 'Saved in this device’s app preferences.',
                     border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -125,9 +146,15 @@ class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
               ),
             const SizedBox(height: 4),
             FilledButton.icon(
-              onPressed: _saveAll,
-              icon: const Icon(Icons.save),
-              label: const Text('Save'),
+              onPressed: _isSaving ? null : _saveAll,
+              icon: _isSaving
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.save),
+              label: Text(_isSaving ? 'Saving...' : 'Save'),
             ),
           ],
         ),

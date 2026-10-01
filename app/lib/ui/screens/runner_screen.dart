@@ -64,6 +64,13 @@ class RunnerScreen extends StatelessWidget {
               );
             },
           ),
+          const SizedBox(height: 8),
+          Text(
+            'Source text and prompts are sent to the selected provider and saved in local run history.',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+          ),
           const SizedBox(height: 20),
           Consumer<RunnerNotifier>(
             builder: (context, runner, child) {
@@ -98,34 +105,34 @@ class _RunOutputPanel extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          Row(
-            children: [
-              Icon(
-                isSuccess ? Icons.check_circle : Icons.error,
-                color: isSuccess ? colorScheme.primary : colorScheme.error,
-              ),
-              const SizedBox(width: 8),
-              const Text(
-                'Output',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 6,
-            runSpacing: 4,
-            children: [
-              _MetricChip(label: '${run.executionTimeMs} ms'),
-              if (run.tokenUsage != null)
-                _MetricChip(label: '${run.tokenUsage!['total_tokens']} tokens'),
-              if (run.servedModelId != null &&
-                  run.servedModelId != run.request.targetModelId)
-                _MetricChip(label: 'Served as ${run.servedModelId}'),
-              if (run.finishReason != null)
-                _MetricChip(label: 'Finish: ${run.finishReason}'),
-            ],
-          ),
+            Row(
+              children: [
+                Icon(
+                  isSuccess ? Icons.check_circle : Icons.error,
+                  color: isSuccess ? colorScheme.primary : colorScheme.error,
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  'Output',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 6,
+              runSpacing: 4,
+              children: [
+                _MetricChip(label: '${run.executionTimeMs} ms'),
+                if (run.tokenUsage != null)
+                  _MetricChip(label: '${run.tokenUsage!['total_tokens']} tokens'),
+                if (run.servedModelId != null &&
+                    run.servedModelId != run.request.targetModelId)
+                  _MetricChip(label: 'Served as ${run.servedModelId}'),
+                if (run.finishReason != null)
+                  _MetricChip(label: 'Finish: ${run.finishReason}'),
+              ],
+            ),
             const Divider(height: 20),
             if (isSuccess)
               SelectableText(

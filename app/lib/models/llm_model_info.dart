@@ -32,4 +32,11 @@ class LLMModelInfo {
       isFree: json['isFree'] as bool? ?? false,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is LLMModelInfo && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

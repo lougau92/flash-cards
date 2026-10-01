@@ -11,4 +11,7 @@ abstract class LLMServiceInterface {
     required String apiKey,
     required SummaryRequest request,
   });
+
+  /// Releases HTTP resources owned by this service.
+  void dispose();
 }

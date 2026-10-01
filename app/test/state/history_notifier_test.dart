@@ -9,21 +9,21 @@ class FakeStorageService implements StorageServiceInterface {
   final List<SummaryRun> runs = [];
 
   @override
-  Future saveRun(SummaryRun run) async => runs.add(run);
+  Future<void> saveRun(SummaryRun run) async => runs.add(run);
 
   @override
   Future<List<SummaryRun>> getAllRuns() async => List.from(runs);
 
   @override
-  Future deleteRun(String id) async => runs.removeWhere((r) => r.id == id);
+  Future<void> deleteRun(String id) async => runs.removeWhere((r) => r.id == id);
 
   @override
-  Future clearAllRuns() async => runs.clear();
+  Future<void> clearAllRuns() async => runs.clear();
 
   @override
-  Future init() {
+  Future<void> init() {
     // No initialization needed for the fake service.
-    return Future.value();
+    return Future<void>.value();
   }
 }
 
@@ -70,6 +70,8 @@ void main() {
     fakeStorage.runs.addAll([run1, run2]);
     historyNotifier = HistoryNotifier();
   });
+
+  tearDown(() => historyNotifier.dispose());
 
   group('HistoryNotifier Unit Tests', () {
     test('loadHistory populates allRuns from storage', () async {

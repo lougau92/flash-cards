@@ -54,7 +54,7 @@ class ComparisonView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                    color: colorScheme.onPrimaryContainer,
+                      color: colorScheme.onPrimaryContainer,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -79,13 +79,26 @@ class ComparisonView extends StatelessWidget {
               runSpacing: 6,
               children: [
                 _metricBadge(
+                  context,
+                  icon: isSuccess ? Icons.check_circle_outline : Icons.error_outline,
+                  label: isSuccess ? 'Success' : 'Failed',
+                ),
+                _metricBadge(
+                  context,
                   icon: Icons.timer_outlined,
                   label: '${run.executionTimeMs} ms',
                 ),
                 _metricBadge(
+                  context,
                   icon: Icons.token_outlined,
                   label: '${run.tokenUsage?['total_tokens'] ?? 'N/A'} tokens',
                 ),
+                if (run.finishReason != null)
+                  _metricBadge(
+                    context,
+                    icon: Icons.flag_outlined,
+                    label: 'Finish: ${run.finishReason}',
+                  ),
               ],
             ),
             const SizedBox(height: 12),
@@ -96,7 +109,10 @@ class ComparisonView extends StatelessWidget {
             Text(
               'Temperature: ${run.request.temperature.toStringAsFixed(2)} · '
               'Max output tokens: ${run.request.maxTokens}',
-              style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+              style: TextStyle(
+                fontSize: 12,
+                color: colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 12),
 
@@ -179,20 +195,25 @@ class ComparisonView extends StatelessWidget {
         ),
       );
 
-  Widget _metricBadge({required IconData icon, required String label}) {
+  Widget _metricBadge(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: Colors.grey.shade400),
+        border: Border.all(color: colorScheme.outlineVariant),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: Colors.grey[700]),
+          Icon(icon, size: 14, color: colorScheme.onSurfaceVariant),
           const SizedBox(width: 4),
-          Text(label, style: TextStyle(fontSize: 11, color: Colors.grey[800])),
+          Text(label, style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant)),
         ],
       ),
     );

@@ -1,99 +1,111 @@
 import 'package:flutter/foundation.dart';
+
 import '../models/llm_provider_type.dart';
+import '../models/summary_run.dart';
 import '../services/storage/storage_service_interface.dart';
 
 class HistoryNotifier extends ChangeNotifier {
-  List _allRuns = [];
+  List<SummaryRun> _allRuns = const [];
   bool _isLoading = false;
   String _searchQuery = '';
   LLMProviderType? _providerFilter;
-  final Set _selectedRunIdsForComparison = {};
+  String? _loadError;
+  final Set<String> _selectedRunIdsForComparison = {};
 
-  List get allRuns => _allRuns;
+  List<SummaryRun> get allRuns => List.unmodifiable(_allRuns);
   bool get isLoading => _isLoading;
   String get searchQuery => _searchQuery;
   LLMProviderType? get providerFilter => _providerFilter;
-  Set get selectedRunIdsForComparison => _selectedRunIdsForComparison;
+  String? get loadError => _loadError;
+  int get comparisonSelectionCount => _selectedRunIdsForComparison.length;
+  Set<String> get selectedRunIdsForComparison =>
+      Set.unmodifiable(_selectedRunIdsForComparison);
 
-  /// Returns filtered runs matching active search string and provider filter.
-  List get filteredRuns {
+  bool isSelectedForComparison(String runId) =>
+      _selectedRunIdsForComparison.contains(runId);
+
+  List<SummaryRun> get filteredRuns {
+    final query = _searchQuery.trim().toLowerCase();
     return _allRuns.where((run) {
-      // Filter by provider
       if (_providerFilter != null && run.request.providerType != _providerFilter) {
         return false;
       }
+      if (query.isEmpty) return true;
 
-      // Filter by search query
-      if (_searchQuery.trim().isNotEmpty) {
-        final query = _searchQuery.toLowerCase();
-        final matchesModel = run.request.targetModelId.toLowerCase().contains(query);
-        final matchesInstruction = run.request.instructionPrompt.toLowerCase().contains(query);
-        final matchesSource = run.request.sourceText.toLowerCase().contains(query);
-        final matchesOutput = run.outputText?.toLowerCase().contains(query) ?? false;
-        final matchesFileName = run.request.inputFileName?.toLowerCase().contains(query) ?? false;
-
-        return matchesModel || matchesInstruction || matchesSource || matchesOutput || matchesFileName;
-      }
-
-      return true;
+      return run.request.targetModelId.toLowerCase().contains(query) ||
+          (run.servedModelId?.toLowerCase().contains(query) ?? false) ||
+          run.request.instructionPrompt.toLowerCase().contains(query) ||
+          run.request.systemPrompt.toLowerCase().contains(query) ||
+          run.request.sourceText.toLowerCase().contains(query) ||
+          (run.outputText?.toLowerCase().contains(query) ?? false) ||
+          (run.request.inputFileName?.toLowerCase().contains(query) ?? false);
     }).toList();
   }
 
-  /// Returns the specific list of runs currently checked for side-by-side comparison.
-  List get comparisonRuns {
-    return _allRuns.where((run) => _selectedRunIdsForComparison.contains(run.id)).toList();
-  }
+  List<SummaryRun> get comparisonRuns => _allRuns
+      .where((run) => _selectedRunIdsForComparison.contains(run.id))
+      .toList();
 
-  Future loadHistory(StorageServiceInterface storageService) async {
+  Future<void> loadHistory(StorageServiceInterface storageService) async {
     _isLoading = true;
+    _loadError = null;
     notifyListeners();
 
     try {
       _allRuns = await storageService.getAllRuns();
-    } catch (e) {
-      debugPrint('Error loading run history: $e');
+      _selectedRunIdsForComparison.removeWhere(
+        (id) => !_allRuns.any((run) => run.id == id),
+      );
+    } catch (error) {
+      _loadError = 'Could not load run history: $error';
+      debugPrint(_loadError);
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future deleteRun(String id, StorageServiceInterface storageService) async {
+  Future<void> deleteRun(String id, StorageServiceInterface storageService) async {
     await storageService.deleteRun(id);
-    _allRuns.removeWhere((run) => run.id == id);
+    _allRuns = _allRuns.where((run) => run.id != id).toList();
     _selectedRunIdsForComparison.remove(id);
     notifyListeners();
   }
 
-  Future clearAllHistory(StorageServiceInterface storageService) async {
+  Future<void> clearAllHistory(StorageServiceInterface storageService) async {
     await storageService.clearAllRuns();
-    _allRuns.clear();
+    _allRuns = const [];
     _selectedRunIdsForComparison.clear();
     notifyListeners();
   }
 
   void setSearchQuery(String query) {
+    if (_searchQuery == query) return;
     _searchQuery = query;
     notifyListeners();
   }
 
   void setProviderFilter(LLMProviderType? provider) {
+    if (_providerFilter == provider) return;
     _providerFilter = provider;
     notifyListeners();
   }
 
-  void toggleRunSelectionForComparison(String runId) {
-    if (_selectedRunIdsForComparison.contains(runId)) {
-      _selectedRunIdsForComparison.remove(runId);
-    } else {
-      if (_selectedRunIdsForComparison.length < 4) {
-        _selectedRunIdsForComparison.add(runId);
-      }
+  /// Returns false when adding the run would exceed the four-run comparison limit.
+  bool toggleRunSelectionForComparison(String runId) {
+    if (_selectedRunIdsForComparison.remove(runId)) {
+      notifyListeners();
+      return true;
     }
+    if (_selectedRunIdsForComparison.length >= 4) return false;
+
+    _selectedRunIdsForComparison.add(runId);
     notifyListeners();
+    return true;
   }
 
   void clearComparisonSelection() {
+    if (_selectedRunIdsForComparison.isEmpty) return;
     _selectedRunIdsForComparison.clear();
     notifyListeners();
   }

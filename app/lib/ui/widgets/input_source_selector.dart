@@ -36,19 +36,26 @@ class _InputSourceSelectorState extends State<InputSourceSelector> {
     }
   }
 
-  Future _handleFilePick(RunnerNotifier runner) async {
-    final result = await FileHelper.pickAndReadTextFile();
-    if (result != null) {
-      runner.setSourceText(result.content, fileName: result.fileName);
+  Future<void> _handleFilePick(RunnerNotifier runner) async {
+    try {
+      final result = await FileHelper.pickAndReadTextFile();
+      if (result == null) return;
+
       _textController.text = result.content;
+      runner.setSourceText(result.content, fileName: result.fileName);
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not read the selected file: $error')),
+      );
     }
   }
 
-  Future _handleClipboardPaste(RunnerNotifier runner) async {
+  Future<void> _handleClipboardPaste(RunnerNotifier runner) async {
     final text = await ClipboardHelper.pasteFromClipboard();
     if (text != null && text.isNotEmpty) {
-      runner.setSourceText(text, fileName: null);
       _textController.text = text;
+      runner.setSourceText(text);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Pasted text from clipboard.')),
@@ -122,13 +129,20 @@ class _InputSourceSelectorState extends State<InputSourceSelector> {
                 ),
                 if (runner.inputFileName != null) ...[
                   const SizedBox(height: 8),
-                  Chip(
-                    avatar: const Icon(Icons.insert_drive_file, size: 16),
-                    label: Text(runner.inputFileName!),
-                    onDeleted: () {
-                      runner.clearInput();
-                      _textController.clear();
-                    },
+                  SizedBox(
+                    width: double.infinity,
+                    child: Chip(
+                      avatar: const Icon(Icons.insert_drive_file, size: 16),
+                      label: Text(
+                        runner.inputFileName!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      onDeleted: () {
+                        runner.clearInput();
+                        _textController.clear();
+                      },
+                    ),
                   ),
                 ],
                 const SizedBox(height: 12),

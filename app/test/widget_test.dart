@@ -1,30 +1,65 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:app/app.dart';
+import 'package:app/models/summary_run.dart';
+import 'package:app/services/storage/storage_service_interface.dart';
+import 'package:app/state/history_notifier.dart';
+import 'package:app/state/runner_notifier.dart';
+import 'package:app/state/settings_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
 
-import 'package:app/main.dart';
+class _MemoryStorage implements StorageServiceInterface {
+  final List<SummaryRun> runs = [];
+
+  @override
+  Future<void> init() async {}
+
+  @override
+  Future<void> saveRun(SummaryRun run) async => runs.add(run);
+
+  @override
+  Future<List<SummaryRun>> getAllRuns() async => List.of(runs);
+
+  @override
+  Future<void> deleteRun(String id) async {
+    runs.removeWhere((run) => run.id == id);
+  }
+
+  @override
+  Future<void> clearAllRuns() async => runs.clear();
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('workspace and history fit a narrow phone screen', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(360, 800));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final runner = RunnerNotifier();
+    final history = HistoryNotifier();
+    final storage = _MemoryStorage();
+    addTearDown(runner.dispose);
+    addTearDown(history.dispose);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<RunnerNotifier>.value(value: runner),
+          ChangeNotifierProvider<HistoryNotifier>.value(value: history),
+          ChangeNotifierProvider(create: (_) => SettingsNotifier()),
+        ],
+        child: App(storageService: storage),
+      ),
+    );
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Input Source'), findsOneWidget);
+    expect(find.text('Run Summarization'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    await tester.tap(find.byIcon(Icons.history));
+    await tester.pumpAndSettle();
+
+    expect(find.text('No historical runs saved yet.'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

@@ -7,23 +7,23 @@ class MockStorageService implements StorageServiceInterface {
   SummaryRun? lastSavedRun;
 
   @override
-  Future saveRun(SummaryRun run) async {
+  Future<void> saveRun(SummaryRun run) async {
     lastSavedRun = run;
   }
   
   @override
-  Future getAllRuns() async => [];
+  Future<List<SummaryRun>> getAllRuns() async => [];
 
   @override
-  Future deleteRun(String id) async {}
+  Future<void> deleteRun(String id) async {}
 
   @override
-  Future clearAllRuns() async {}
+  Future<void> clearAllRuns() async {}
 
   @override
-  Future init() {
+  Future<void> init() {
     // No initialization needed for the mock service.
-    return Future.value();
+    return Future<void>.value();
   }
 }
 
@@ -33,6 +33,8 @@ void main() {
   setUp(() {
     runner = RunnerNotifier();
   });
+
+  tearDown(() => runner.dispose());
 
   group('RunnerNotifier Execution & State Validation Tests', () {
     test('executeSummary throws exception when source text is empty', () async {
@@ -63,7 +65,7 @@ void main() {
     test('fetchAvailableModels sets error state when API key is blank', () async {
       await runner.fetchAvailableModels('   ');
 
-      expect(runner.modelFetchError, contains('API Key required'));
+      expect(runner.modelFetchError, contains('API key required'));
       expect(runner.availableModels, isEmpty);
       expect(runner.isLoadingModels, isFalse);
     });

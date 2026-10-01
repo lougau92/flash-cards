@@ -30,6 +30,7 @@ class RunCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSuccess = run.status == SummaryRunStatus.success;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
       elevation: 1,
@@ -37,7 +38,7 @@ class RunCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: isSelectedForComparison ? Theme.of(context).primaryColor : Colors.transparent,
+          color: isSelectedForComparison ? colorScheme.primary : Colors.transparent,
           width: 2,
         ),
       ),
@@ -54,7 +55,7 @@ class RunCard extends StatelessWidget {
                   Checkbox(
                     value: isSelectedForComparison,
                     onChanged: onComparisonChanged,
-                    activeColor: Theme.of(context).primaryColor,
+                    activeColor: colorScheme.primary,
                   ),
                   Expanded(
                     child: Column(
@@ -65,14 +66,15 @@ class RunCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                color: Colors.blueGrey[100],
+                                color: colorScheme.surfaceContainerHighest,
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
                                 run.request.providerType.displayName,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ),
@@ -95,13 +97,13 @@ class RunCard extends StatelessWidget {
                         const SizedBox(height: 2),
                         Text(
                           _formatTimestamp(run.timestamp),
-                          style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                          style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
                         ),
                       ],
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.delete_outline, size: 20, color: Colors.grey),
+                    icon: Icon(Icons.delete_outline, size: 20, color: colorScheme.onSurfaceVariant),
                     onPressed: onDelete,
                     tooltip: 'Delete Run',
                   ),
@@ -116,7 +118,7 @@ class RunCard extends StatelessWidget {
                   Icon(
                     isSuccess ? Icons.check_circle_outline : Icons.error_outline,
                     size: 16,
-                    color: isSuccess ? Colors.green : Colors.red,
+                    color: isSuccess ? colorScheme.primary : colorScheme.error,
                   ),
                   const SizedBox(width: 4),
                   Text(
@@ -124,7 +126,7 @@ class RunCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: isSuccess ? Colors.green : Colors.red,
+                      color: isSuccess ? colorScheme.primary : colorScheme.error,
                     ),
                   ),
                   Text(
@@ -134,7 +136,7 @@ class RunCard extends StatelessWidget {
                   if (run.tokenUsage != null) ...[
                     Text(
                       '• ${run.tokenUsage!['total_tokens'] ?? 0} tokens',
-                      style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                      style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ],
@@ -144,7 +146,11 @@ class RunCard extends StatelessWidget {
                 'Prompt: ${run.request.instructionPrompt}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 12, color: Colors.grey[800], fontStyle: FontStyle.italic),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: colorScheme.onSurfaceVariant,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -155,7 +161,7 @@ class RunCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 13,
-                  color: isSuccess ? Colors.black87 : Colors.red[800],
+                  color: isSuccess ? colorScheme.onSurface : colorScheme.error,
                 ),
               ),
             ],

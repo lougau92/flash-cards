@@ -1,58 +1,57 @@
 import 'package:flutter/foundation.dart';
+
+import '../core/constants/prompt_presets.dart';
 import '../models/llm_model_info.dart';
 import '../models/llm_provider_type.dart';
 import '../models/summary_request.dart';
 import '../models/summary_run.dart';
 import '../services/llm/gemini_service.dart';
 import '../services/llm/groq_service.dart';
+import '../services/llm/llm_service_interface.dart';
+import '../services/llm/llm_service_helpers.dart';
 import '../services/llm/mistral_service.dart';
 import '../services/llm/openrouter_service.dart';
 import '../services/storage/storage_service_interface.dart';
 
-enum InputSourceType { clipboard, file, text }
-
 class RunnerNotifier extends ChangeNotifier {
-  // Input State
-  InputSourceType _inputSource = InputSourceType.text;
+  RunnerNotifier({
+    LLMProviderType initialProvider = LLMProviderType.openRouter,
+    Map<LLMProviderType, LLMServiceInterface>? services,
+  })  : _selectedProvider = initialProvider,
+        _llmServices = services ?? _createServices();
+
+  final Map<LLMProviderType, LLMServiceInterface> _llmServices;
+
   String _sourceText = '';
   String? _inputFileName;
-
-  // Prompt Configuration State
-  String _systemPrompt = 'You are an expert concise technical summarizer.';
-  String _instructionPrompt = """Extract from the following text 
-      - 3 key takeaways ideas
-      - 5 key meaningful facts that would be relevant to share to a friend or colleague.""";
-
-  // Model & Provider State
-  LLMProviderType _selectedProvider = LLMProviderType.openRouter;
+  String _systemPrompt = PromptPresets.defaultSystemPrompt;
+  String _instructionPrompt = PromptPresets.defaultInstructionPrompt;
+  LLMProviderType _selectedProvider;
   LLMModelInfo? _selectedModel;
-  List _availableModels = [];
+  List<LLMModelInfo> _availableModels = const [];
   double _temperature = 0.7;
   int _maxTokens = 1000;
-
-  // Execution State
   bool _isLoadingModels = false;
   bool _isExecuting = false;
+  bool _disposed = false;
+  int _modelRequestGeneration = 0;
   String? _modelFetchError;
   SummaryRun? _latestRun;
 
-  // Service Dispatcher Mapping
-  final Map _llmServices = {
-    LLMProviderType.openRouter: OpenRouterService(),
-    LLMProviderType.gemini: GeminiService(),
-    LLMProviderType.mistral: MistralService(),
-    LLMProviderType.groq: GroqService(),
-  };
+  static Map<LLMProviderType, LLMServiceInterface> _createServices() => {
+        LLMProviderType.openRouter: OpenRouterService(),
+        LLMProviderType.gemini: GeminiService(),
+        LLMProviderType.mistral: MistralService(),
+        LLMProviderType.groq: GroqService(),
+      };
 
-  // Getters
-  InputSourceType get inputSource => _inputSource;
   String get sourceText => _sourceText;
   String? get inputFileName => _inputFileName;
   String get systemPrompt => _systemPrompt;
   String get instructionPrompt => _instructionPrompt;
   LLMProviderType get selectedProvider => _selectedProvider;
   LLMModelInfo? get selectedModel => _selectedModel;
-  List get availableModels => _availableModels;
+  List<LLMModelInfo> get availableModels => List.unmodifiable(_availableModels);
   double get temperature => _temperature;
   int get maxTokens => _maxTokens;
   bool get isLoadingModels => _isLoadingModels;
@@ -60,110 +59,114 @@ class RunnerNotifier extends ChangeNotifier {
   String? get modelFetchError => _modelFetchError;
   SummaryRun? get latestRun => _latestRun;
 
-  // Input Setters
-  void setInputSource(InputSourceType source) {
-    _inputSource = source;
-    notifyListeners();
-  }
-
   void setSourceText(String text, {String? fileName}) {
+    if (_sourceText == text && _inputFileName == fileName) return;
     _sourceText = text;
     _inputFileName = fileName;
-    notifyListeners();
+    _notifyIfActive();
   }
 
-  void clearInput() {
-    _sourceText = '';
-    _inputFileName = null;
-    notifyListeners();
-  }
+  void clearInput() => setSourceText('');
 
-  // Prompt Setters
   void setSystemPrompt(String prompt) {
+    if (_systemPrompt == prompt) return;
     _systemPrompt = prompt;
-    notifyListeners();
+    _notifyIfActive();
   }
 
   void setInstructionPrompt(String prompt) {
+    if (_instructionPrompt == prompt) return;
     _instructionPrompt = prompt;
-    notifyListeners();
+    _notifyIfActive();
   }
 
-  // Parameter Setters
-  void setTemperature(double temp) {
-    _temperature = temp;
-    notifyListeners();
+  void setTemperature(double temperature) {
+    final clamped = temperature.clamp(0.0, 1.0).toDouble();
+    if (_temperature == clamped) return;
+    _temperature = clamped;
+    _notifyIfActive();
   }
 
   void setMaxTokens(int tokens) {
-    _maxTokens = tokens;
-    notifyListeners();
+    final clamped = tokens.clamp(1, 100000).toInt();
+    if (_maxTokens == clamped) return;
+    _maxTokens = clamped;
+    _notifyIfActive();
   }
 
   void setSelectedModel(LLMModelInfo? model) {
+    if (_selectedModel?.id == model?.id) return;
     _selectedModel = model;
-    notifyListeners();
+    _notifyIfActive();
   }
 
-  /// Changes current provider and triggers dynamic model listing fetch.
-  Future changeProvider(LLMProviderType provider, String apiKey) async {
-    _selectedProvider = provider;
-    _selectedModel = null;
-    _availableModels = [];
-    notifyListeners();
-
+  /// Selects a provider and fetches its models. A stale response from a prior
+  /// provider selection is ignored so it cannot replace the active model list.
+  Future<void> changeProvider(LLMProviderType provider, String apiKey) async {
+    if (_selectedProvider != provider) {
+      _selectedProvider = provider;
+      _selectedModel = null;
+      _availableModels = const [];
+    }
+    _notifyIfActive();
     await fetchAvailableModels(apiKey);
   }
 
-  /// Fetches available models for the currently active provider.
-  Future fetchAvailableModels(String apiKey) async {
-    if (apiKey.trim().isEmpty) {
-      _modelFetchError = 'API Key required for ${_selectedProvider.displayName}';
-      _availableModels = [];
-      notifyListeners();
+  Future<void> fetchAvailableModels(String apiKey) async {
+    final provider = _selectedProvider;
+    final requestGeneration = ++_modelRequestGeneration;
+    final trimmedKey = apiKey.trim();
+
+    if (trimmedKey.isEmpty) {
+      _isLoadingModels = false;
+      _modelFetchError = 'API key required for ${provider.displayName}.';
+      _availableModels = const [];
+      _selectedModel = null;
+      _notifyIfActive();
       return;
     }
 
+    final previousModelId = _selectedModel?.id;
     _isLoadingModels = true;
     _modelFetchError = null;
-    notifyListeners();
+    _notifyIfActive();
 
     try {
-      final service = _llmServices[_selectedProvider]!;
-      _availableModels = await service.fetchAvailableModels(apiKey);
+      final models = await _llmServices[provider]!.fetchAvailableModels(trimmedKey);
+      if (_disposed || requestGeneration != _modelRequestGeneration) return;
 
-      if (_availableModels.isNotEmpty) {
-        _selectedModel = _availableModels.first;
-      }
-    } catch (e) {
-      _modelFetchError = e.toString();
-      _availableModels = [];
+      _availableModels = models;
+      _selectedModel = models.cast<LLMModelInfo?>().firstWhere(
+            (model) => model?.id == previousModelId,
+            orElse: () => models.isEmpty ? null : models.first,
+          );
+      if (models.isEmpty) _modelFetchError = 'No compatible text models were returned.';
+    } catch (error) {
+      if (_disposed || requestGeneration != _modelRequestGeneration) return;
+      _availableModels = const [];
+      _selectedModel = null;
+      _modelFetchError = error.toString().replaceFirst('Exception: ', '');
     } finally {
-      _isLoadingModels = false;
-      notifyListeners();
+      if (!_disposed && requestGeneration == _modelRequestGeneration) {
+        _isLoadingModels = false;
+        _notifyIfActive();
+      }
     }
   }
 
-  /// Executes text summarization using the configured parameters and persists output to local disk.
-  Future executeSummary({
+  /// Runs a single request and stores both successful and failed attempts.
+  Future<SummaryRun> executeSummary({
     required String apiKey,
     required StorageServiceInterface storageService,
   }) async {
-    if (_sourceText.trim().isEmpty) {
-      throw Exception('Source text is empty.');
-    }
+    if (_isExecuting) throw StateError('A summary request is already running.');
+    if (_sourceText.trim().isEmpty) throw StateError('Source text is empty.');
 
-    if (_selectedModel == null) {
-      throw Exception('No target model selected.');
-    }
-
+    final model = _selectedModel;
+    if (model == null) throw StateError('No target model selected.');
     if (apiKey.trim().isEmpty) {
-      throw Exception('API Key for ${_selectedProvider.displayName} is missing.');
+      throw StateError('API key for ${_selectedProvider.displayName} is missing.');
     }
-
-    _isExecuting = true;
-    _latestRun = null;
-    notifyListeners();
 
     final request = SummaryRequest(
       sourceText: _sourceText,
@@ -172,27 +175,54 @@ class RunnerNotifier extends ChangeNotifier {
       instructionPrompt: _instructionPrompt,
       temperature: _temperature,
       maxTokens: _maxTokens,
-      targetModelId: _selectedModel!.id,
+      targetModelId: model.id,
       providerType: _selectedProvider,
     );
-
     final service = _llmServices[_selectedProvider]!;
+    final startedAt = DateTime.now();
+    final stopwatch = Stopwatch()..start();
+
+    _isExecuting = true;
+    _latestRun = null;
+    _notifyIfActive();
 
     try {
-      final run = await service.generateSummary(
-        apiKey: apiKey,
-        request: request,
-      );
+      SummaryRun run;
+      try {
+        run = await service.generateSummary(apiKey: apiKey.trim(), request: request);
+      } catch (error) {
+        stopwatch.stop();
+        run = SummaryRun(
+          id: newRunId(),
+          timestamp: startedAt,
+          request: request,
+          executionTimeMs: stopwatch.elapsedMilliseconds,
+          status: SummaryRunStatus.error,
+          errorMessage: error.toString(),
+        );
+      }
 
       _latestRun = run;
-
-      // Persist completed execution run to storage disk
+      _notifyIfActive();
       await storageService.saveRun(run);
-
       return run;
     } finally {
       _isExecuting = false;
-      notifyListeners();
+      _notifyIfActive();
     }
+  }
+
+  void _notifyIfActive() {
+    if (!_disposed) notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    _modelRequestGeneration++;
+    for (final service in _llmServices.values.toSet()) {
+      service.dispose();
+    }
+    super.dispose();
   }
 }

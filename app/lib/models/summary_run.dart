@@ -11,9 +11,11 @@ class SummaryRun {
   final SummaryRequest request;
   final String? outputText;
   final int executionTimeMs;
-  final Map? tokenUsage;
+  final Map<String, int>? tokenUsage;
   final SummaryRunStatus status;
   final String? errorMessage;
+  final String? servedModelId;
+  final String? finishReason;
 
   const SummaryRun({
     required this.id,
@@ -24,9 +26,11 @@ class SummaryRun {
     this.tokenUsage,
     required this.status,
     this.errorMessage,
+    this.servedModelId,
+    this.finishReason,
   });
 
-  Map toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'timestamp': timestamp.toIso8601String(),
@@ -36,24 +40,30 @@ class SummaryRun {
       'tokenUsage': tokenUsage,
       'status': status.name,
       'errorMessage': errorMessage,
+      'servedModelId': servedModelId,
+      'finishReason': finishReason,
     };
   }
 
-  factory SummaryRun.fromJson(Map json) {
+  factory SummaryRun.fromJson(Map<String, dynamic> json) {
     return SummaryRun(
       id: json['id'] as String,
       timestamp: DateTime.parse(json['timestamp'] as String),
-      request: SummaryRequest.fromJson(json['request'] as Map),
+      request: SummaryRequest.fromJson(
+        Map<String, dynamic>.from(json['request'] as Map),
+      ),
       outputText: json['outputText'] as String?,
       executionTimeMs: json['executionTimeMs'] as int? ?? 0,
-      tokenUsage: (json['tokenUsage'] as Map?)?.map(
-        (k, v) => MapEntry(k, (v as num).toInt()),
+      tokenUsage: (json['tokenUsage'] as Map?)?.map<String, int>(
+        (key, value) => MapEntry(key.toString(), (value as num).toInt()),
       ),
       status: SummaryRunStatus.values.firstWhere(
         (e) => e.name == json['status'],
         orElse: () => SummaryRunStatus.error,
       ),
       errorMessage: json['errorMessage'] as String?,
+      servedModelId: json['servedModelId'] as String?,
+      finishReason: json['finishReason'] as String?,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'app.dart';
+import 'models/llm_provider_type.dart';
 import 'services/storage/local_run_storage.dart';
 import 'state/history_notifier.dart';
 import 'state/runner_notifier.dart';
@@ -21,12 +22,18 @@ void main() async {
   final storageService = LocalRunStorage();
   final settingsNotifier = SettingsNotifier();
   await settingsNotifier.loadSettings();
+  final initialProvider = LLMProviderType.values.firstWhere(
+    (provider) => settingsNotifier.getApiKey(provider).isNotEmpty,
+    orElse: () => LLMProviderType.openRouter,
+  );
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: settingsNotifier),
-        ChangeNotifierProvider(create: (_) => RunnerNotifier()),
+        ChangeNotifierProvider(
+          create: (_) => RunnerNotifier(initialProvider: initialProvider),
+        ),
         ChangeNotifierProvider(create: (_) => HistoryNotifier()),
         Provider.value(value: storageService),
       ],

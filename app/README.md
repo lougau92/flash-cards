@@ -1,145 +1,45 @@
-# app
+# LLM Summary Lab
 
-Project File Structure
-Plaintext
-lib/
-├── main.dart
-├── app.dart
-├── core/
-│   ├── constants/
-│   │   ├── default_prompts.dart
-│   │   └── provider_configs.dart
-│   ├── theme/
-│   │   └── app_theme.dart
-│   └── utils/
-│       ├── file_helper.dart
-│       └── clipboard_helper.dart
-├── models/
-│   ├── llm_provider_type.dart
-│   ├── llm_model_info.dart
-│   ├── summary_request.dart
-│   └── summary_run.dart
-├── services/
-│   ├── storage/
-│   │   ├── storage_service_interface.dart
-│   │   └── local_run_storage.dart
-│   └── llm/
-│       ├── llm_service_interface.dart
-│       ├── openrouter_service.dart
-│       ├── gemini_service.dart
-│       ├── mistral_service.dart
-│       └── groq_service.dart
-├── state/
-│   ├── runner_notifier.dart
-│   ├── history_notifier.dart
-│   └── settings_notifier.dart
-└── ui/
-    ├── screens/
-    │   ├── main_layout_screen.dart
-    │   ├── runner_screen.dart
-    │   ├── history_screen.dart
-    │   └── comparison_screen.dart
-    └── widgets/
-        ├── input_source_selector.dart
-        ├── prompt_editor.dart
-        ├── provider_model_selector.dart
-        ├── run_card.dart
-        └── comparison_view.dart
-Step-by-Step Implementation Plan
-Phase 1: Models & Data Layer
-models/llm_provider_type.dart
+LLM Summary Lab is a Flutter proof of concept for comparing text summaries across providers and models. Each saved run includes the input, prompts, selected settings, result, latency, provider-reported token usage, status, and—when returned—the model that served the request and its finish reason.
 
-Define LLMProviderType enum (openRouter, gemini, mistral, groq).
+## Providers
 
-Add metadata extensions for display names, default base URLs, and API key requirement flags.
+- OpenRouter
+- Google Gemini
+- Mistral AI
+- GroqCloud
 
-models/llm_model_info.dart
+OpenRouter, Mistral, and Groq use a shared OpenAI-compatible chat service. Gemini uses its native `generateContent` API. Requests are not automatically retried, so each saved attempt reflects one provider call.
 
-Model representing available models per provider (ID, display name, max context tokens, cost tags, free model boolean).
+## API keys
 
-models/summary_request.dart
+Create `app/.env` from `app/env.example` and put local default keys in it. The app reads those defaults at startup. You can inspect them in **Configure API Keys**; the fields are masked until revealed and show which values came from `.env`. Non-empty values saved in the settings sheet take precedence over `.env`; clearing a saved value restores the built-in default.
 
-Encapsulate parameters: source text, input file name (if applicable), system prompt, instruction prompt, temperature, max tokens, target model ID, provider type.
+Flutter bundles `.env` into the application because this is a local research prototype. Anyone who receives an installed build can extract its built-in keys. The app preference store is also not a secure credential vault. Use dedicated, low-limit keys and do not distribute a build containing private credentials. A public release should call a backend that keeps provider credentials off the client.
 
-models/summary_run.dart
+Never commit a real `.env` file. The checked-in `env.example` contains empty values and is not bundled.
 
-Encapsulate output results: unique run ID, timestamp, complete SummaryRequest, generated output text, execution time in milliseconds, token usage stats, status (success/error), and error message.
+## Run locally
 
-Include jsonEncode/jsonDecode methods for local disk serialization.
+```sh
+cd app
+cp env.example .env
+# Add keys to .env, then:
+flutter pub get
+flutter run
+```
 
-Phase 2: Utilities & Core Local Services
-core/utils/file_helper.dart
+## Tests
 
-Implement cross-platform file picking using file_picker for .txt, .md, .json, and .pdf files.
+Run `flutter test` from the `app` directory. Provider contract tests use mocked HTTP responses, so they do not require API keys or contact live providers. They check each provider's model-list response, request format, output parsing, token metadata, and failed HTTP responses.
 
-Read plain text contents safely across Mobile, Desktop, and Web.
+## Research workflow
 
-core/utils/clipboard_helper.dart
+1. Select a provider and refresh its available text models.
+2. Load or paste source text, edit the system and instruction prompts, and set temperature and output-token limit.
+3. Run a summary. Successful and failed provider attempts are retained in local history.
+4. Select up to four runs in history to compare their models, input preview, prompts, settings, output, latency, token counts, and finish reason.
 
-Implement clipboard paste handler using standard Clipboard.getData(Clipboard.kTextPlain).
+Run history stores the complete source text and prompt locally. The text and prompts are also sent to the selected provider when you run a request. Token estimates shown before a run are approximate; final counts come from provider responses when available. Model availability, pricing, and serving routes can change over time, so retain the saved run metadata when reporting an experiment.
 
-services/storage/storage_service_interface.dart & local_run_storage.dart
-
-Define interface and concrete implementation using path_provider to write/read JSON files to an app_runs/ subfolder on local disk.
-
-Implement saveRun(SummaryRun run), getAllRuns(), deleteRun(String id), and clearAllRuns().
-
-Phase 3: Polymorphic LLM API Integrations
-services/llm/llm_service_interface.dart
-
-Define abstract class LLMServiceInterface with methods fetchAvailableModels() and generateSummary(SummaryRequest request).
-
-services/llm/openrouter_service.dart
-
-Implement OpenRouter REST integration; handle custom headers (HTTP-Referer, X-Title) and free model filtering logic.
-
-services/llm/gemini_service.dart
-
-Implement direct Google Gemini API integration (supporting system instructions and temperature controls).
-
-services/llm/mistral_service.dart & groq_service.dart
-
-Implement Open-AI format compatible endpoints for Mistral AI and GroqCloud APIs.
-
-Phase 4: State Management
-state/runner_notifier.dart
-
-Manage current workspace state: selected input source, raw input text, active prompt, selected provider/model, temperature slider state, loading indicator, and latest run output.
-
-state/history_notifier.dart
-
-Manage local run history list, filtering (by provider, model, or keyword), search queries, and selected runs for side-by-side comparison.
-
-state/settings_notifier.dart
-
-Persist provider API keys securely in local application settings.
-
-Phase 5: Primary UI (Runner & Configuration)
-ui/widgets/input_source_selector.dart
-
-Segmented UI/Buttons to toggle between "Upload File" and "Paste Clipboard", including source preview details (file name, character count, token estimate).
-
-ui/widgets/prompt_editor.dart
-
-Expandable multi-line text editor with preset prompt templates (e.g., "3 Bullet Points", "Executive Summary", "Key Takeaways Only") and reset capabilities.
-
-ui/widgets/provider_model_selector.dart
-
-Dropdown pickers for selecting active provider and populated models list with badges for "Free" or "Paid" endpoints.
-
-ui/screens/runner_screen.dart
-
-Main workspace UI putting together input, prompt configuration, model parameters, execution button, real-time output panel, and response metadata (latency, output length).
-
-Phase 6: Run History & Comparison UI
-ui/widgets/run_card.dart
-
-Card widget displaying historical run summaries: model used, prompt snippet, execution latency, timestamp, and selection checkbox for comparison.
-
-ui/screens/history_screen.dart
-
-ListView displaying saved test runs loaded from disk with filtering controls and quick deletion options.
-
-ui/screens/comparison_screen.dart & ui/widgets/comparison_view.dart
-
-Split-screen / grid view allowing users to select 2–4 past runs and compare input parameters, execution speed, model output, and formatting side-by-side.
+The file picker accepts text, Markdown, JSON, and PDF files. PDF extraction is a lightweight fallback and may not read scanned, compressed, or complex PDFs accurately; verify imported text before using it in an experiment.
