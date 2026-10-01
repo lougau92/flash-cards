@@ -1,0 +1,1757 @@
+========================================
+Testing Provider: Google Gemini (SDK)
+========================================
+
+Found 5 candidate models to test.
+
+Testing [gemini-3.8-flash]... ❌ FAILED
+   Details: GenerativeAIException: Server Error [503]: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+
+
+Testing [gemini-3.7-flash]... ❌ FAILED
+   Details: GenerativeAIException: Server Error [503]: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+
+
+Testing [gemini-3.6-flash]... ✅ SUCCESS
+--- Output Preview ---
+Here is a 3-bullet summary of the text:
+
+* **Specialized Design:** The James Webb Space Telescope (JWST) is the largest optical space telescope ever built, specifically designed to conduct infrared astronomy.
+* **Advanced Capabilities:** With superior resolution and sensitivity, the JWST can observe objects that are too faint, old, or distant for the Hubble Space Telescope to detect.
+* **Key Scientific Goals:** It enables groundbreaking research across cosmology, including studying the universe's first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [gemini-3.5-flash]... ✅ SUCCESS
+--- Output Preview ---
+Here is a 3-bullet summary of the text:
+
+* **Advanced Infrared Capabilities:** The James Webb Space Telescope (JWST) is the largest optical space telescope, designed primarily to conduct high-resolution infrared astronomy.
+* **Superior to Hubble:** Its exceptional sensitivity and resolution allow it to detect extremely old, distant, or faint cosmic objects that the Hubble Space Telescope cannot see.
+* **Key Scientific Goals:** JWST enables researchers to study the universe's first stars and galaxies and to analyze the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [gemini-3.5-flash-lite]... ✅ SUCCESS
+--- Output Preview ---
+* **Primary Purpose:** The James Webb Space Telescope (JWST) is the largest optical space telescope designed primarily for infrared astronomy.
+* **Advanced Capabilities:** Its superior resolution and sensitivity surpass Hubble, enabling it to view objects that are too old, distant, or faint.
+* **Key Research Areas:** It facilitates investigations into the formation of the first stars and galaxies, as well as the atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+========================================
+Testing Provider: OpenRouter
+========================================
+
+Found 464 candidate models to test.
+
+Testing [openai/gpt-6.1-sol-pro]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space and is designed primarily for infrared astronomy.
+- Its high resolution and sensitivity let it observe objects too old, distant, or faint for the Hubble Space Telescope.
+- JWST studies the first stars and galaxies and examines the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-6.1-sol-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-6.1-sol-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-6.1-sol]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space and primarily conducts infrared astronomy.
+- Its high resolution and sensitivity let it observe objects too old, distant, or faint for Hubble to see.
+- JWST studies the first stars and galaxies and characterizes the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-6.1-sol:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-6.1-sol:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [anthropic/claude-sonnet-5.5]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose and design:** The James Webb Space Telescope (JWST) is a space telescope built mainly for infrared astronomy, and it is the largest optical telescope in space.
+- **Capabilities:** Its high resolution and sensitivity let it observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+- **Scientific applications:** It supports research across astronomy and cosmology, including studying the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [anthropic/claude-sonnet-5.5:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-sonnet-5.5:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [typesafe/jev-router]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is a large space-based telescope designed primarily for infrared astronomy.
+- Its high resolution and sensitivity let it observe faint, distant, and ancient objects beyond Hubbleâs capabilities.
+- JWST studies topics including the first stars and galaxies, as well as the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [perceptron/perceptron-mk1.5]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed primarily for infrared astronomy.
+- As the largest optical telescope in space, it can observe objects too old, distant, or faint for the Hubble Space Telescope.
+- This capability enables investigations across many fields of astronomy and cosmology, such as observing the first stars and galaxies, and characterizing exoplanet atmospheres.
+----------------------
+
+Testing [fireworks/ember-1]... ❌ FAILED
+   Details: HttpException: HTTP 429: Provider returned error
+
+Testing [z-ai/glm-5.3-prime]... ✅ SUCCESS
+--- Output Preview ---
+- **The James Webb Space Telescope (JWST)** is a space telescope designed primarily for infrared astronomy and is the largest optical telescope in space.
+
+- **Its high resolution and sensitivity** allow it to view objects that are too old, distant, or faint for the Hubble Space Telescope to observe.
+
+- **It enables research across many areas of astronomy and cosmology**, including studying the first stars and galaxies, and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.8-max-prime]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope built mainly for infrared astronomy.
+- It is the largest optical telescope in space, with high resolution and sensitivity that let it observe objects too old, distant, or faint for Hubble.
+- It supports research across astronomy and cosmology, including studying the first stars and galaxies and analyzing atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [stealth/space-bunny-alpha]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest space telescope, designed primarily for infrared astronomy.
+- Its high resolution and sensitivity reveal objects that are too old, distant, or faint for the Hubble Space Telescope.
+- It supports research on the first stars and galaxies, cosmology, and the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [aion-labs/aion-3.5-mini]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope primarily designed for infrared astronomy.
+- It is the largest optical telescope in space, with high resolution and sensitivity that allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- Its capabilities enable investigations in astronomy and cosmology, such as observing the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [aion-labs/aion-3.5]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The James Webb Space Telescope (JWST) is a space telescope designed primarily for infrared astronomy and is the largest optical telescope in space.
+
+â¢ Its high resolution and sensitivity allow it to view objects too old, distant, or faint for the Hubble Space Telescope.
+
+â¢ This capability enables investigations across many fields of astronomy and cosmology, including observing the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [upstage/solar-mini4]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope designed mainly for infrared astronomy and is the largest optical telescope in space.
+- Its high resolution and sensitivity let it observe objects too old, distant, or faint for the Hubble Space Telescope.
+- It supports research in astronomy and cosmology, including studying the first stars and galaxies and analyzing atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [cohere/command-a-plus]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope built for infrared astronomy, serving as the largest optical telescope ever launched.  
+- Its high resolution and sensitivity let it observe objects that are too old, distant, or faint for the Hubble Space Telescope.  
+- It aims to study the earliest stars and galaxy formation, and to characterize the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-6-luna-pro]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a large space-based telescope designed primarily for infrared astronomy.
+- Its high resolution and sensitivity let it observe faint, distant, and ancient objects beyond Hubbleâs reach.
+- JWST studies topics including the first stars and galaxies, and the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-6-luna-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-6-luna-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-6-luna]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is designed primarily for infrared astronomy.
+- Its size, resolution, and sensitivity let it observe faint, distant, and ancient objects beyond Hubbleâs reach.
+- It studies topics including the first stars and galaxies, as well as the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-6-luna:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-6-luna:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-6-sol-pro]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed primarily for infrared astronomy.
+- Its size, resolution, and sensitivity let it observe objects too old, distant, or faint for Hubble.
+- It studies the first stars and galaxies and examines the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-6-sol-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-6-sol-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-6-sol]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed primarily for infrared astronomy.
+- Its size, resolution, and sensitivity let it observe objects too old, distant, or faint for Hubble.
+- It supports research on the first stars and galaxies and on the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-6-sol:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-6-sol:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [anthropic/claude-opus-5.5]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose:** The James Webb Space Telescope (JWST) is a space telescope designed primarily for infrared astronomy.
+- **Capabilities:** As the largest optical telescope in space, its high resolution and sensitivity let it observe objects too old, distant, or faint for the Hubble Space Telescope.
+- **Scientific impact:** It supports research across astronomy and cosmology, including observing the first stars, studying how the first galaxies formed, and analyzing the atmospheres of potentially habitable exoplanets in detail.
+----------------------
+
+Testing [anthropic/claude-opus-5.5:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-opus-5.5:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [xiaomi/mimo-v2.6-pro-ultraspeed]... ✅ SUCCESS
+--- Output Preview ---
+â¢ **What it is:** The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+
+â¢ **Capabilities:** Its high resolution and sensitivity let it observe objects too old, distant, or faint for the Hubble Space Telescope to detect.
+
+â¢ **Scientific goals:** It enables studies of the first stars and galaxy formation, as well as detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [xiaomi/mimo-v2.6-flash]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The James Webb Space Telescope (JWST) is a space-based observatory primarily designed for infrared astronomy, and it is the largest optical telescope in space.
+
+â¢ Its superior resolution and sensitivity surpass the Hubble Space Telescope, enabling the observation of objects that are too old, distant, or faint for Hubble to detect.
+
+â¢ Its capabilities support research across multiple areas of astronomy and cosmology, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [xiaomi/mimo-v2.6-pro]... ✅ SUCCESS
+--- Output Preview ---
+â¢ **What it is:** The James Webb Space Telescope (JWST) is a space telescope focused on infrared astronomy and is the largest optical telescope in space.
+
+â¢ **Capabilities:** Its high resolution and sensitivity let it observe objects too old, distant, or faint for the Hubble Space Telescope.
+
+â¢ **Research impact:** It enables major studies in astronomy and cosmology, including observing the first stars and galaxies and characterizing exoplanet atmospheres for potential habitability.
+----------------------
+
+Testing [x-ai/grok-4.7]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope built mainly for infrared astronomy.
+- As the largest optical telescope in space, its resolution and sensitivity let it see objects too old, distant, or faint for Hubble.
+- It supports astronomy and cosmology research, including the first stars and galaxies and the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.8-omni-flash]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space-based infrared telescope and the largest optical telescope in space.  
+- Its high resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.  
+- JWST supports major astronomy and cosmology research, including studying the first stars and galaxies and analyzing exoplanet atmospheres.
+----------------------
+
+Testing [prism-ml/ternary-bonsai-2-27b]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a large space telescope designed for infrared astronomy.  
+- Its high resolution and sensitivity let it observe objects that are too old, distant, or faint for the Hubble Space Telescope.  
+- JWST supports research in astronomy and cosmology, including studying the first stars, early galaxies, and potentially habitable exoplanet atmospheres.
+----------------------
+
+Testing [z-ai/glm-5.3-flashx]... ✅ SUCCESS
+--- Output Preview ---
+- **James Webb Space Telescope (JWST)**: A space telescope built primarily for infrared astronomy, and the largest optical telescope ever placed in space.
+
+- **Superior capabilities**: Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+
+- **Scientific impact**: It enables research in astronomy and cosmology, including studying the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [unbiased/pareto]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed primarily for infrared astronomy.  
+- It is the largest optical telescope in space, with high resolution and sensitivity that allow it to observe objects too old, distant, or faint for Hubble.  
+- It enables research in astronomy and cosmology, including the first stars and galaxies and atmospheric studies of potentially habitable exoplanets.
+----------------------
+
+Testing [~deepseek/deepseek-pro-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a large infrared space telescope with resolution and sensitivity far exceeding Hubble, allowing it to observe extremely old, distant, and faint objects.
+- Its capabilities enable major advances in astronomy and cosmology, including studying the first stars, the formation of early galaxies, and characterizing exoplanet atmospheres.
+- A key goal is the detailed study of potentially habitable exoplanets.
+----------------------
+
+Testing [~deepseek/deepseek-flash-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is a space telescope built mainly for infrared astronomy.
+- It is the largest optical telescope in space, with high resolution and sensitivity that let it observe objects too old, distant, or faint for Hubble.
+- Its capabilities support astronomy and cosmology research, including the first stars and galaxies and atmospheric studies of potentially habitable exoplanets.
+----------------------
+
+Testing [inference-net/schematron-v2-turbo]... ✅ SUCCESS
+--- Output Preview ---
+{
+  "summary": "The James Webb Space Telescope (JWST) is a large infrared space telescope that can observe objects too old, distant, or faint for the Hubble Space Telescope. Its high resolution and sensitivity enable studies of the first stars, the formation of the first galaxies, and detailed atmospheric characterization of potentially habitable exoplanets, opening new possibilities across many fields of astronomy and cosmology."
+}
+----------------------
+
+Testing [inference-net/schematron-v2-small]... ✅ SUCCESS
+--- Output Preview ---
+{
+  "summary": "The James Webb Space Telescope (JWST) is a space telescope designed primarily to conduct infrared astronomy. As the largest optical telescope in space, its high resolution and sensitivity allow it to view objects too old, distant, or faint for the Hubble Space Telescope. This enables investigations across many fields of astronomy and cosmology, such as observation of the first stars and the formation of the first galaxies, and detailed atmospheric characterization of potentially habitable exoplanets."
+}
+----------------------
+
+Testing [~openai/gpt-astra-latest]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 800. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [~openai/gpt-sol-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space and is designed primarily for infrared astronomy.
+- Its high resolution and sensitivity let it observe objects too old, distant, or faint for Hubble to detect.
+- JWST studies the first stars and galaxies and characterizes the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [~openai/gpt-terra-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space-based observatory focused primarily on infrared astronomy.  
+- Its large size, high resolution, and sensitivity let it observe objects that are too distant, faint, or ancient for the Hubble Space Telescope.  
+- JWST supports research into the universeâs first stars and galaxies and can analyze the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [~openai/gpt-luna-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is a space observatory built primarily for infrared astronomy.
+- Its size, resolution, and sensitivity let it study faint, distant, and ancient objects beyond Hubbleâs reach.
+- It supports research into the first stars and galaxies, as well as the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [sakana/fugu-ultra-v2]... ❌ FAILED
+   Details: HttpException: HTTP 403: Provider returned error
+
+Testing [sakana/fugu-max]... ❌ FAILED
+   Details: HttpException: HTTP 403: Provider returned error
+
+Testing [inclusionai/ling-3.0-flash-vl]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The James Webb Space Telescope (JWST) is a space telescope optimized for infrared astronomy, serving as the largest optical telescope in space.
+â¢ Its high resolution and sensitivity allow it to observe objects too distant, faint, or ancient for the Hubble Space Telescope.
+â¢ It enables key research such as observing the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [deepseek/deepseek-v4.1-flash]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope built mainly for infrared astronomy.
+- It is the largest optical telescope in space, with high resolution and sensitivity that let it observe objects too old, distant, or faint for Hubble.
+- It supports studies of the early universeâsuch as the first stars and galaxiesâand detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [deepseek/deepseek-v4.1-flash:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: deepseek/deepseek-v4.1-flash:batch cannot be used with the chat/completions endpoint (adapter DeepInfraBatchAdapter).
+
+Testing [inception/mercury-2.5]... ❌ FAILED
+   Details: type 'Null' is not a subtype of type 'String' in type cast
+
+Testing [nex-agi/nex-n2.5-mini]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed mainly for infrared astronomy.  
+- It is the largest optical telescope in space, with high resolution and sensitivity.  
+- JWST can study objects too old, distant, or faint for Hubble, helping scientists investigate early stars, galaxy formation, and potentially habitable exoplanet atmospheres.
+----------------------
+
+Testing [nex-agi/nex-n2.5-pro]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope optimized for infrared astronomy.
+- It is the largest optical telescope in space, with high resolution and sensitivity surpassing Hubble for faint, distant, or old objects.
+- It supports studies of the first stars and galaxies and detailed analysis of potentially habitable exoplanet atmospheres.
+----------------------
+
+Testing [openai/gpt-6-astra]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 654. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [openai/gpt-6-astra:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-6-astra:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-6-astra-pro]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 654. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [openai/gpt-6-astra-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-6-astra-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [inclusionai/ling-3.0-flash-sante:free]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope designed primarily for infrared astronomy.
+- As the largest optical telescope in space, its high resolution and sensitivity allow it to observe objects too old, distant, or faint for Hubble.
+- It enables research across astronomy and cosmology, including the first stars and galaxies and atmospheric characterization of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.8-max-0902]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is a space telescope built mainly for infrared astronomy.
+- As the largest optical telescope in space, it can observe older, farther, and fainter objects than Hubble.
+- It supports major research areas, including the first stars and galaxies and the study of potentially habitable exoplanets.
+----------------------
+
+Testing [meta/muse-spark-1.3-contributor]... ❌ FAILED
+   Details: HttpException: HTTP 403: This model requires you to complete the following before use: 18+ age confirmation. Confirm at https://openrouter.ai/settings/preferences.
+
+Testing [meta/muse-spark-1.3]... ❌ FAILED
+   Details: HttpException: HTTP 403: This model requires you to complete the following before use: 18+ age confirmation. Confirm at https://openrouter.ai/settings/preferences.
+
+Testing [google/gemini-3.8-flash]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, primarily designed to conduct infrared astronomy.
+* Its advanced resolution and sensitivity allow it to detect objects that are too old, distant, or faint for the Hubble Space Telescope to see.
+* It enables groundbreaking astronomical research, including observing the universe's first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemini-3.8-flash:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: google/gemini-3.8-flash:batch cannot be used with the chat/completions endpoint (adapter VertexGeminiBatchAdapter).
+
+Testing [anthropic/claude-fable-5.1]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 654. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [anthropic/claude-fable-5.1:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-fable-5.1:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [ibm-granite/granite-4.2-8b]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope designed primarily for infrared astronomy and is the largest optical telescope operating in space.  
+- Its high resolution and sensitivity enable it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.  
+- These capabilities support investigations of earlyâuniverse phenomena (e.g., the first stars and first galaxies) and detailed atmospheric characterization of potentially habitable exoplanets.
+----------------------
+
+Testing [tencent/hy4-preview]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope built primarily for infrared astronomy and is the largest optical telescope in space.
+- Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- It supports major astronomy and cosmology research, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [inclusionai/ling-3.0-flash-fin]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+â¢ Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+â¢ It enables key research in astronomy and cosmology, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [~z-ai/glm-flash-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, built primarily for infrared astronomy.
+- Its high resolution and sensitivity let it observe objects too old, distant, or faint for the Hubble Space Telescope.
+- This enables studies of the first stars and galaxies, plus detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.8-flash]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is an infrared space telescope and the largest optical telescope in space.
+
+- Its high resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+
+- It supports astronomy and cosmology research, including studying the first stars and galaxies and analyzing atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [z-ai/glm-5.3-flash]... ✅ SUCCESS
+--- Output Preview ---
+- The JWST is an infrared space telescope and the largest optical telescope in space, with superior resolution and sensitivity compared to Hubble.
+
+- It can observe objects that are too old, distant, or faint for previous telescopes like Hubble.
+
+- Its capabilities support research into early cosmic historyâsuch as the first stars and galaxy formationâas well as studying the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [z-ai/glm-5.3-flash:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: z-ai/glm-5.3-flash:batch cannot be used with the chat/completions endpoint (adapter DeepInfraBatchAdapter).
+
+Testing [meta/muse-spark-1.2-contributor]... ❌ FAILED
+   Details: HttpException: HTTP 403: This model requires you to complete the following before use: 18+ age confirmation. Confirm at https://openrouter.ai/settings/preferences.
+
+Testing [deepseek/deepseek-v4-flash-vision-exp]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed for infrared astronomy.
+- It is the largest optical telescope in space, with high resolution and sensitivity to see objects too old, distant, or faint for Hubble.
+- Its capabilities enable studies of the first stars and galaxies, plus detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [tencent/hy-mt2-1.8b]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a large space telescope optimized for infrared astronomy.  
+- It offers high resolution and sensitivity, enabling observation of ancient, distant, or faint objects.  
+- Its capabilities support research in astronomy and cosmology, including studying early stars, galaxy formation, and exoplanet atmospheres.
+----------------------
+
+Testing [tencent/hy-mt2-30b-a3b]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is a large space-based infrared telescope that surpasses Hubble in resolving power and sensitivity, enabling it to detect older, more distant, and fainter celestial objects.  
+- It plays a crucial role in studying the early universe, including the formation of the first stars and galaxies, as well as advancing our understanding of cosmic evolution.  
+- JWST also facilitates detailed analysis of exoplanet atmospheres, helping identify potentially habitable worlds and expand knowledge of planetary systems.
+----------------------
+
+Testing [~z-ai/glm-latest]... ✅ SUCCESS
+--- Output Preview ---
+- **The James Webb Space Telescope (JWST)** is a space telescope designed primarily for infrared astronomy and is the largest optical telescope in space.
+- Its **high resolution and sensitivity** allow it to view objects too old, distant, or faint for the Hubble Space Telescope.
+- This capability enables research across astronomy and cosmology, including **observing the first stars and galaxies** and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [tencent/hy-mt2-7b]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is the largest optical telescope in space, designed for infrared astronomy.  
+- Its high resolution and sensitivity enable observation of extremely old, distant, or faint objects beyond Hubbleâs capabilities.  
+- It facilitates research in astronomy and cosmology, including studying the first stars and galaxies, and analyzing atmospheres of habitable exoplanets.
+----------------------
+
+Testing [z-ai/glm-5.3]... ✅ SUCCESS
+--- Output Preview ---
+- **The James Webb Space Telescope (JWST)** is a space telescope designed primarily for infrared astronomy and is the largest optical telescope in space.
+- Its **high resolution and sensitivity** allow it to view objects too old, distant, or faint for the Hubble Space Telescope.
+- This capability enables research across astronomy and cosmology, including **observing the first stars and galaxies** and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [z-ai/glm-5.3:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: z-ai/glm-5.3:batch cannot be used with the chat/completions endpoint (adapter DeepInfraBatchAdapter).
+
+Testing [qwen/qwen3.8-27b]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a large infrared space telescope designed for high-resolution, high-sensitivity observations.
+- It can study objects that are too old, distant, or faint for the Hubble Space Telescope.
+- JWST supports research in astronomy and cosmology, including early stars, galaxy formation, and exoplanet atmospheres.
+----------------------
+
+Testing [qwen/qwen3.8-27b:free]... ❌ FAILED
+   Details: HttpException: HTTP 429: Provider returned error
+
+Testing [dots-studio/dots-3-note-preview:free]... ✅ SUCCESS
+--- Output Preview ---
+Here is a summary of the text in three bullet points:
+
+*   The James Webb Space Telescope (JWST) is a powerful space telescope designed primarily for infrared astronomy.
+*   It is the largest optical telescope in space, offering greater resolution and sensitivity than the Hubble Space Telescope, allowing it to observe older, more distant, and fainter objects.
+*   Its advanced capabilities enable key scientific investigations, such as observing the first stars and galaxies, and characterizing the atmospheres of exoplanets.
+----------------------
+
+Testing [google/gemini-3.7-flash]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, primarily engineered to conduct infrared astronomy.
+* Its advanced resolution and sensitivity allow it to detect objects that are older, more distant, and fainter than those visible to the Hubble Space Telescope.
+* It enables groundbreaking astronomical research, including observing the universe's first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemini-3.7-flash:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: google/gemini-3.7-flash:batch cannot be used with the chat/completions endpoint (adapter VertexGeminiBatchAdapter).
+
+Testing [bytedance-seed/seed-2-1-turbo]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily to conduct infrared astronomy.
+* Its higher resolution and sensitivity give it a key advantage over the Hubble Space Telescope, allowing it to view cosmic objects too old, distant, or faint for Hubble to detect.
+* It supports broad research across astronomy and cosmology, including study of the first stars and formation of the first galaxies, and detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.8-2.4t-a95b]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is a space telescope built mainly for infrared astronomy.
+- As the largest optical telescope in space, it can observe older, farther, and fainter objects than Hubble.
+- It supports research on the first stars and galaxies, as well as detailed studies of potentially habitable exoplanetsâ atmospheres.
+----------------------
+
+Testing [bytedance-seed/seed-2.0-code]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest space-based optical telescope, engineered primarily for infrared astronomy, with higher resolution and sensitivity than the Hubble Space Telescope.
+- Its enhanced capabilities let it detect cosmic objects too ancient, distant, or faint for Hubble to observe, expanding accessible astronomical and cosmological data.
+- It supports targeted high-priority research: observing the universeâs first stars and early galaxies, and conducting detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [deepseek/deepseek-v4-pro-0813]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is an infrared space telescope and the largest optical telescope in space, offering greater resolution and sensitivity than Hubble.
+- Its advanced capabilities allow it to observe extremely old, distant, and faint objects, enabling studies of the first stars and galaxies.
+- JWST is also used to characterize the atmospheres of potentially habitable exoplanets in detail.
+----------------------
+
+Testing [x-ai/grok-4.6]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope built mainly for infrared astronomy.
+- As the largest optical telescope in space, its resolution and sensitivity let it observe objects too old, distant, or faint for Hubble.
+- It supports studies of the first stars and galaxies plus detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [liquid/lfm-2.5-2.6b:free]... ✅ SUCCESS
+--- Output Preview ---
+- **Primary Purpose**: The James Webb Space Telescope (JWST) is an infrared astronomy telescope designed to study objects too ancient, distant, or faint for previous instruments like Hubble.
+
+- **Technical Advantage**: As the largest optical telescope in space, JWST offers superior resolution and sensitivity due to its advanced technology.
+
+- **Scientific Applications**: It enables groundbreaking research including observing the first stars and galaxies, and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [nvidia/nemotron-3.5-lightning]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope designed primarily for infrared astronomy and is the largest optical telescope ever launched into space.  
+- Its high resolution and sensitivity allow it to detect objects that are too old, distant, or faint for the Hubble Space Telescope.  
+- This capability enables key astronomical research, including observing the formation of the first stars and galaxies, and analyzing atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [nvidia/nemotron-3.5-lightning:free]... ❌ FAILED
+   Details: NoSuchMethodError: The method '[]' was called on null.
+Receiver: null
+Tried calling: [](0)
+
+Testing [sakana/sakana-namazu]... ❌ FAILED
+   Details: HttpException: HTTP 404: 0 endpoints out of 1 requested are available matching your guardrail restrictions and data policy. We removed them for the following reasons (an endpoint may have matched multiple reasons):
+Paid model training violation (account settings): 1 endpoint excluded; configurable at https://openrouter.ai/settings/privacy
+
+Testing [upstage/solar-pro4]... ✅ SUCCESS
+--- Output Preview ---
+*   The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+*   Its high resolution and sensitivity enable it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+*   JWST supports diverse astronomical investigations, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [meta/muse-glimmer-30b]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope is a space telescope designed primarily for infrared astronomy and is the largest optical telescope in space.
+* Its high resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+* This capability enables research across astronomy and cosmology, including observing the first stars and galaxy formation, and detailed atmospheric characterization of potentially habitable exoplanets.
+----------------------
+
+Testing [meta/muse-spark-1.2]... ❌ FAILED
+   Details: HttpException: HTTP 403: This model requires you to complete the following before use: 18+ age confirmation. Confirm at https://openrouter.ai/settings/preferences.
+
+Testing [~deepseek/deepseek-v4-flash-latest]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope built for infrared astronomy and is the largest optical telescope in space.
+- Its high resolution and sensitivity let it see objects too old, distant, or faint for Hubble.
+- It enables research on the first stars, early galaxy formation, and atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [deepseek/deepseek-v4-flash-0731]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope optimized for infrared astronomy and is the largest optical telescope in space.
+- Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for Hubble.
+- It enables research on the first stars, early galaxy formation, and atmospheric study of potentially habitable exoplanets.
+----------------------
+
+Testing [thinkingmachines/inkling-small]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The James Webb Space Telescope (JWST) is the largest optical space telescope, designed primarily for infrared astronomy.
+â¢ Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+â¢ It enables studies of early stars and galaxy formation, as well as detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [thinkingmachines/inkling-small:free]... ❌ FAILED
+   Details: HttpException: HTTP 403: thinkingmachines/inkling-small:free is only available on agentic harnesses. Try plugging it into a coding agent or productivity app listed on https://openrouter.ai/apps
+
+Testing [qwen/qwen3.7-flash]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The James Webb Space Telescope (JWST) is the largest space telescope, optimized primarily for high-resolution infrared astronomy.
+â¢ Its exceptional sensitivity enables it to observe objects that are too old, distant, or faint for the Hubble Space Telescope to detect.
+â¢ This capability drives key research in cosmology, including studying the formation of the early universe's first stars and galaxies, and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [anthropic/claude-opus-5]... ✅ SUCCESS
+--- Output Preview ---
+â¢ **What it is:** The James Webb Space Telescope (JWST) is a space-based observatory built mainly for infrared astronomy, and it is the largest optical telescope ever placed in space.
+
+â¢ **Key advantage:** Its high resolution and sensitivity let it observe objects that are too old, distant, or faint for the Hubble Space Telescope to detect.
+
+â¢ **Scientific purpose:** These capabilities support research across astronomy and cosmology, including studying the first stars and earliest galaxy formation, as well as characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [anthropic/claude-opus-5:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-opus-5:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [inclusionai/ling-3.0-flash]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+- Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- It enables research across astronomy and cosmology, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [poolside/laguna-s-2.1]... ✅ SUCCESS
+--- Output Preview ---
+- **Primary Function**: The James Webb Space Telescope (JWST) is a large infrared space telescope designed to observe objects too old, distant, or faint for the Hubble Space Telescope, thanks to its high resolution and sensitivity.  
+- **Key Advantages**: As the largest optical telescope in space, it enables groundbreaking studies of the early universe, including the first stars, galaxy formation, and detailed analysis of exoplanet atmospheres.  
+- **Scientific Impact**: Its capabilities support diverse research in astronomy and cosmology, advancing our understanding of cosmic evolution and potentially habitable worlds.
+----------------------
+
+Testing [poolside/laguna-s-2.1:free]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose & Design**: The James Webb Space Telescope (JWST) is a large infrared space telescope, designed to observe objects too distant, faint, or ancient for the Hubble Space Telescope, with enhanced resolution and sensitivity.  
+- **Key Capabilities**: Its advanced infrared capabilities enable groundbreaking studies of the early universe, including the formation of the first stars and galaxies.  
+- **Scientific Applications**: JWST supports diverse research, such as atmospheric analysis of potentially habitable exoplanets and probing cosmic phenomena beyond Hubbleâs reach.
+----------------------
+
+Testing [google/gemini-3.6-flash]... ✅ SUCCESS
+--- Output Preview ---
+Here is a 3-bullet summary of the text:
+
+* **Primary Function:** The James Webb Space Telescope (JWST) is the largest optical telescope in space, built specifically to perform infrared astronomy.
+* **Key Advantage:** Its superior resolution and sensitivity allow it to observe celestial objects that are too old, distant, or faint for the Hubble Space Telescope to see.
+* **Scientific Goals:** JWST enables breakthrough research in astronomy and cosmology, including observing the earliest stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemini-3.6-flash:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: google/gemini-3.6-flash:batch cannot be used with the chat/completions endpoint (adapter VertexGeminiBatchAdapter).
+
+Testing [google/gemini-3.5-flash-lite]... ✅ SUCCESS
+--- Output Preview ---
+* **Advanced Capabilities:** JWST is the largest optical space telescope, specializing in high-resolution and high-sensitivity infrared astronomy.
+* **Exceeds Hubble:** Its superior power allows it to observe celestial objects that are too old, distant, or faint for the Hubble Space Telescope.
+* **Key Scientific Goals:** It enables groundbreaking research on the first stars and galaxies, as well as the atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemini-3.5-flash-lite:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: google/gemini-3.5-flash-lite:batch cannot be used with the chat/completions endpoint (adapter VertexGeminiBatchAdapter).
+
+Testing [meituan/longcat-2.0]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is the largest optical telescope in space, designed for high-resolution infrared astronomy.
+- Its advanced sensitivity allows it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+- It enables key investigations such as studying the first stars and galaxies, and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [thinkingmachines/inkling]... ✅ SUCCESS
+--- Output Preview ---
+- The JWST is the largest optical space telescope, designed primarily for high-resolution infrared astronomy.
+- Its advanced sensitivity allows it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+- It enables broad research in astronomy and cosmology, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [thinkingmachines/inkling:free]... ❌ FAILED
+   Details: HttpException: HTTP 403: thinkingmachines/inkling:free is only available on agentic harnesses. Try plugging it into a coding agent or productivity app listed on https://openrouter.ai/apps
+
+Testing [openrouter/auto-beta]... ✅ SUCCESS
+--- Output Preview ---
+Here's a summary of the provided text:
+
+*   The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed for infrared astronomy.
+*   Its advanced capabilities allow it to observe objects beyond the reach of the Hubble Space Telescope, including very old and distant celestial bodies.
+*   JWST's research focuses on areas like the formation of early stars and galaxies, and the atmospheric analysis of exoplanets for habitability.
+----------------------
+
+Testing [moonshotai/kimi-k3]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose:** The James Webb Space Telescope (JWST) is a space telescope built primarily for infrared astronomy.
+- **Capability:** As the largest optical telescope in space, its superior resolution and sensitivity allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- **Scientific impact:** JWST supports research across astronomy and cosmology, including studying the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [moonshotai/kimi-k3:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: moonshotai/kimi-k3:batch cannot be used with the chat/completions endpoint (adapter DeepInfraBatchAdapter).
+
+Testing [meta/muse-spark-1.1]... ❌ FAILED
+   Details: HttpException: HTTP 403: This model requires you to complete the following before use: 18+ age confirmation. Confirm at https://openrouter.ai/settings/preferences.
+
+Testing [kwaipilot/kat-coder-pro-v2.5]... ❌ FAILED
+   Details: HttpException: HTTP 400: Provider returned error
+
+Testing [openai/gpt-5.6-luna-pro]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a large space-based observatory designed primarily for infrared astronomy.
+- Its exceptional resolution and sensitivity allow it to observe faint, distant, and ancient objects beyond Hubbleâs capabilities.
+- JWST studies topics including the first stars and galaxies, as well as the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.6-luna-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.6-luna-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-5.6-luna]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a large space observatory designed primarily for infrared astronomy.
+- Its high resolution and sensitivity allow it to observe distant, ancient, and faint objects beyond Hubbleâs capabilities.
+- JWST studies the early universe, including the first stars and galaxies, and analyzes the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.6-luna:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.6-luna:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-5.6-terra-pro]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope is a space-based observatory designed mainly for infrared astronomy.  
+- Its large size, high resolution, and sensitivity let it observe objects that are too distant, faint, or ancient for Hubble to detect.  
+- JWST supports research on the first stars and galaxies, as well as detailed studies of atmospheres on potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.6-terra-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.6-terra-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-5.6-terra]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space-based observatory focused primarily on infrared astronomy.  
+- Its large size, high resolution, and sensitivity let it observe objects that are too distant, faint, or ancient for Hubble to study.  
+- JWST supports research on the first stars and galaxies, as well as detailed studies of the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.6-terra:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.6-terra:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-5.6-sol-pro]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space and specializes in infrared astronomy.
+- Its high resolution and sensitivity let it observe objects too old, distant, or faint for Hubble.
+- JWST studies the first stars and galaxies and analyzes the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.6-sol-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.6-sol-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-5.6-sol]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space and is designed primarily for infrared astronomy.
+- Its high resolution and sensitivity let it observe objects that are too old, distant, or faint for Hubble.
+- JWST studies the first stars and galaxies and analyzes the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.6-sol:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.6-sol:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [x-ai/grok-4.5]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope primarily designed for infrared astronomy.
+- As the largest optical telescope in space, its high resolution and sensitivity enable it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- It supports wide-ranging astronomy and cosmology research, including studies of the first stars and galaxies and detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [~x-ai/grok-latest]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope built mainly for infrared astronomy.
+- As the largest optical telescope in space, its resolution and sensitivity let it observe objects too old, distant, or faint for Hubble.
+- It supports wide-ranging astronomy and cosmology, including first stars and galaxies plus atmospheric study of potentially habitable exoplanets.
+----------------------
+
+Testing [aion-labs/aion-3.0-mini]... ✅ SUCCESS
+--- Output Preview ---
+â¢ JWST is a space telescope designed for infrared astronomy and is the largest optical telescope in space.  
+â¢ Its high resolution and sensitivity allow it to view objects too old, distant, or faint for the Hubble Space Telescope.  
+â¢ It enables studies across astronomy and cosmology, including observation of the first stars and galaxies, and atmospheric characterization of potentially habitable exoplanets.
+----------------------
+
+Testing [aion-labs/aion-3.0]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+
+â¢ Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+
+â¢ JWST enables investigations across multiple fields, including studying the first stars and galaxies and characterizing atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [tencent/hy3]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical space telescope, primarily designed for high-resolution and sensitive infrared astronomy.
+- Its advanced capabilities allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- It enables diverse astronomical and cosmological research, such as studying the first stars and galaxies and characterizing exoplanet atmospheres.
+----------------------
+
+Testing [poolside/laguna-xs-2.1]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose and Capabilities**: The James Webb Space Telescope (JWST) is an infrared space telescope, the largest optical telescope in space, with high resolution and sensitivity to observe objects too old, distant, or faint for the Hubble Space Telescope.  
+- **Scientific Investigations**: It enables studies in astronomy and cosmology, including the observation of the first stars, the formation of the first galaxies, and other cosmic phenomena.  
+- **Exoplanet Research**: JWST conducts detailed atmospheric characterization of potentially habitable exoplanets, advancing our understanding of their composition and habitability.
+----------------------
+
+Testing [poolside/laguna-xs-2.1:free]... ❌ FAILED
+   Details: HttpException: HTTP 429: Provider returned error
+
+Testing [anthropic/claude-sonnet-5]... ✅ SUCCESS
+--- Output Preview ---
+- **What it is**: The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+
+- **Key capability**: Its high resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope to detect.
+
+- **Scientific applications**: JWST enables research across astronomy and cosmology, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [anthropic/claude-sonnet-5:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-sonnet-5:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [google/gemini-3.1-flash-lite-image]... ✅ SUCCESS
+--- Output Preview ---
+Here is a 3-bullet summary of the text:
+
+*   The James Webb Space Telescope (JWST) is the largest optical telescope in space, primarily designed to conduct infrared astronomy.
+*   Its high resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+*   The JWST enables key research in cosmology and astronomy, including studying the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [sakana/fugu-ultra]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 895. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [google/gemini-3.1-flash-image]... ✅ SUCCESS
+--- Output Preview ---
+*   The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+*   Its high resolution and sensitivity allow it to view objects that are too old, distant, or faint for the Hubble Space Telescope.
+*   The JWST enables investigations into the first stars and galaxies, as well as the atmospheric characterization of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemini-3-pro-image]... ✅ SUCCESS
+--- Output Preview ---
+Here is a 3-bullet summary of the text:
+
+*   The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+*   Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+*   JWST enables diverse astronomical investigations, including observing the first stars and galaxies and characterizing potentially habitable exoplanet atmospheres.
+----------------------
+
+Testing [cohere/north-mini-code:free]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is the largest optical telescope in space, designed for infrared astronomy with exceptional resolution and sensitivity.  
+- Its advanced capabilities let it observe objects too old, distant, or faint for Hubble, enabling the study of the first stars and the formation of early galaxies.  
+- JWST can perform detailed atmospheric characterization of potentially habitable exoplanets, advancing the search for life beyond our solar system.
+----------------------
+
+Testing [z-ai/glm-5.2]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+* Its high resolution and sensitivity allow it to see objects that are too old, distant, or faint for the Hubble Space Telescope.
+* These capabilities enable diverse scientific investigations, such as observing the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openrouter/fusion]... ✅ SUCCESS
+--- Output Preview ---
+Here's a 3-bullet summary:
+
+- **Purpose:** The James Webb Space Telescope (JWST) is a space telescope built mainly for infrared astronomy.
+- **Capabilities:** It is the largest optical telescope in space. Its high resolution and sensitivity let it see objects that are too old, distant or faint for the Hubble Space Telescope.
+- **Research uses:** It supports work across astronomy and cosmology, such as observing the first stars and galaxies and studying the atmospheres of exoplanets that could be habitable.
+----------------------
+
+Testing [moonshotai/kimi-k2.7-code]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily to conduct infrared astronomy.
+- Its high resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+- It enables research across astronomy and cosmology, including the first stars, the formation of the first galaxies, and the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [~anthropic/claude-fable-latest]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 537. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [anthropic/claude-fable-5]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 537. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [anthropic/claude-fable-5:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-fable-5:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [nvidia/nemotron-3.5-content-safety]... ✅ SUCCESS
+--- Output Preview ---
+User Safety: safe
+----------------------
+
+Testing [nvidia/nemotron-3.5-content-safety:free]... ✅ SUCCESS
+--- Output Preview ---
+User Safety: safe
+----------------------
+
+Testing [nvidia/nemotron-3-ultra-550b-a55b]... ✅ SUCCESS
+--- Output Preview ---
+*   JWST is the largest optical telescope in space, designed for high-resolution **infrared astronomy**.
+*   Its superior sensitivity allows it to observe objects too **old, distant, or faint** for the Hubble Space Telescope.
+*   Key science goals include studying the **first stars and galaxies** and characterizing the atmospheres of **potentially habitable exoplanets**.
+----------------------
+
+Testing [nvidia/nemotron-3-ultra-550b-a55b:free]... ❌ FAILED
+   Details: NoSuchMethodError: The method '[]' was called on null.
+Receiver: null
+Tried calling: [](0)
+
+Testing [qwen/qwen3.7-plus]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical space telescope, primarily designed for infrared astronomy.
+* It surpasses the Hubble Space Telescope in resolution and sensitivity, enabling the observation of older, fainter, and more distant cosmic objects.
+* JWST facilitates major astronomical research, including studying the universe's first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [minimax/minimax-m3]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space-based observatory designed primarily for infrared astronomy.
+- As the largest optical telescope in space, its superior resolution and sensitivity allow it to detect objects that are too old, distant, or faint for the Hubble Space Telescope.
+- These capabilities support a wide range of astronomical research, including studying the first stars and earliest galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [stepfun/step-3.7-flash]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy, with higher resolution and sensitivity than the Hubble Space Telescope.
+- Its advanced capabilities allow it to observe cosmic objects that are too old, distant, or faint to be detected by the Hubble Space Telescope.
+- It supports wide-ranging astronomy and cosmology research, including studying the first stars and galaxies, and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [anthropic/claude-opus-4.8]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy with high resolution and sensitivity.
+- Its capabilities allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- This enables research across astronomy and cosmology, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [anthropic/claude-opus-4.8:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-opus-4.8:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [qwen/qwen3.7-max]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for high-resolution infrared astronomy.
+* Its advanced sensitivity surpasses the Hubble Space Telescope, allowing it to observe exceptionally old, distant, and faint cosmic objects.
+* Key scientific goals include studying the formation of the first stars and galaxies, and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [x-ai/grok-build-0.1]... ❌ FAILED
+   Details: NoSuchMethodError: The method '[]' was called on null.
+Receiver: null
+Tried calling: [](0)
+
+Testing [google/gemini-3.5-flash]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [google/gemini-3.5-flash:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: google/gemini-3.5-flash:batch cannot be used with the chat/completions endpoint (adapter VertexGeminiBatchAdapter).
+
+Testing [perceptron/perceptron-mk1]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a large infrared space telescope with high resolution and sensitivity.
+- It can observe objects that are too old, distant, or faint for the Hubble Space Telescope to see.
+- JWST enables research in various fields of astronomy and cosmology, including studying the first stars, galaxy formation, and exoplanet atmospheres.
+----------------------
+
+Testing [google/gemini-3.1-flash-lite]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope is the largest optical telescope in space, specializing in infrared astronomy.
+* Its superior resolution and sensitivity allow it to observe ancient, distant, and faint objects beyond Hubble's capabilities.
+* Key research goals include studying the formation of the first stars and galaxies, as well as analyzing the atmospheres of exoplanets.
+----------------------
+
+Testing [google/gemini-3.1-flash-lite:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: google/gemini-3.1-flash-lite:batch cannot be used with the chat/completions endpoint (adapter VertexGeminiBatchAdapter).
+
+Testing [openai/gpt-chat-latest]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 540. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [x-ai/grok-4.3]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope primarily designed for infrared astronomy and is the largest optical telescope in space.
+- Its high resolution and sensitivity enable viewing objects too old, distant, or faint for the Hubble Space Telescope.
+- This supports key investigations in astronomy and cosmology, including the first stars, galaxy formation, and exoplanet atmospheres.
+----------------------
+
+Testing [x-ai/grok-4.3:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: x-ai/grok-4.3:batch cannot be used with the chat/completions endpoint (adapter XAIBatchAdapter).
+
+Testing [mistralai/mistral-medium-3-5]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose**: JWST is designed for infrared astronomy, serving as the largest optical telescope in space.
+- **Capabilities**: Its high resolution and sensitivity enable it to observe objects too old, distant, or faint for Hubble.
+- **Applications**: It supports various astronomy and cosmology fields, including studying the first stars, galaxies, and habitable exoplanets' atmospheres.
+----------------------
+
+Testing [mistralai/mistral-medium-3-5:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: mistralai/mistral-medium-3-5:batch cannot be used with the chat/completions endpoint (adapter MistralBatchAdapter).
+
+Testing [nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a spaceâbased infrared telescope, the largest optical telescope ever launched.  
+- Its high resolution and sensitivity let it observe extremely distant, old, or faint objects that Hubble cannot.  
+- This capability enables studies of the first stars and galaxies as well as detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [~anthropic/claude-haiku-latest]... ✅ SUCCESS
+--- Output Preview ---
+# James Webb Space Telescope Summary
+
+â¢ **Primary Function**: JWST is a space-based infrared telescope designed to observe objects too distant, old, or faint for the Hubble Space Telescope, with superior resolution and sensitivity.
+
+â¢ **Key Capabilities**: As the largest optical telescope in space, it enables investigations across multiple astronomy fields including studying the first stars and galaxies in the universe.
+
+â¢ **Scientific Applications**: JWST can perform detailed atmospheric analysis of potentially habitable exoplanets, advancing our understanding of cosmology and the search for life beyond Earth.
+----------------------
+
+Testing [~openai/gpt-mini-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a large space telescope built mainly for infrared astronomy.  
+- Its high sensitivity and resolution let it observe very distant, faint, or ancient objects beyond Hubbleâs reach.  
+- JWST is used to study topics like the first stars and galaxies, as well as the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [~google/gemini-pro-latest]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [~moonshotai/kimi-latest]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [~google/gemini-flash-latest]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, primarily built to conduct infrared astronomy.
+* Its advanced resolution and sensitivity allow it to detect objects that are too old, distant, or faint for the Hubble Space Telescope to observe.
+* It enables groundbreaking research across astronomy, including studying the universe's earliest stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+
+Testing [~anthropic/claude-sonnet-latest]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [qwen/qwen3.5-plus-20260420]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest space-based optical telescope, specifically engineered for infrared astronomy.
+- Its advanced resolution and sensitivity enable it to detect celestial objects that are too distant, ancient, or faint for the Hubble Space Telescope.
+- JWST drives major scientific research across astronomy and cosmology, including studying the formation of the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.6-flash]... ✅ SUCCESS
+--- Output Preview ---
+- Designed primarily for infrared astronomy, JWST is the largest and most sensitive optical telescope ever deployed in space.
+- Its superior resolution and sensitivity enable it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+- The telescope facilitates key research into the formation of the universe's first stars and galaxies, as well as detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.6-35b-a3b]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical space telescope, specifically engineered for advanced infrared astronomy.
+- Its superior resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+- This capability drives major advances in cosmology and astronomy, including the study of the universe's first stars and galaxies, as well as the atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.6-max-preview]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, optimized specifically for infrared astronomy.  
+- Its superior resolution and sensitivity allow it to observe extremely old, distant, or faint objects that Hubble cannot detect.  
+- JWST enables groundbreaking research in cosmology and astronomy, including studying the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [qwen/qwen3.6-27b]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, specifically engineered for infrared astronomy.
+- Its advanced resolution and sensitivity allow it to observe extremely old, distant, or faint objects that are undetectable by the Hubble Space Telescope.
+- These capabilities enable critical research into the formation of the first stars and galaxies, as well as detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.5-pro]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 90. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [openai/gpt-5.5-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.5-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-5.5]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 419. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [openai/gpt-5.5:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.5:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [deepseek/deepseek-v4-pro]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, specifically designed for infrared astronomy.
+- Its superior resolution and sensitivity allow it to observe extremely old, distant, or faint objects that the Hubble Space Telescope cannot.
+- This capability supports key scientific goals, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [deepseek/deepseek-v4-flash]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is the largest optical telescope in space, designed for infrared astronomy.
+- Its high resolution and sensitivity allow it to observe objects too old, distant, or faint for Hubble.
+- It enables studies of the first stars, first galaxies, and atmospheric characterization of potentially habitable exoplanets.
+----------------------
+
+Testing [tencent/hy3-preview]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, primarily designed for high-resolution and sensitive infrared astronomy.
+- Its advanced capabilities allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- It enables diverse research in astronomy and cosmology, including studying the first stars and galaxies and characterizing exoplanet atmospheres.
+----------------------
+
+Testing [xiaomi/mimo-v2.5-pro]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose and Design**: The JWST is a space telescope primarily designed for infrared astronomy, featuring the largest optical mirror in space.
+- **Capabilities**: Its high resolution and sensitivity allow it to observe objects that are older, more distant, or fainter than those visible to the Hubble Space Telescope.
+- **Scientific Impact**: This enables key research in early universe studies (first stars and galaxies) and detailed analysis of exoplanet atmospheres for habitability.
+----------------------
+
+Testing [xiaomi/mimo-v2.5]... ✅ SUCCESS
+--- Output Preview ---
+â¢ **Purpose:** The James Webb Space Telescope (JWST) is designed primarily for infrared astronomy, serving as the largest optical telescope in space.
+
+â¢ **Capabilities:** Its high resolution and sensitivity enable it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+
+â¢ **Scientific Goals:** JWST supports investigations across astronomy and cosmology, including studying the first stars and galaxies, and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.4-image-2]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 838. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [~anthropic/claude-opus-latest]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 502. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [openrouter/pareto-code]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 251. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [moonshotai/kimi-k2.6]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The James Webb Space Telescope (JWST) is a large space observatory designed primarily for infrared astronomy.  
+â¢ With greater resolution and sensitivity than the Hubble Space Telescope, it can detect objects that are older, more distant, or fainter.  
+â¢ Its key research areas include studying the formation of the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [anthropic/claude-opus-4.7]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 649. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [anthropic/claude-opus-4.7:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-opus-4.7:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [z-ai/glm-5.1]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed primarily for infrared astronomy.
+* Its high resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope to see.
+* These capabilities enable groundbreaking research, such as studying the universe's earliest stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemma-4-26b-a4b-it]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, specialized for high-resolution infrared astronomy.
+* Its advanced sensitivity allows it to observe objects that are too distant, old, or faint for the Hubble Space Telescope to detect.
+* The telescope's primary missions include studying the formation of the first stars and galaxies, as well as analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemma-4-26b-a4b-it:free]... ❌ FAILED
+   Details: HttpException: HTTP 429: Provider returned error
+
+Testing [google/gemma-4-31b-it]... ✅ SUCCESS
+--- Output Preview ---
+* The James Webb Space Telescope (JWST) is the largest optical telescope in space, specializing in high-resolution infrared astronomy.
+* Its superior sensitivity allows it to detect objects that are too old, distant, or faint for the Hubble Space Telescope to see.
+* Its primary goals include studying the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemma-4-31b-it:free]... ❌ FAILED
+   Details: HttpException: HTTP 429: Provider returned error
+
+Testing [qwen/qwen3.6-plus]... ✅ SUCCESS
+--- Output Preview ---
+â¢ Designed primarily for infrared astronomy, JWST is the largest optical telescope in space.
+â¢ Its superior resolution and sensitivity surpass Hubbleâs, enabling observation of extremely faint, distant, or ancient celestial objects.
+â¢ Key scientific missions include studying the formation of the first stars and galaxies and analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [z-ai/glm-5v-turbo]... ✅ SUCCESS
+--- Output Preview ---
+Here is a summary of the text:
+
+*   **Primary Function:** The James Webb Space Telescope (JWST) is the largest optical telescope in space, designed specifically to conduct high-resolution infrared astronomy.
+*   **Superior Capabilities:** It possesses the sensitivity to view extremely old, distant, or faint objects that are beyond the reach of the Hubble Space Telescope.
+*   **Scientific Goals:** These capabilities allow astronomers to study the formation of the first stars and galaxies, as well as analyze the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [arcee-ai/trinity-large-thinking]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space-based infrared observatory, the largest optical telescope in space, with high resolution and sensitivity.
+- Its capabilities allow it to observe objects too old, distant, or faint for the Hubble Space Telescope.
+- This enables major advances in astronomy and cosmology, including studying the first stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [x-ai/grok-4.20-multi-agent]... ✅ SUCCESS
+--- Output Preview ---
+- **JWST Overview**: The James Webb Space Telescope is the largest optical telescope in space, primarily designed for infrared astronomy with exceptional resolution and sensitivity.
+- **Advantages Over Hubble**: It can observe objects too old, distant, or faint for the Hubble Space Telescope.
+- **Scientific Impact**: Enables broad advances in astronomy and cosmology, including studies of the first stars/galaxies and atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [x-ai/grok-4.20]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, primarily designed for infrared astronomy.
+- It offers significantly higher resolution and sensitivity than the Hubble Space Telescope, allowing observation of extremely old, distant, or faint objects.
+- JWST supports broad astronomical and cosmological research, including studying the first stars and galaxies, and analyzing atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [google/lyria-3-pro-preview]... ✅ SUCCESS
+--- Output Preview ---
+Here is a summary of the text:
+
+*   **Primary Function:** The James Webb Space Telescope (JWST) is the largest optical telescope in space,
+----------------------
+
+Testing [google/lyria-3-clip-preview]... ❌ FAILED
+   Details: HttpException: HTTP 400: Provider returned error
+
+Testing [rekaai/reka-edge]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a space telescope with exceptional infrared capabilities, enabling studies of ancient stars and galaxy formation.
+- It provides high-resolution imaging for faint, distant objects not visible with Hubble, broadening astronomy and cosmology research.
+- The telescope aids in characterizing atmospheric conditions of exoplanets, potentially identifying habitable worlds.
+----------------------
+
+Testing [minimax/minimax-m2.7]... ✅ SUCCESS
+--- Output Preview ---
+**Summary:**
+
+- **JWST is the largest optical telescope in space**, designed primarily for infrared astronomy with high resolution and sensitivity
+- **It can view objects too old, distant, or faint for Hubble**, enabling observations beyond what previous telescopes could achieve
+- **It enables key investigations** including observing the first stars and galaxies, and studying atmospheres of potentially habitable exoplanets
+----------------------
+
+
+Testing [openai/gpt-5.4-nano]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space-based telescope focused mainly on infrared astronomy.  
+- Being the largest optical/space telescope, it has high resolution and sensitivity, letting it observe objects too old, distant, or faint for Hubble.  
+- JWST supports major research in astronomy and cosmology, including studying the first stars and galaxies and analyzing atmospheres ofpotentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.4-nano:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.4-nano:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-5.4-mini]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope built mainly for infrared astronomy.  
+- It is the largest optical telescope in space and has very high resolution and sensitivity, letting it observe objects that are too old, distant, or faint for Hubble.  
+- JWST is used to study topics like the first stars and galaxies, as well as the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-5.4-mini:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.4-mini:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [mistralai/mistral-small-2603]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose & Capabilities**: The James Webb Space Telescope (JWST) is a large, space-based optical telescope designed for infrared astronomy, offering high resolution and sensitivity to observe distant, faint, or old celestial objects beyond Hubbleâs reach.
+
+- **Scientific Goals**: It aims to study the first stars, early galaxy formation, and analyze the atmospheres of potentially habitable exoplanets.
+
+- **Advancement**: As the largest optical telescope in space, JWST enables breakthroughs in astronomy and cosmology.
+----------------------
+
+Testing [mistralai/mistral-small-2603:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: mistralai/mistral-small-2603:batch cannot be used with the chat/completions endpoint (adapter MistralBatchAdapter).
+
+Testing [z-ai/glm-5-turbo]... ✅ SUCCESS
+--- Output Preview ---
+â¢ The JWST is the largest optical telescope in space, designed primarily for infrared astronomy.
+â¢ Its high resolution and sensitivity allow it to view objects too old, distant, or faint for the Hubble Space Telescope.
+â¢ It enables advanced cosmological studies, such as observing the universe's earliest stars and galaxies and characterizing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [nvidia/nemotron-3-super-120b-a12b]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, optimized for infrared astronomy with high resolution and sensitivity.  
+- Its capabilities enable observation of extremely old, distant, or faint objects beyond Hubbleâs reach, such as the first stars, earlygalaxies, and the atmospheres of potentially habitable exoplanets.  
+- JWST thus supports a broad range of astronomical and cosmological investigations, advancing our understanding of the universeâs origins and the potential for life elsewhere.
+----------------------
+
+Testing [nvidia/nemotron-3-super-120b-a12b:free]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, optimized for infrared astronomy.  
+- Its high resolution and sensitivity enable it to observe objects that are older, more distant, or fainter than those detectable by the Hubble Space Telescope.  
+- This capability supports research on the first stars and galaxies, as well as detailed atmospheric studies of potentially habitable exoplanets.
+----------------------
+
+Testing [bytedance-seed/seed-2.0-lite]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [qwen/qwen3.5-9b]... ❌ FAILED
+   Details: type 'Null' is not a subtype of type 'String' in type cast
+
+Testing [openai/gpt-5.4-pro]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 42. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [openai/gpt-5.4-pro:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.4-pro:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [openai/gpt-5.4]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 505. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [openai/gpt-5.4:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: openai/gpt-5.4:batch cannot be used with the chat/completions endpoint (adapter OpenAIBatchAdapter).
+
+Testing [inception/mercury-2]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is a spaceâbased infrared telescope, the largest optical instrument ever placed in orbit.  
+- Its high resolution and sensitivity let it see objects that are older, more distant, or fainter than those observable by Hubble.  
+- This capability supports key studies such as the earliest stars and galaxies and detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemini-3.1-flash-lite-preview]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [bytedance-seed/seed-2.0-mini]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed primarily for infrared astronomy, and it is the largest optical telescope in space.
+- Its high resolution and sensitivity allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope.
+- This capability supports a wide range of astronomy and cosmology research, including studying the first stars, early galaxy formation, and characterizing atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [google/gemini-3.1-flash-image-preview]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [qwen/qwen3.5-35b-a3b]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [qwen/qwen3.5-27b]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [qwen/qwen3.5-122b-a10b]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [qwen/qwen3.5-flash-02-23]... ✅ SUCCESS
+--- Output Preview ---
+Thinking Process:
+
+1.  **Analyze the Request:**
+    *   Task: Summarize the provided text.
+    *   Constraint 1: Be concise.
+    *   Constraint 2: Provide a clear, complete summary.
+    *   Constraint 3: Use exactly 3 bullets.
+    *   Input Text: A short paragraph about the James Webb Space Telescope (JWST).
+
+2.  **Analyze the Input Text:**
+    *   Sentence 1: JWST is a space telescope designed primarily for infrared astronomy.
+    *   Sentence 2: It's the largest optical telescope in space, with high resolution/sensitivity, allowing it to view objects too old,distant, or faint for Hubble.
+    *   Sentence 3: This enables investigations in astronomy/cosmology (first stars/galaxies) and exoplanet atmospheric characterization (habitability).
+
+3.  **Drafting Key Points:**
+    *   Point 1: Purpose/Design (Infrared space telescope).
+    *   Point 2: Capabilities/Comparison (Largest/highest res, surpasses Hubble for old/distant/faint objects).
+    *   Point 3: Scientific Goals (First stars/galaxies, exoplanet atmospheres).
+
+4.  **Refining into 3 Bullets:**
+    *   *Draft 1:*
+        *   The James Webb Space Telescope is a space-based instrument built primarily for infrared astronomy.
+        *   Its large size and sensitivity allow it to observe objects older, farther, and fainter than what the Hubble Space Telescopecan see.
+        *   This capability supports research into early cosmic history, such as first stars and galaxies, as well as the study of habitable exoplanets.
+    *   *Critique 1:* Clear, covers all main points, fits constraints.
+
+5.  **Final Polish (checking conciseness):**
+    *   Bullet 1: Focus on identity and primary function.
+    *   Bullet 2: Focus on technical advantage over Hubble.
+    *   Bullet 3: Focus on scientific applications.
+
+    *   *Revised Draft:*
+        *   The James Webb Space Telescope (JWST) is a space-based observatory designed primarily for conducting infrared astronomy.
+        *   As the largest optical telescope in space, its superior resolution and sensitivity enable it to detect objects that are tooold, distant, or faint for the Hubble Space Telescope.
+        *   These capabilities facilitate groundbreaking research into the formation of the first stars and galaxies, along with detailed analysis of potentially habitable exoplanet atmospheres.
+
+6.  **Final Count Check:** 3 bullets? Yes. Concise? Yes. Complete? Yes.
+
+7.  **Output Generation.** (Selecting the revised draft).ot
+</think>
+
+*   The James Webb Space Telescope (JWST) is a space-based observatory designed primarily for conducting infrared astronomy.
+*   As the largest optical telescope in space, its superior resolution and sensitivity enable it to detect objects that are too old, distant, or faint for the Hubble Space Telescope.
+*   These capabilities facilitate groundbreaking research into the formation of the first stars and galaxies, along with detailed analysis of potentially habitable exoplanet atmospheres.
+----------------------
+
+Testing [google/gemini-3.1-pro-preview-customtools]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 631. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [openai/gpt-5.3-codex]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 541. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [aion-labs/aion-2.0]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [google/gemini-3.1-pro-preview]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 631. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [google/gemini-3.1-pro-preview:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: google/gemini-3.1-pro-preview:batch cannot be used with the chat/completions endpoint (adapter VertexGeminiBatchAdapter).
+
+Testing [anthropic/claude-sonnet-4.6]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 505. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [anthropic/claude-sonnet-4.6:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-sonnet-4.6:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [qwen/qwen3.5-plus-02-15]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [qwen/qwen3.5-397b-a17b]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [minimax/minimax-m2.5]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [z-ai/glm-5]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [qwen/qwen3-max-thinking]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.
+
+Testing [anthropic/claude-opus-4.6]... ❌ FAILED
+   Details: HttpException: HTTP 402: This request requires more credits, or fewer max_tokens. You requested up to 1000 tokens, but can only afford 303. To increase, visit https://openrouter.ai/workspaces/default/keys/98e5e92818ef6968ecfffc66d27d359cdba2f40d998cb4a7d8a1c48da9e3d0b4 and adjust the key's total limit
+
+Testing [anthropic/claude-opus-4.6:batch]... ❌ FAILED
+   Details: HttpException: HTTP 404: anthropic/claude-opus-4.6:batch cannot be used with the chat/completions endpoint (adapter AnthropicBatchAdapter).
+
+Testing [qwen/qwen3-coder-next]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is the largest optical telescope in space, optimized for infrared astronomy.  
+- Its high resolution and sensitivity enable observations of extremely distant, faint, or ancient objectsâlike the first stars and galaxiesâthat Hubble cannot detect.  
+- JWST supports breakthrough research in astronomy and cosmology, including studying early cosmic evolution and characterizing atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openrouter/free]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is the largest optical telescope in space, optimized for infrared astronomy with high resolution and sensitivity.  
+- Its capabilities enable observation of extremely old, distant, or faint objects beyond Hubbleâs reach, such as the first stars, earlygalaxies, and exoplanet atmospheres.  
+- This supports broad research in astronomy and cosmology, including the study of cosmic origins and the habitability of distant worlds.
+----------------------
+....
+....
+....
+
+========================================
+Testing Provider: Mistral AI
+========================================
+
+Found 46 candidate models to test.
+
+Testing [codestral-2508]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed for infrared astronomy.
+- It is the largest optical telescope in space, offering high resolution and sensitivity to view distant, old, or faint objects.
+- JWST enables investigations in various fields of astronomy and cosmology, including the observation of the first starsand galaxies, and detailed atmospheric characterization of potentially habitable exoplanets.
+----------------------
+
+Testing [codestral-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed for infrared astronomy.
+- It is larger and more sensitive than the Hubble Space Telescope, allowing it to observe distant, old, or faint objects.
+- JWST enables studies in various fields, including the observation of the first stars and galaxies, and the characterization of exoplanet atmospheres.
+----------------------
+
+Testing [mistral-code-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed for infrared astronomy.
+- It is the largest optical telescope in space, offering high resolution and sensitivity to view distant, old, or faint objects.
+- JWST enables investigations in various fields of astronomy and cosmology, including studying the first stars and galaxies, and characterizing exoplanet atmospheres.
+----------------------
+
+Testing [mistral-code-fim-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is a space telescope designed for infrared astronomy.
+- It is larger and more sensitive than the Hubble Space Telescope, allowing it to observe distant, old, or faint objects.
+- JWST enables research in various fields, including the study of the first stars and galaxies, and the characterizationof exoplanet atmospheres.
+----------------------
+
+Testing [mistral-small-2603]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-small-latest]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-vibe-cli-fast]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [magistral-small-latest]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [voxtral-small-2507]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is designed for infrared astronomy.
+- It is the largest optical telescope in space, with high resolution and sensitivity.
+- JWST can observe objects too old, distant, or faint for the Hubble Space Telescope, enabling studies of early stars, galaxy formation, and exoplanet atmospheres.
+----------------------
+
+Testing [voxtral-small-latest]... ✅ SUCCESS
+--- Output Preview ---
+- The James Webb Space Telescope (JWST) is designed for infrared astronomy.
+- It is the largest optical telescope in space, with high resolution and sensitivity.
+- JWST can observe objects too old, distant, or faint for the Hubble Space Telescope, enabling studies of early stars, galaxy formation, and exoplanet atmospheres.
+----------------------
+
+Testing [labs-leanstral-1-5-1]... ❌ FAILED
+   Details: HttpException: HTTP 403: {"object":"error","message":"Model labs-leanstral-1-5-1 is a Labs model. To use Labs models, an admin must enable them in your organization settings at https://admin.mistral.ai/plateforme/privacy.","type":"labs_not_enabled","param":null,"code":"1913","raw_status_code":403}
+
+Testing [labs-leanstral-1-5]... ❌ FAILED
+   Details: HttpException: HTTP 403: {"object":"error","message":"Model labs-leanstral-1-5 is a Labs model. To use Labs models, an admin must enable them in your organization settings at https://admin.mistral.ai/plateforme/privacy.","type":"labs_not_enabled","param":null,"code":"1913","raw_status_code":403}
+
+Testing [ministral-3b-2512]... ✅ SUCCESS
+--- Output Preview ---
+- **Primary Purpose**: The **James Webb Space Telescope (JWST)** is a **large infrared astronomy observatory**, designedto study distant and faint cosmic objects beyond Hubbleâs capabilities.
+
+- **Key Capabilities**: Offers **high resolution and sensitivity**, enabling observations of:
+  - The **first stars and galaxies** (early universe).
+  - **Atmospheric analysis of exoplanets** (potentially habitable worlds).
+
+- **Scientific Impact**: Expands research across **astronomy, cosmology, and exoplanet studies**, revolutionizing our understanding of the universe.
+----------------------
+
+Testing [ministral-3b-latest]... ✅ SUCCESS
+--- Output Preview ---
+- **Primary Purpose**: The **James Webb Space Telescope (JWST)** is a **large infrared astronomy telescope** designed toobserve distant, faint, or ancient cosmic objects beyond Hubbleâs capabilities.
+
+- **Key Capabilities**: Offers **high resolution and sensitivity**, enabling studies of:
+  - The **first stars and galaxies** (early universe).
+  - **Exoplanet atmospheres** (searching for habitable worlds).
+
+- **Scientific Impact**: Expands research across **astronomy, cosmology, and planetary science**.
+----------------------
+
+Testing [ministral-8b-2512]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose & Capability**: The **James Webb Space Telescope (JWST)** specializes in **infrared astronomy**, serving as the **largest optical telescope in space** with unmatched **resolution and sensitivity** to observe objects beyond Hubbleâs reachâincluding distant, faint, or ancient cosmic phenomena.
+
+- **Key Discoveries**: Enables research into **early universe formation**, such as the **first stars and galaxies**, andprovides **detailed insights** into the atmospheres of **potentially habitable exoplanets**.
+
+- **Scientific Impact**: A **multi-disciplinary tool** for astronomy and cosmology, bridging gaps in understanding the universeâs origins, evolution, and the potential for extraterrestrial life.
+----------------------
+
+Testing [ministral-8b-latest]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose & Technology**: The **James Webb Space Telescope (JWST)** is an **infrared-optimized** space observatory, the **largest optical telescope ever launched**, offering **unprecedented resolution and sensitivity** to study faint, distant, or ancient cosmic objects beyond Hubbleâs reach.
+
+- **Scientific Focus**: Enables groundbreaking research in **cosmology** (e.g., first stars/galaxies) and **exoplanet studies**, including **atmospheric analysis** of potentially habitable worlds.
+
+- **Advantages**: Bridges gaps in Hubbleâs capabilities by revealing **older, dimmer, or more distant** cosmic phenomena, revolutionizing our understanding of the universeâs origins and evolution.
+----------------------
+
+Testing [ministral-14b-2512]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose & Capabilities**: The **James Webb Space Telescope (JWST)** is an **infrared-focused** space telescope, the **largest optical telescope in space**, with **unmatched resolution and sensitivity**âfar surpassing Hubbleâs limits for observing **old, distant, or faint objects**.
+
+- **Scientific Goals**: It enables groundbreaking research in **cosmology and astronomy**, including:
+  - Studying the **first stars and galaxies** formed after the Big Bang.
+  - Probing the **atmospheres of exoplanets** to assess potential habitability.
+
+- **Impact**: JWSTâs advanced tech **expands our understanding of the universeâs origins** and the potential for life beyond Earth.
+----------------------
+
+Testing [ministral-14b-latest]... ✅ SUCCESS
+--- Output Preview ---
+- **Purpose & Capabilities**: The **James Webb Space Telescope (JWST)** is an infrared-focused space telescope, the **largest optical telescope in space**, with **unmatched resolution and sensitivity**âoutperforming Hubble for faint, distant, or ancient objects.
+
+- **Scientific Goals**: It enables groundbreaking research in **cosmology** (e.g., studying the **first stars/galaxies**) and **exoplanet science** (e.g., analyzing atmospheres of potentially habitable worlds).
+
+- **Impact**: JWST expands our understanding of the **early universe** and **planetary habitability**, pushing boundaries in astronomy.
+----------------------
+
+Testing [mistral-medium-latest]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-medium]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-medium-3-5]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-medium-3.5]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-medium-3]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-medium-2604]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-vibe-cli-latest]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-vibe-cli-with-tools]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [magistral-medium-latest]... ❌ FAILED
+   Details: HttpException: HTTP 429: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
+
+Testing [mistral-embed-2312]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-embed-2312","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-embed]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-embed","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [codestral-embed]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: codestral-embed","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [codestral-embed-2505]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: codestral-embed-2505","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-moderation-2603]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-moderation-2603","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-ocr-2512]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-ocr-2512","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-ocr-3-0]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-ocr-3-0","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-ocr-3]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-ocr-3","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-ocr-4-0]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-ocr-4-0","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-ocr-latest]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-ocr-latest","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-ocr-4]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-ocr-4","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [mistral-ocr-4-1]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: mistral-ocr-4-1","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [voxtral-mini-2602]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: voxtral-mini-2602","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [voxtral-mini-latest]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: voxtral-mini-latest","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [voxtral-mini-transcribe-realtime-2602]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: voxtral-mini-transcribe-realtime-2602","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [voxtral-mini-realtime-2602]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: voxtral-mini-realtime-2602","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [voxtral-mini-realtime-latest]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: voxtral-mini-realtime-latest","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [voxtral-mini-tts-2603]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: voxtral-mini-tts-2603","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+Testing [voxtral-mini-tts-latest]... ❌ FAILED
+   Details: HttpException: HTTP 400: {"object":"error","message":"Invalid model: voxtral-mini-tts-latest","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}
+
+========================================
+Testing Provider: GroqCloud
+========================================
+
+Found 11 candidate models to test.
+
+Testing [allam-2-7b]... ✅ SUCCESS
+--- Output Preview ---
+The James Webb Space Telescope (JWST) is:
+
+1. Primarily designed for infrared astronomy, enabling observations not possible with other telescopes.
+2. The largest optical telescope in space, providing high resolution and sensitivity.
+3. Allows investigations across various astronomy and cosmology fields, including observing the first stars, forming galaxies, and studying potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-oss-120b]... ✅ SUCCESS
+--- Output Preview ---
+- The Jamesâ¯Webb Space Telescope is a large infrared space telescope with superior resolution and sensitivity, surpassing Hubble.  
+- Its capabilities let it observe extremely old, distant, or faint objects that Hubble cannot detect.  
+- This enables research on the universeâs first stars and galaxies and detailed studies of potentially habitable exoplanet atmospheres.
+----------------------
+
+Testing [whisper-large-v3-turbo]... ❌ FAILED
+   Details: HttpException: HTTP 400: The model `whisper-large-v3-turbo` does not support chat completions
+
+Testing [canopylabs/orpheus-arabic-saudi]... ❌ FAILED
+   Details: HttpException: HTTP 400: The model `canopylabs/orpheus-arabic-saudi` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-arabic-saudi
+
+Testing [whisper-large-v3]... ❌ FAILED
+   Details: HttpException: HTTP 400: The model `whisper-large-v3` does not support chat completions
+
+Testing [qwen/qwen3.8-27b]... ✅ SUCCESS
+--- Output Preview ---
+Here is a 3-bullet summary of the text:
+
+*   The James Webb Space Telescope (JWST) is the largest optical telescope in space, specifically designed for high-resolution and high-sensitivity infrared astronomy.
+*   Its advanced capabilities allow it to observe objects that are too old, distant, or faint for the Hubble Space Telescope to detect.
+*   Key scientific goals include studying the formation of the first stars and galaxies, as well as analyzing the atmospheres of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-oss-safeguard-20b]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is the largest spaceâbased optical telescope, optimized for infrared observations with high resolution and sensitivity.  
+- Its capabilities let it detect objects that are too old, distant, or faint for the Hubble Space Telescope.  
+- This allows studies of the earliest stars and galaxies, as well as detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [openai/gpt-oss-20b]... ✅ SUCCESS
+--- Output Preview ---
+- JWST is the largest optical telescope in space, optimized for infrared observations.  
+- Its high resolution and sensitivity let it detect very old, distant, or faint objects that Hubble cannot see.  
+- It enables studies of early stars and galaxies, as well as detailed atmospheric analysis of potentially habitable exoplanets.
+----------------------
+
+Testing [canopylabs/orpheus-v1-english]... ❌ FAILED
+   Details: HttpException: HTTP 400: The model `canopylabs/orpheus-v1-english` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-v1-english
+
+Testing [meta-llama/llama-prompt-guard-2-22m]... ❌ FAILED
+   Details: HttpException: HTTP 400: `max_tokens` must be less than or equal to `512`, the maximum value for `max_tokens` is less than the `context_window` for this model
+
+Testing [meta-llama/llama-prompt-guard-2-86m]... ❌ FAILED
+   Details: HttpException: HTTP 400: `max_tokens` must be less than or equal to `512`, the maximum value for `max_tokens` is less than the `context_window` for this model
