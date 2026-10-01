@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../models/llm_provider_type.dart';
 import '../../models/summary_run.dart';
 
 class RunCard extends StatelessWidget {
