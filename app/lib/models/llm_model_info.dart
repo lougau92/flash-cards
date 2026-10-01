@@ -13,7 +13,7 @@ class LLMModelInfo {
     this.isFree = false,
   });
 
-  Map toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'displayName': displayName,
@@ -23,7 +23,7 @@ class LLMModelInfo {
     };
   }
 
-  factory LLMModelInfo.fromJson(Map json) {
+  factory LLMModelInfo.fromJson(Map<String, dynamic> json) {
     return LLMModelInfo(
       id: json['id'] as String,
       displayName: json['displayName'] as String? ?? json['id'] as String,

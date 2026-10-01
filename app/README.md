@@ -44,7 +44,6 @@ lib/
         ├── prompt_editor.dart
         ├── provider_model_selector.dart
         ├── run_card.dart
-        ├── parameter_drawer.dart
         └── comparison_view.dart
 Step-by-Step Implementation Plan
 Phase 1: Models & Data Layer

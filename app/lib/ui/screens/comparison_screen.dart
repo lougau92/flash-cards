@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../state/history_notifier.dart';
 import '../widgets/comparison_view.dart';
 
 class ComparisonScreen extends StatelessWidget {
@@ -7,7 +8,7 @@ class ComparisonScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final history = context.watch();
+    final history = context.watch<HistoryNotifier>();
     final runs = history.comparisonRuns;
 
     return Scaffold(

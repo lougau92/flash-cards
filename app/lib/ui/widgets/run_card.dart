@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../models/llm_provider_type.dart';
 import '../../models/summary_run.dart';
 
 class RunCard extends StatelessWidget {
   final SummaryRun run;
   final bool isSelectedForComparison;
-  final ValueChanged? onComparisonChanged;
+  final ValueChanged<bool?>? onComparisonChanged;
   final VoidCallback onDelete;
   final VoidCallback? onTap;
 
@@ -19,12 +18,13 @@ class RunCard extends StatelessWidget {
   });
 
   String _formatTimestamp(DateTime dt) {
-    final year = dt.year;
-    final month = dt.month.toString().padLeft(2, '0');
-    final day = dt.day.toString().padLeft(2, '0');
-    final hour = dt.hour.toString().padLeft(2, '0');
-    final minute = dt.minute.toString().padLeft(2, '0');
-    return '(year-)month-(day)hour:$minute';
+    final local = dt.toLocal();
+    final year = local.year.toString().padLeft(4, '0');
+    final month = local.month.toString().padLeft(2, '0');
+    final day = local.day.toString().padLeft(2, '0');
+    final hour = local.hour.toString().padLeft(2, '0');
+    final minute = local.minute.toString().padLeft(2, '0');
+    return '$year-$month-$day $hour:$minute';
   }
 
   @override
@@ -79,7 +79,10 @@ class RunCard extends StatelessWidget {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                run.request.targetModelId,
+                                run.servedModelId == null ||
+                                        run.servedModelId == run.request.targetModelId
+                                    ? run.request.targetModelId
+                                    : '${run.request.targetModelId} → ${run.servedModelId}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -105,7 +108,10 @@ class RunCard extends StatelessWidget {
                 ],
               ),
               const Divider(height: 16),
-              Row(
+              Wrap(
+                spacing: 8,
+                runSpacing: 4,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Icon(
                     isSuccess ? Icons.check_circle_outline : Icons.error_outline,
@@ -121,13 +127,11 @@ class RunCard extends StatelessWidget {
                       color: isSuccess ? Colors.green : Colors.red,
                     ),
                   ),
-                  const Spacer(),
                   Text(
                     '${run.executionTimeMs} ms',
                     style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                   ),
                   if (run.tokenUsage != null) ...[
-                    const SizedBox(width: 8),
                     Text(
                       '• ${run.tokenUsage!['total_tokens'] ?? 0} tokens',
                       style: TextStyle(fontSize: 12, color: Colors.grey[700]),

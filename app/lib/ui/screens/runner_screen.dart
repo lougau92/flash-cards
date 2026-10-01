@@ -87,46 +87,45 @@ class _RunOutputPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSuccess = run.status == SummaryRunStatus.success;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: isSuccess ? null : Colors.red[50],
+      color: isSuccess ? null : colorScheme.errorContainer,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      isSuccess ? Icons.check_circle : Icons.error,
-                      color: isSuccess ? Colors.green : Colors.red,
-                    ),
-                    const SizedBox(width: 8),
-                    const Text('Output', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Chip(
-                      label: Text('${run.executionTimeMs} ms'),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                    if (run.tokenUsage != null) ...[
-                      const SizedBox(width: 4),
-                      Chip(
-                        label: Text('${run.tokenUsage!['total_tokens'] ?? 0} tokens'),
-                        visualDensity: VisualDensity.compact,
-                      ),
-                    ],
-                  ],
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              Icon(
+                isSuccess ? Icons.check_circle : Icons.error,
+                color: isSuccess ? colorScheme.primary : colorScheme.error,
+              ),
+              const SizedBox(width: 8),
+              const Text(
+                'Output',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 6,
+            runSpacing: 4,
+            children: [
+              _MetricChip(label: '${run.executionTimeMs} ms'),
+              if (run.tokenUsage != null)
+                _MetricChip(label: '${run.tokenUsage!['total_tokens']} tokens'),
+              if (run.servedModelId != null &&
+                  run.servedModelId != run.request.targetModelId)
+                _MetricChip(label: 'Served as ${run.servedModelId}'),
+              if (run.finishReason != null)
+                _MetricChip(label: 'Finish: ${run.finishReason}'),
+            ],
+          ),
             const Divider(height: 20),
             if (isSuccess)
               SelectableText(
@@ -136,11 +135,24 @@ class _RunOutputPanel extends StatelessWidget {
             else
               SelectableText(
                 run.errorMessage ?? 'An unknown error occurred.',
-                style: const TextStyle(color: Colors.red, fontSize: 13),
+                style: TextStyle(color: colorScheme.onErrorContainer, fontSize: 13),
               ),
           ],
         ),
       ),
     );
   }
+}
+
+class _MetricChip extends StatelessWidget {
+  const _MetricChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Chip(
+        label: Text(label),
+        visualDensity: VisualDensity.compact,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      );
 }

@@ -21,7 +21,7 @@ class SummaryRequest {
     required this.providerType,
   });
 
-  Map toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'sourceText': sourceText,
       'inputFileName': inputFileName,
@@ -34,7 +34,7 @@ class SummaryRequest {
     };
   }
 
-  factory SummaryRequest.fromJson(Map json) {
+  factory SummaryRequest.fromJson(Map<String, dynamic> json) {
     return SummaryRequest(
       sourceText: json['sourceText'] as String,
       inputFileName: json['inputFileName'] as String?,

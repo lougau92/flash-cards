@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'app.dart';
 import 'services/storage/local_run_storage.dart';
 import 'state/history_notifier.dart';
 import 'state/runner_notifier.dart';
 import 'state/settings_notifier.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
-    await dotenv.load(fileName: ".env");
-  } catch (_) {
-    // Gracefully handle missing .env asset file without crashing app startup
+    await dotenv.load(fileName: '.env');
+  } catch (error) {
+    // The app still opens without a local environment file; users can enter
+    // provider keys in the settings sheet instead.
+    debugPrint('No .env file was loaded: $error');
   }
 
   final storageService = LocalRunStorage();

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../models/llm_provider_type.dart';
 import '../../models/summary_run.dart';
 
 class ComparisonView extends StatelessWidget {
-  final List runs;
+  final List<SummaryRun> runs;
 
   const ComparisonView({super.key, required this.runs});
 
@@ -21,14 +20,19 @@ class ComparisonView extends StatelessWidget {
 
   Widget _buildColumn(BuildContext context, SummaryRun run) {
     final isSuccess = run.status == SummaryRunStatus.success;
+    final colorScheme = Theme.of(context).colorScheme;
+    final modelLabel = run.servedModelId == null ||
+            run.servedModelId == run.request.targetModelId
+        ? run.request.targetModelId
+        : '${run.request.targetModelId} → ${run.servedModelId}';
 
     return Container(
       width: 320,
       margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(color: colorScheme.outlineVariant),
       ),
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
@@ -39,7 +43,7 @@ class ComparisonView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                color: colorScheme.primaryContainer,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -50,13 +54,19 @@ class ComparisonView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                    color: colorScheme.onPrimaryContainer,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    run.request.targetModelId,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    modelLabel,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onPrimaryContainer,
+                    ),
                   ),
                 ],
               ),
@@ -64,8 +74,9 @@ class ComparisonView extends StatelessWidget {
             const SizedBox(height: 12),
 
             // Performance Metrics
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              spacing: 8,
+              runSpacing: 6,
               children: [
                 _metricBadge(
                   icon: Icons.timer_outlined,
@@ -83,24 +94,29 @@ class ComparisonView extends StatelessWidget {
             const Text('Parameters', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
             Text(
-              'Temp: ({run.request.temperature} | Max Tokens:){run.request.maxTokens}',
+              'Temperature: ${run.request.temperature.toStringAsFixed(2)} · '
+              'Max output tokens: ${run.request.maxTokens}',
               style: TextStyle(fontSize: 12, color: Colors.grey[700]),
             ),
             const SizedBox(height: 12),
 
+            const Text('System prompt', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4),
+            _textPanel(context, run.request.systemPrompt),
+            const SizedBox(height: 12),
+
             const Text('Instruction', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: Colors.grey[200]!),
-              ),
-              child: Text(
-                run.request.instructionPrompt,
-                style: const TextStyle(fontSize: 12),
-              ),
+            _textPanel(context, run.request.instructionPrompt),
+            const SizedBox(height: 12),
+
+            const Text('Input preview', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4),
+            _textPanel(
+              context,
+              run.request.sourceText,
+              maxLines: 8,
+              caption: run.request.inputFileName,
             ),
             const SizedBox(height: 12),
 
@@ -111,20 +127,19 @@ class ComparisonView extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: isSuccess ? Colors.white : Colors.red[50],
+                color: isSuccess ? colorScheme.surface : colorScheme.errorContainer,
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                  color: isSuccess ? Colors.grey[300]! : Colors.red[200]!,
-                ),
+                border: Border.all(color: isSuccess ? colorScheme.outlineVariant : colorScheme.error),
               ),
               child: SelectableText(
                 isSuccess
                     ? (run.outputText ?? 'No response content returned.')
                     : (run.errorMessage ?? 'Execution error occurred.'),
+                maxLines: 18,
                 style: TextStyle(
                   fontSize: 13,
                   height: 1.4,
-                  color: isSuccess ? Colors.black87 : Colors.red[800],
+                  color: isSuccess ? colorScheme.onSurface : colorScheme.onErrorContainer,
                 ),
               ),
             ),
@@ -134,13 +149,43 @@ class ComparisonView extends StatelessWidget {
     );
   }
 
+  Widget _textPanel(
+    BuildContext context,
+    String text, {
+    int? maxLines,
+    String? caption,
+  }) =>
+      Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (caption != null && caption.isNotEmpty) ...[
+              Text(caption, style: Theme.of(context).textTheme.labelSmall),
+              const SizedBox(height: 4),
+            ],
+            SelectableText(
+              text,
+              maxLines: maxLines,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
+      );
+
   Widget _metricBadge({required IconData icon, required String label}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(color: Colors.grey.shade400),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
