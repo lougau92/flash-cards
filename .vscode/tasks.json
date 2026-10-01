@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Flutter: Get Packages",
+      "type": "process",
+      "command": "flutter",
+      "args": ["pub", "get"],
+      "options": {"cwd": "${workspaceFolder}/app"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Flutter: Analyze",
+      "type": "process",
+      "command": "flutter",
+      "args": ["analyze"],
+      "options": {"cwd": "${workspaceFolder}/app"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Flutter: Test",
+      "type": "process",
+      "command": "flutter",
+      "args": ["test"],
+      "options": {"cwd": "${workspaceFolder}/app"},
+      "group": {"kind": "test", "isDefault": true},
+      "problemMatcher": []
+    },
+    {
+      "label": "Flutter: Build Android Debug APK",
+      "type": "process",
+      "command": "flutter",
+      "args": ["build", "apk", "--debug"],
+      "options": {"cwd": "${workspaceFolder}/app"},
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

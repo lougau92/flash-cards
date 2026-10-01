@@ -1,3 +1,13 @@
 {
-    "cmake.sourceDirectory": "/home/louis/Documents/flash-cards/app/linux"
+  "cmake.sourceDirectory": "${workspaceFolder}/app/linux",
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnSave": true,
+    "editor.rulers": [80],
+    "editor.tabSize": 2
+  },
+  "files.watcherExclude": {
+    "**/app/.dart_tool/**": true,
+    "**/app/build/**": true
+  }
 }
