@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart'
     show
         AppBar,
@@ -25,6 +27,9 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:supabase_flutter/supabase_flutter.dart' show SupabaseClient;
 
+import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
+import 'error_log/screen.dart' show errorLogButton;
+
 class SupabaseAuthScreen extends StatefulWidget {
   const SupabaseAuthScreen({super.key, required this.client});
 
@@ -50,6 +55,7 @@ class _SupabaseAuthScreenState extends State<SupabaseAuthScreen> {
   }
 
   Future<void> _submit() async {
+    AppErrorLog.instance.registerSecrets([_passwordController.text]);
     setState(() {
       _isBusy = true;
       _error = null;
@@ -65,6 +71,7 @@ class _SupabaseAuthScreenState extends State<SupabaseAuthScreen> {
         );
       }
     } catch (error) {
+      unawaited(AppErrorLog.instance.record(error, source: 'Supabase sign in'));
       setState(() => _error = error.toString());
     } finally {
       if (mounted) setState(() => _isBusy = false);
@@ -93,7 +100,10 @@ class _SupabaseAuthScreenState extends State<SupabaseAuthScreen> {
   Widget build(BuildContext context) {
     final title = _isSignUp ? 'Create research account' : 'Sign in';
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: Text(title),
+        actions: [errorLogButton(context)],
+      ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),

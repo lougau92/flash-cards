@@ -1,4 +1,7 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
+import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 
 class ClipboardHelper {
   /// Retrieves plain text content from the system clipboard.
@@ -10,7 +13,12 @@ class ClipboardHelper {
         return data.text;
       }
       return null;
-    } catch (e) {
+    } catch (error, stackTrace) {
+      unawaited(AppErrorLog.instance.record(
+        error,
+        source: 'Clipboard read',
+        stackTrace: stackTrace,
+      ));
       return null;
     }
   }

@@ -1,3 +1,4 @@
+import 'dart:async' show unawaited;
 import 'dart:convert' show jsonDecode, jsonEncode;
 import 'dart:io' show Directory, File;
 
@@ -7,6 +8,7 @@ import 'package:path_provider/path_provider.dart'
     show getApplicationDocumentsDirectory;
 
 import '../../models/summary_run.dart' show SummaryRun;
+import '../diagnostics/app_error_log.dart' show AppErrorLog;
 import 'storage_service_interface.dart' show StorageServiceInterface;
 
 StorageServiceInterface createLocalRunStorage() => _LocalRunStorageIO();
@@ -48,6 +50,11 @@ class _LocalRunStorageIO implements StorageServiceInterface {
           runs.add(SummaryRun.fromJson(Map<String, dynamic>.from(decoded)));
         }
       } catch (error) {
+        unawaited(AppErrorLog.instance.record(
+          error,
+          source: 'Local run storage',
+          context: 'Reading ${p.basename(entity.path)}',
+        ));
         debugPrint(
             'Could not read saved run ${p.basename(entity.path)}: $error');
       }

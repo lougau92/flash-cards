@@ -1,9 +1,12 @@
+import 'dart:async' show unawaited;
 import 'dart:convert' show utf8;
 import 'dart:typed_data' show Uint8List;
 
 import 'package:file_picker/file_picker.dart'
     show FilePicker, FileType, PlatformFile;
 import 'package:flutter/foundation.dart' show debugPrint;
+
+import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 
 class PickedFileResult {
   final String fileName;
@@ -39,6 +42,10 @@ class FileHelper {
         byteSize: bytes.length,
       );
     } catch (error) {
+      unawaited(AppErrorLog.instance.record(
+        error,
+        source: 'File import',
+      ));
       debugPrint('Could not pick or read a text file: $error');
       rethrow;
     }

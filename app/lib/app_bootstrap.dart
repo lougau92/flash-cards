@@ -1,9 +1,12 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart'
     show WidgetsFlutterBinding, debugPrint, runApp;
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
 
 import 'models/llm_provider_type.dart' show LLMProviderType;
+import 'services/diagnostics/app_error_log.dart' show AppErrorLog;
 import 'services/storage/local_run_storage.dart' show LocalRunStorage;
 import 'services/storage/supabase_run_storage.dart' show SupabaseRunStorage;
 import 'state/settings_notifier.dart' show SettingsNotifier;
@@ -14,6 +17,8 @@ import 'ui/screens/supabase_auth_gate.dart' show SupabaseAuthGate;
 abstract final class AppBootstrap {
   static Future<void> run() async {
     WidgetsFlutterBinding.ensureInitialized();
+    await AppErrorLog.instance.initialize();
+    AppErrorLog.instance.installHandlers();
     await _loadEnvironment();
 
     final configuration = _SupabaseConfiguration.fromEnvironment();
@@ -31,7 +36,12 @@ abstract final class AppBootstrap {
   static Future<void> _loadEnvironment() async {
     try {
       await dotenv.load(fileName: '.env');
-    } catch (error) {
+    } catch (error, stackTrace) {
+      unawaited(AppErrorLog.instance.record(
+        error,
+        source: 'Environment loading',
+        stackTrace: stackTrace,
+      ));
       debugPrint('No .env file was loaded: $error');
     }
   }
@@ -39,6 +49,10 @@ abstract final class AppBootstrap {
   static Future<SettingsNotifier> _loadSettings() async {
     final settings = SettingsNotifier();
     await settings.loadSettings();
+    AppErrorLog.instance.registerSecrets([
+      ...LLMProviderType.values.map(settings.getApiKey),
+      _environmentValue('SUPABASE_PUBLISHABLE_KEY'),
+    ]);
     return settings;
   }
 

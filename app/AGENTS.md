@@ -35,3 +35,17 @@ not make an oversized unit larger.
 - Put all UI code under `lib/ui/`, including app shells, screens, widgets, and
   UI composition widgets. Keep services, state, models, and startup-only
   bootstrap code in their corresponding non-UI folders.
+
+## Diagnostics and error export
+
+- Record uncaught framework and asynchronous failures through
+  `AppErrorLog`; record handled failures at the catch site with a useful
+  source and context so recoverable errors are retained too.
+- Keep diagnostics local unless the user explicitly requests remote error
+  reporting. Preserve the bounded log and user-controlled export/clear flow.
+- Redact known API keys, passwords, bearer credentials, and token-like values
+  before storing or exporting an error. Never log prompts, source documents,
+  request headers, or raw provider responses just to add diagnostic detail.
+- Keep exported diagnostics useful but concise: include timestamp, source,
+  sanitized message, safe context, and stack trace when available. Add tests
+  for redaction or serialization when changing the diagnostic format.

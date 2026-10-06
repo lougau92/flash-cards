@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 
 import '../../core/constants/prompt_presets.dart' show PromptPresets;
@@ -17,6 +19,7 @@ import '../../services/llm/providers/openai_compatible/openrouter_service.dart'
     show OpenRouterService;
 import '../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
+import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 
 part 'provider_actions.dart';
 part 'summary_actions.dart';

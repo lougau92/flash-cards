@@ -18,6 +18,13 @@ extension RunnerSummaryActions on RunnerNotifier {
           await _execute(service, apiKey.trim(), request, startedAt, stopwatch);
       _latestRun = run;
       _notifyIfActive();
+      if (run.status == SummaryRunStatus.error && run.errorMessage != null) {
+        unawaited(AppErrorLog.instance.record(
+          run.errorMessage!,
+          source: 'Summary generation',
+          context: '${request.providerType.name}:${request.targetModelId}',
+        ));
+      }
       await storageService.saveRun(run);
       return run;
     } finally {

@@ -1,9 +1,12 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/foundation.dart' show ChangeNotifier, debugPrint;
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 import '../models/llm_provider_type.dart'
     show LLMProviderType, LLMProviderTypeX;
+import '../services/diagnostics/app_error_log.dart' show AppErrorLog;
 
 class SettingsNotifier extends ChangeNotifier {
   final Map<LLMProviderType, String> _apiKeys = {};
@@ -42,6 +45,11 @@ class SettingsNotifier extends ChangeNotifier {
     } catch (error) {
       _loadError = 'Saved settings could not be loaded: $error';
       debugPrint(_loadError);
+      unawaited(AppErrorLog.instance.record(
+        error,
+        source: 'Settings load',
+        context: 'Reading saved provider API keys',
+      ));
     } finally {
       _isLoaded = true;
       notifyListeners();
@@ -78,6 +86,7 @@ class SettingsNotifier extends ChangeNotifier {
         }
       }
     }
+    AppErrorLog.instance.registerSecrets(_apiKeys.values);
     notifyListeners();
   }
 

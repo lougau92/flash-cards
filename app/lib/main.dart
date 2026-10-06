@@ -1,3 +1,17 @@
-import 'app_bootstrap.dart' show AppBootstrap;
+import 'dart:async' show runZonedGuarded, unawaited;
 
-Future<void> main() => AppBootstrap.run();
+import 'app_bootstrap.dart' show AppBootstrap;
+import 'services/diagnostics/app_error_log.dart' show AppErrorLog;
+
+void main() {
+  runZonedGuarded(
+    AppBootstrap.run,
+    (error, stackTrace) => unawaited(
+      AppErrorLog.instance.record(
+        error,
+        source: 'Dart zone',
+        stackTrace: stackTrace,
+      ),
+    ),
+  );
+}

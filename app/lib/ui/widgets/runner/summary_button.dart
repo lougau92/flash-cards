@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart'
     show
         BorderRadius,
@@ -23,6 +25,7 @@ import '../../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
 import '../../../state/runner/runner_notifier.dart'
     show RunnerNotifier, RunnerSummaryActions;
+import '../../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 import '../../../state/settings_notifier.dart' show SettingsNotifier;
 
 class RunSummaryButton extends StatelessWidget {
@@ -67,6 +70,7 @@ class RunSummaryButton extends StatelessWidget {
         storageService: storageService,
       );
     } catch (error) {
+      unawaited(AppErrorLog.instance.record(error, source: 'Running summary'));
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),

@@ -1,3 +1,4 @@
+import 'dart:async' show unawaited;
 import 'dart:convert' show jsonDecode, jsonEncode;
 
 import 'package:flutter/foundation.dart' show debugPrint;
@@ -5,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 
 import '../../models/summary_run.dart' show SummaryRun;
+import '../diagnostics/app_error_log.dart' show AppErrorLog;
 import 'storage_service_interface.dart' show StorageServiceInterface;
 
 StorageServiceInterface createLocalRunStorage() => _LocalRunStorageWeb();
@@ -39,6 +41,10 @@ class _LocalRunStorageWeb implements StorageServiceInterface {
           runs.add(SummaryRun.fromJson(Map<String, dynamic>.from(decoded)));
         }
       } catch (error) {
+        unawaited(AppErrorLog.instance.record(
+          error,
+          source: 'Browser run storage',
+        ));
         debugPrint('Could not read a saved browser run: $error');
       }
     }

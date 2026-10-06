@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart'
     show
         AlertDialog,
@@ -22,6 +24,7 @@ import 'package:provider/provider.dart' show ReadContext, WatchContext;
 
 import '../../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
+import '../../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 import '../../../state/history_notifier.dart' show HistoryNotifier;
 import '../../widgets/history/filter_bar.dart' show HistoryFilterBar;
 import '../../widgets/history/results_panel.dart' show HistoryResultsPanel;
@@ -91,6 +94,7 @@ class _HistoryScreenContentState extends State<HistoryScreenContent> {
     try {
       await history.deleteRun(runId, widget.storageService);
     } catch (error) {
+      unawaited(AppErrorLog.instance.record(error, source: 'Deleting run'));
       if (mounted) _showError('Could not delete run: $error');
     }
   }
@@ -120,6 +124,8 @@ class _HistoryScreenContentState extends State<HistoryScreenContent> {
     try {
       await history.clearAllHistory(widget.storageService);
     } catch (error) {
+      unawaited(
+          AppErrorLog.instance.record(error, source: 'Clearing run history'));
       if (mounted) _showError('Could not clear history: $error');
     }
   }

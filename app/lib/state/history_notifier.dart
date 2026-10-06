@@ -1,9 +1,12 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/foundation.dart' show ChangeNotifier, debugPrint;
 
 import '../models/llm_provider_type.dart' show LLMProviderType;
 import '../models/summary_run.dart' show SummaryRun;
 import '../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
+import '../services/diagnostics/app_error_log.dart' show AppErrorLog;
 
 class HistoryNotifier extends ChangeNotifier {
   List<SummaryRun> _allRuns = const [];
@@ -61,6 +64,7 @@ class HistoryNotifier extends ChangeNotifier {
     } catch (error) {
       _loadError = 'Could not load run history: $error';
       debugPrint(_loadError);
+      unawaited(AppErrorLog.instance.record(error, source: 'History load'));
     } finally {
       _isLoading = false;
       notifyListeners();

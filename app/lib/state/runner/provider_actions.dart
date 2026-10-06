@@ -30,6 +30,11 @@ extension RunnerProviderActions on RunnerNotifier {
       _acceptModels(models, previousModelId);
     } catch (error) {
       if (_isStale(generation)) return;
+      unawaited(AppErrorLog.instance.record(
+        error,
+        source: 'Provider model loading',
+        context: provider.displayName,
+      ));
       _rejectModels(error);
     } finally {
       if (!_isStale(generation)) {

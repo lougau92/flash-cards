@@ -1,3 +1,5 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart'
     show
         BorderRadius,
@@ -15,6 +17,7 @@ import 'package:flutter/material.dart'
         showModalBottomSheet;
 import 'package:provider/provider.dart' show ReadContext, WatchContext;
 import '../../../models/llm_provider_type.dart' show LLMProviderType;
+import '../../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 import '../../../state/settings_notifier.dart' show SettingsNotifier;
 import 'form.dart' show ApiKeySettingsForm;
 
@@ -83,6 +86,7 @@ class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
       Navigator.of(context).pop();
       messenger.showSnackBar(const SnackBar(content: Text('API keys saved.')));
     } catch (error) {
+      unawaited(AppErrorLog.instance.record(error, source: 'Saving API keys'));
       if (!mounted) return;
       messenger.showSnackBar(
           SnackBar(content: Text('Could not save API keys: $error')));
