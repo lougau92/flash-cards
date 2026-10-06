@@ -1,10 +1,11 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode, jsonEncode;
 
-import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
-import '../../models/summary_run.dart';
-import 'storage_service_interface.dart';
+import '../../models/summary_run.dart' show SummaryRun;
+import 'storage_service_interface.dart' show StorageServiceInterface;
 
 StorageServiceInterface createLocalRunStorage() => _LocalRunStorageWeb();
 
@@ -48,7 +49,8 @@ class _LocalRunStorageWeb implements StorageServiceInterface {
   @override
   Future<void> deleteRun(String id) async {
     final preferences = await SharedPreferences.getInstance();
-    final runs = await getAllRuns()..removeWhere((run) => run.id == id);
+    final runs = await getAllRuns()
+      ..removeWhere((run) => run.id == id);
     await preferences.setStringList(
       _storageKey,
       runs.map((item) => jsonEncode(item.toJson())).toList(),

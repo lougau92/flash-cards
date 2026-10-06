@@ -1,7 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../state/history_notifier.dart';
-import '../../widgets/comparison/view.dart';
+import 'package:flutter/material.dart'
+    show
+        AppBar,
+        BuildContext,
+        Center,
+        Colors,
+        Column,
+        EdgeInsets,
+        ElevatedButton,
+        Icon,
+        IconButton,
+        Icons,
+        MainAxisAlignment,
+        Navigator,
+        Padding,
+        Scaffold,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextAlign,
+        TextStyle,
+        Widget;
+import 'package:provider/provider.dart' show WatchContext;
+import '../../../state/history_notifier.dart' show HistoryNotifier;
+import '../../widgets/comparison/view.dart' show ComparisonView;
 
 class ComparisonScreen extends StatelessWidget {
   const ComparisonScreen({super.key});
@@ -30,7 +51,8 @@ class ComparisonScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.compare_arrows, size: 64, color: Colors.grey),
+                    const Icon(Icons.compare_arrows,
+                        size: 64, color: Colors.grey),
                     const SizedBox(height: 16),
                     const Text(
                       'Select 2 to 4 runs from History to compare them side-by-side.',

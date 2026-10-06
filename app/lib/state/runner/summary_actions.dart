@@ -14,7 +14,8 @@ extension RunnerSummaryActions on RunnerNotifier {
     _latestRun = null;
     _notifyIfActive();
     try {
-      final run = await _execute(service, apiKey.trim(), request, startedAt, stopwatch);
+      final run =
+          await _execute(service, apiKey.trim(), request, startedAt, stopwatch);
       _latestRun = run;
       _notifyIfActive();
       await storageService.saveRun(run);
@@ -31,7 +32,8 @@ extension RunnerSummaryActions on RunnerNotifier {
     final model = _selectedModel;
     if (model == null) throw StateError('No target model selected.');
     if (apiKey.trim().isEmpty) {
-      throw StateError('API key for ${_selectedProvider.displayName} is missing.');
+      throw StateError(
+          'API key for ${_selectedProvider.displayName} is missing.');
     }
     return SummaryRequest(
       sourceText: _sourceText,

@@ -1,12 +1,15 @@
-import 'package:app/app.dart';
-import 'package:app/models/summary_run.dart';
-import 'package:app/services/storage/storage_service_interface.dart';
-import 'package:app/state/history_notifier.dart';
-import 'package:app/state/runner/runner_notifier.dart';
-import 'package:app/state/settings_notifier.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
+import 'package:app/app.dart' show App;
+import 'package:app/models/summary_run.dart' show SummaryRun;
+import 'package:app/services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
+import 'package:app/state/history_notifier.dart' show HistoryNotifier;
+import 'package:app/state/runner/runner_notifier.dart' show RunnerNotifier;
+import 'package:app/state/settings_notifier.dart' show SettingsNotifier;
+import 'package:flutter/material.dart' show Icons, Size;
+import 'package:flutter_test/flutter_test.dart'
+    show addTearDown, expect, find, findsOneWidget, isNull, testWidgets;
+import 'package:provider/provider.dart'
+    show ChangeNotifierProvider, MultiProvider;
 
 class _MemoryStorage implements StorageServiceInterface {
   final List<SummaryRun> runs = [];
@@ -30,7 +33,8 @@ class _MemoryStorage implements StorageServiceInterface {
 }
 
 void main() {
-  testWidgets('workspace and history fit a narrow phone screen', (tester) async {
+  testWidgets('workspace and history fit a narrow phone screen',
+      (tester) async {
     await tester.binding.setSurfaceSize(const Size(360, 800));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 

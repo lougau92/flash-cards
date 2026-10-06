@@ -1,6 +1,7 @@
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:google_generative_ai/google_generative_ai.dart'
+    show Content, GenerationConfig, GenerativeModel;
 
-import 'interface.dart';
+import 'interface.dart' show LlmProvider;
 
 class GeminiSdkProvider implements LlmProvider {
   GeminiSdkProvider(this.apiKey);
@@ -30,7 +31,8 @@ class GeminiSdkProvider implements LlmProvider {
       systemInstruction: Content.system(
         'You are a concise assistant. Provide a clear, complete 3-bullet summary.',
       ),
-      generationConfig: GenerationConfig(temperature: 0.2, maxOutputTokens: 1000),
+      generationConfig:
+          GenerationConfig(temperature: 0.2, maxOutputTokens: 1000),
     );
     final response = await model.generateContent([
       Content.text('Please summarize the following text:\n\n$text'),

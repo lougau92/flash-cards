@@ -1,6 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Column,
+        CrossAxisAlignment,
+        FontStyle,
+        FontWeight,
+        Icon,
+        Icons,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextOverflow,
+        TextStyle,
+        Theme,
+        Widget,
+        Wrap,
+        WrapCrossAlignment;
 
-import '../../../models/summary_run.dart';
+import '../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 
 class RunCardResult extends StatelessWidget {
   const RunCardResult({super.key, required this.run});
@@ -83,10 +100,13 @@ class _RunTextSummary extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          success ? run.outputText ?? 'Empty output' : run.errorMessage ?? 'Unknown error',
+          success
+              ? run.outputText ?? 'Empty output'
+              : run.errorMessage ?? 'Unknown error',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 13, color: success ? colors.onSurface : colors.error),
+          style: TextStyle(
+              fontSize: 13, color: success ? colors.onSurface : colors.error),
         ),
       ],
     );

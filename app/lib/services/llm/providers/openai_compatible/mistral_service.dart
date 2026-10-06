@@ -1,7 +1,8 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http show Client;
 
-import 'service.dart';
-import '../../../../models/llm_provider_type.dart';
+import 'service.dart' show OpenAiCompatibleService;
+import '../../../../models/llm_provider_type.dart'
+    show LLMProviderType, LLMProviderTypeX;
 
 class MistralService extends OpenAiCompatibleService {
   MistralService({http.Client? client})

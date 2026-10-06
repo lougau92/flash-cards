@@ -1,8 +1,8 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http show Client;
 
-import '../../../../models/llm_model_info.dart';
-import '../../llm_service_helpers.dart';
-import 'model_parser.dart';
+import '../../../../models/llm_model_info.dart' show LLMModelInfo;
+import '../../llm_service_helpers.dart' show apiErrorMessage, decodeJsonObject;
+import 'model_parser.dart' show OpenAiModelParser;
 
 class OpenAiModelClient {
   const OpenAiModelClient({
@@ -36,7 +36,8 @@ class OpenAiModelClient {
       ));
     }
     final models = decodeJsonObject(response.body)['data'];
-    if (models is! List) throw FormatException('$providerName returned no model list.');
+    if (models is! List)
+      throw FormatException('$providerName returned no model list.');
     return OpenAiModelParser.parse(models, supportsModel);
   }
 }

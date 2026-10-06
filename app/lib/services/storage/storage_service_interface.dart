@@ -1,4 +1,4 @@
-import '../../models/summary_run.dart';
+import '../../models/summary_run.dart' show SummaryRun;
 
 abstract class StorageServiceInterface {
   /// Initializes local storage directory/database if needed.

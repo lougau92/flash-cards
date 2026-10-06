@@ -56,7 +56,8 @@ extension RunnerProviderActions on RunnerNotifier {
           (model) => model?.id == previousId,
           orElse: () => models.isEmpty ? null : models.first,
         );
-    if (models.isEmpty) _modelFetchError = 'No compatible text models were returned.';
+    if (models.isEmpty)
+      _modelFetchError = 'No compatible text models were returned.';
   }
 
   void _rejectModels(Object error) {

@@ -1,4 +1,4 @@
-import 'summary_request.dart';
+import 'summary_request.dart' show SummaryRequest;
 
 enum SummaryRunStatus {
   success,

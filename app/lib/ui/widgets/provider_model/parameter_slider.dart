@@ -1,4 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Column,
+        Expanded,
+        FontWeight,
+        Row,
+        Slider,
+        StatelessWidget,
+        Text,
+        TextStyle,
+        ValueChanged,
+        Widget;
 
 class ParameterSlider extends StatelessWidget {
   const ParameterSlider({
@@ -26,7 +38,8 @@ class ParameterSlider extends StatelessWidget {
           Row(
             children: [
               Expanded(child: Text(title)),
-              Text(valueLabel, style: const TextStyle(fontWeight: FontWeight.bold)),
+              Text(valueLabel,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
           Slider(

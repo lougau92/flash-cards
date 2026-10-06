@@ -1,4 +1,4 @@
-import 'llm_provider_type.dart';
+import 'llm_provider_type.dart' show LLMProviderType;
 
 class SummaryRequest {
   final String sourceText;

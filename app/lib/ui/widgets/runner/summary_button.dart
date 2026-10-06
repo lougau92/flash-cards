@@ -1,9 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart'
+    show
+        BorderRadius,
+        BuildContext,
+        CircularProgressIndicator,
+        Colors,
+        EdgeInsets,
+        ElevatedButton,
+        FontWeight,
+        Icon,
+        Icons,
+        RoundedRectangleBorder,
+        ScaffoldMessenger,
+        SizedBox,
+        SnackBar,
+        StatelessWidget,
+        Text,
+        TextStyle,
+        Widget;
+import 'package:provider/provider.dart' show Consumer2;
 
-import '../../../services/storage/storage_service_interface.dart';
-import '../../../state/runner/runner_notifier.dart';
-import '../../../state/settings_notifier.dart';
+import '../../../services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
+import '../../../state/runner/runner_notifier.dart'
+    show RunnerNotifier, RunnerSummaryActions;
+import '../../../state/settings_notifier.dart' show SettingsNotifier;
 
 class RunSummaryButton extends StatelessWidget {
   const RunSummaryButton({super.key, required this.storageService});
@@ -11,17 +31,22 @@ class RunSummaryButton extends StatelessWidget {
   final StorageServiceInterface storageService;
 
   @override
-  Widget build(BuildContext context) => Consumer2<RunnerNotifier, SettingsNotifier>(
+  Widget build(BuildContext context) =>
+      Consumer2<RunnerNotifier, SettingsNotifier>(
         builder: (context, runner, settings, _) => ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
-          onPressed: runner.isExecuting ? null : () => _execute(context, runner, settings),
+          onPressed: runner.isExecuting
+              ? null
+              : () => _execute(context, runner, settings),
           icon: runner.isExecuting
               ? const SizedBox.square(
                   dimension: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                  child: CircularProgressIndicator(
+                      strokeWidth: 2, color: Colors.white),
                 )
               : const Icon(Icons.play_arrow),
           label: Text(

@@ -1,6 +1,6 @@
-import 'package:app/models/llm_provider_type.dart';
-import 'package:app/models/summary_request.dart';
-import 'package:http/http.dart' as http;
+import 'package:app/models/llm_provider_type.dart' show LLMProviderType;
+import 'package:app/models/summary_request.dart' show SummaryRequest;
+import 'package:http/http.dart' as http show Request;
 
 SummaryRequest contractRequest(
   LLMProviderType provider, {

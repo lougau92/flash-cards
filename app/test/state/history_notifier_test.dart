@@ -1,8 +1,8 @@
-import 'package:app/models/llm_provider_type.dart';
-import 'package:app/state/history_notifier.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:app/models/llm_provider_type.dart' show LLMProviderType;
+import 'package:flutter_test/flutter_test.dart'
+    show addTearDown, expect, hasLength, test;
 
-import 'history_notifier_test_support.dart';
+import 'history_notifier_test_support.dart' show createHistoryFixture;
 
 void main() {
   _loadHistoryTest();

@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode;
 
 Map<String, dynamic> decodeJsonObject(String body) {
   final decoded = jsonDecode(body);
@@ -29,9 +29,8 @@ String apiErrorMessage({
   final detail = (providerMessage?.trim().isNotEmpty ?? false)
       ? providerMessage!.trim()
       : body.trim();
-  final shortenedDetail = detail.length > 500
-      ? '${detail.substring(0, 500)}…'
-      : detail;
+  final shortenedDetail =
+      detail.length > 500 ? '${detail.substring(0, 500)}…' : detail;
   final suffix = shortenedDetail.isEmpty ? '' : ': $shortenedDetail';
   return '$providerName request failed (HTTP $statusCode)$suffix';
 }

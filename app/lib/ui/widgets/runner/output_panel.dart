@@ -1,6 +1,31 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BorderRadius,
+        BuildContext,
+        Card,
+        Chip,
+        Column,
+        CrossAxisAlignment,
+        Divider,
+        EdgeInsets,
+        FontWeight,
+        Icon,
+        Icons,
+        MaterialTapTargetSize,
+        Padding,
+        RoundedRectangleBorder,
+        Row,
+        SelectableText,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextStyle,
+        Theme,
+        VisualDensity,
+        Widget,
+        Wrap;
 
-import '../../../models/summary_run.dart';
+import '../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 
 class RunOutputPanel extends StatelessWidget {
   const RunOutputPanel({super.key, required this.run});
@@ -44,7 +69,8 @@ class _OutputTitle extends StatelessWidget {
         Icon(success ? Icons.check_circle : Icons.error,
             color: success ? colors.primary : colors.error),
         const SizedBox(width: 8),
-        const Text('Output', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text('Output',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       ],
     );
   }
@@ -62,9 +88,11 @@ class _OutputMetrics extends StatelessWidget {
           _MetricChip(label: '${run.executionTimeMs} ms'),
           if (run.tokenUsage != null)
             _MetricChip(label: '${run.tokenUsage!['total_tokens']} tokens'),
-          if (run.servedModelId != null && run.servedModelId != run.request.targetModelId)
+          if (run.servedModelId != null &&
+              run.servedModelId != run.request.targetModelId)
             _MetricChip(label: 'Served as ${run.servedModelId}'),
-          if (run.finishReason != null) _MetricChip(label: 'Finish: ${run.finishReason}'),
+          if (run.finishReason != null)
+            _MetricChip(label: 'Finish: ${run.finishReason}'),
         ],
       );
 }
@@ -79,7 +107,9 @@ class _OutputText extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return SelectableText(
-      success ? run.outputText ?? 'No response content returned.' : run.errorMessage ?? 'An unknown error occurred.',
+      success
+          ? run.outputText ?? 'No response content returned.'
+          : run.errorMessage ?? 'An unknown error occurred.',
       style: TextStyle(
         fontSize: success ? 14 : 13,
         height: success ? 1.4 : null,

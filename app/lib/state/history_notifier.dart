@@ -1,8 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show ChangeNotifier, debugPrint;
 
-import '../models/llm_provider_type.dart';
-import '../models/summary_run.dart';
-import '../services/storage/storage_service_interface.dart';
+import '../models/llm_provider_type.dart' show LLMProviderType;
+import '../models/summary_run.dart' show SummaryRun;
+import '../services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
 
 class HistoryNotifier extends ChangeNotifier {
   List<SummaryRun> _allRuns = const [];
@@ -27,7 +28,8 @@ class HistoryNotifier extends ChangeNotifier {
   List<SummaryRun> get filteredRuns {
     final query = _searchQuery.trim().toLowerCase();
     return _allRuns.where((run) {
-      if (_providerFilter != null && run.request.providerType != _providerFilter) {
+      if (_providerFilter != null &&
+          run.request.providerType != _providerFilter) {
         return false;
       }
       if (query.isEmpty) return true;
@@ -65,7 +67,8 @@ class HistoryNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteRun(String id, StorageServiceInterface storageService) async {
+  Future<void> deleteRun(
+      String id, StorageServiceInterface storageService) async {
     await storageService.deleteRun(id);
     _allRuns = _allRuns.where((run) => run.id != id).toList();
     _selectedRunIdsForComparison.remove(id);

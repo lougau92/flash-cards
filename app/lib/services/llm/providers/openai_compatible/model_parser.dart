@@ -1,4 +1,4 @@
-import '../../../../models/llm_model_info.dart';
+import '../../../../models/llm_model_info.dart' show LLMModelInfo;
 
 class OpenAiModelParser {
   static List<LLMModelInfo> parse(
@@ -45,7 +45,8 @@ class OpenAiModelParser {
       modalities is! List || modalities.isEmpty || modalities.contains('text');
 
   static double? _pricePerMillion(dynamic price) {
-    final perToken = price is num ? price.toDouble() : double.tryParse('$price');
+    final perToken =
+        price is num ? price.toDouble() : double.tryParse('$price');
     return perToken == null ? null : perToken * 1000000;
   }
 

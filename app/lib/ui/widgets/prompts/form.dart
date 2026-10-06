@@ -1,6 +1,34 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        ActionChip,
+        BorderRadius,
+        BuildContext,
+        Card,
+        Colors,
+        Column,
+        CrossAxisAlignment,
+        EdgeInsets,
+        ExpansionTile,
+        FontWeight,
+        InputDecoration,
+        OutlineInputBorder,
+        Padding,
+        RoundedRectangleBorder,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextEditingController,
+        TextEditingValue,
+        TextField,
+        TextOverflow,
+        TextStyle,
+        ValueChanged,
+        ValueListenableBuilder,
+        Widget,
+        Wrap;
 
-import '../../../core/constants/prompt_presets.dart';
+import '../../../core/constants/prompt_presets.dart'
+    show PromptPreset, PromptPresets;
 
 class PromptEditorForm extends StatelessWidget {
   const PromptEditorForm({
@@ -60,7 +88,8 @@ class PromptPresetSelector extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Presets', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+          const Text('Presets',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
           const SizedBox(height: 6),
           Wrap(
             spacing: 8,
@@ -94,7 +123,8 @@ class PromptTextFields extends StatelessWidget {
             maxLines: 2,
             decoration: InputDecoration(
               labelText: 'System Prompt',
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             ),
           ),
           const SizedBox(height: 12),
@@ -103,7 +133,8 @@ class PromptTextFields extends StatelessWidget {
             maxLines: 3,
             decoration: InputDecoration(
               labelText: 'Instruction Prompt',
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             ),
           ),
         ],

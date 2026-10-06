@@ -1,6 +1,25 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        Border,
+        BorderRadius,
+        BoxDecoration,
+        BuildContext,
+        Container,
+        EdgeInsets,
+        Icon,
+        IconData,
+        Icons,
+        MainAxisSize,
+        Row,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextStyle,
+        Theme,
+        Widget,
+        Wrap;
 
-import '../../../models/summary_run.dart';
+import '../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 
 class ComparisonRunMetrics extends StatelessWidget {
   const ComparisonRunMetrics({super.key, required this.run});
@@ -18,7 +37,8 @@ class ComparisonRunMetrics extends StatelessWidget {
           icon: success ? Icons.check_circle_outline : Icons.error_outline,
           label: success ? 'Success' : 'Failed',
         ),
-        _MetricBadge(icon: Icons.timer_outlined, label: '${run.executionTimeMs} ms'),
+        _MetricBadge(
+            icon: Icons.timer_outlined, label: '${run.executionTimeMs} ms'),
         _MetricBadge(
           icon: Icons.token_outlined,
           label: '${run.tokenUsage?['total_tokens'] ?? 'N/A'} tokens',
@@ -53,7 +73,8 @@ class _MetricBadge extends StatelessWidget {
         children: [
           Icon(icon, size: 14, color: colors.onSurfaceVariant),
           const SizedBox(width: 4),
-          Text(label, style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant)),
+          Text(label,
+              style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant)),
         ],
       ),
     );

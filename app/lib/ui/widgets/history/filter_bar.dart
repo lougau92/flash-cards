@@ -1,7 +1,28 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Column,
+        DropdownButtonFormField,
+        DropdownMenuItem,
+        EdgeInsets,
+        Expanded,
+        Icon,
+        IconButton,
+        Icons,
+        InputDecoration,
+        LayoutBuilder,
+        Padding,
+        Row,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextEditingController,
+        TextField,
+        Widget;
 
-import '../../../models/llm_provider_type.dart';
-import '../../../state/history_notifier.dart';
+import '../../../models/llm_provider_type.dart'
+    show LLMProviderType, LLMProviderTypeX;
+import '../../../state/history_notifier.dart' show HistoryNotifier;
 
 class HistoryFilterBar extends StatelessWidget {
   const HistoryFilterBar({
@@ -18,7 +39,8 @@ class HistoryFilterBar extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final search = _SearchField(controller: controller, history: history);
+            final search =
+                _SearchField(controller: controller, history: history);
             final provider = _ProviderFilter(history: history);
             return constraints.maxWidth < 420
                 ? Column(
@@ -68,7 +90,8 @@ class _ProviderFilter extends StatelessWidget {
   final HistoryNotifier history;
 
   @override
-  Widget build(BuildContext context) => DropdownButtonFormField<LLMProviderType?>(
+  Widget build(BuildContext context) =>
+      DropdownButtonFormField<LLMProviderType?>(
         initialValue: history.providerFilter,
         isExpanded: true,
         decoration: const InputDecoration(labelText: 'Provider'),

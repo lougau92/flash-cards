@@ -1,4 +1,21 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Center,
+        Column,
+        EdgeInsets,
+        FilledButton,
+        Icon,
+        IconData,
+        MainAxisSize,
+        Padding,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextAlign,
+        Theme,
+        VoidCallback,
+        Widget;
 
 class HistoryEmptyState extends StatelessWidget {
   const HistoryEmptyState({
@@ -21,7 +38,8 @@ class HistoryEmptyState extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 56, color: Theme.of(context).colorScheme.outline),
+              Icon(icon,
+                  size: 56, color: Theme.of(context).colorScheme.outline),
               const SizedBox(height: 12),
               Text(message, textAlign: TextAlign.center),
               if (actionLabel != null && onPressed != null) ...[

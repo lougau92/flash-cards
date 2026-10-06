@@ -1,6 +1,23 @@
-import 'package:flutter/material.dart';
-import 'services/storage/storage_service_interface.dart';
-import 'ui/screens/main_layout_screen.dart';
+import 'package:flutter/material.dart'
+    show
+        BorderRadius,
+        Brightness,
+        BuildContext,
+        CardThemeData,
+        Color,
+        ColorScheme,
+        EdgeInsets,
+        InputDecorationTheme,
+        MaterialApp,
+        OutlineInputBorder,
+        RoundedRectangleBorder,
+        StatelessWidget,
+        ThemeData,
+        ThemeMode,
+        Widget;
+import 'services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
+import 'ui/screens/main_layout_screen.dart' show MainLayoutScreen;
 
 class App extends StatelessWidget {
   final StorageServiceInterface storageService;
@@ -28,7 +45,8 @@ class App extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         ),
       ),
       darkTheme: ThemeData(
@@ -47,7 +65,8 @@ class App extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         ),
       ),
       themeMode: ThemeMode.system,

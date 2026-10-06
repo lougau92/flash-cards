@@ -1,19 +1,23 @@
-import 'dart:convert';
+import 'dart:convert' show jsonEncode;
 
-import 'package:app/models/llm_provider_type.dart';
-import 'package:app/models/summary_run.dart';
-import 'package:app/services/llm/providers/gemini/service.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
+import 'package:app/models/llm_provider_type.dart' show LLMProviderType;
+import 'package:app/models/summary_run.dart' show SummaryRunStatus;
+import 'package:app/services/llm/providers/gemini/service.dart'
+    show GeminiService;
+import 'package:flutter_test/flutter_test.dart'
+    show addTearDown, contains, expect, isNot, test;
+import 'package:http/http.dart' as http show Response;
+import 'package:http/testing.dart' show MockClient;
 
-import '../support.dart';
+import '../support.dart' show contractRequest;
 
 void main() {
   test('redacts API keys when provider responses fail', () async {
     const apiKey = 'gemini test/key+';
     final client = MockClient((_) async => http.Response(
-          jsonEncode({'error': {'message': 'quota exceeded for $apiKey'}}),
+          jsonEncode({
+            'error': {'message': 'quota exceeded for $apiKey'}
+          }),
           429,
         ));
     final service = GeminiService(client: client);
@@ -21,7 +25,8 @@ void main() {
     addTearDown(client.close);
     final run = await service.generateSummary(
       apiKey: apiKey,
-      request: contractRequest(LLMProviderType.gemini, modelId: 'gemini-test-model'),
+      request:
+          contractRequest(LLMProviderType.gemini, modelId: 'gemini-test-model'),
     );
     expect(run.status, SummaryRunStatus.error);
     expect(run.errorMessage, contains('HTTP 429'));

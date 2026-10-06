@@ -1,6 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        Border,
+        BorderRadius,
+        BoxDecoration,
+        BuildContext,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        FontWeight,
+        SelectableText,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextStyle,
+        Theme,
+        Widget;
 
-import '../../../models/summary_run.dart';
+import '../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 
 class ComparisonOutputPanel extends StatelessWidget {
   const ComparisonOutputPanel({super.key, required this.run});

@@ -1,4 +1,4 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 
 class ClipboardHelper {
   /// Retrieves plain text content from the system clipboard.

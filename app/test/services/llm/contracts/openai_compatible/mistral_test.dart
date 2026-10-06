@@ -1,13 +1,15 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode, jsonEncode;
 
-import 'package:app/models/llm_provider_type.dart';
-import 'package:app/models/summary_run.dart';
-import 'package:app/services/llm/providers/openai_compatible/mistral_service.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
+import 'package:app/models/llm_provider_type.dart' show LLMProviderType;
+import 'package:app/models/summary_run.dart' show SummaryRunStatus;
+import 'package:app/services/llm/providers/openai_compatible/mistral_service.dart'
+    show MistralService;
+import 'package:flutter_test/flutter_test.dart'
+    show addTearDown, contains, expect, hasLength, isFalse, test;
+import 'package:http/http.dart' as http show Request, Response;
+import 'package:http/testing.dart' show MockClient;
 
-import '../support.dart';
+import '../support.dart' show contractHeader, contractRequest;
 
 void main() {
   _modelListContract();
@@ -20,16 +22,21 @@ void _modelListContract() {
     late http.Request request;
     final client = MockClient((captured) async {
       request = captured;
-      return http.Response(jsonEncode({
-        'data': [
-          {
-            'id': 'mistral-large-latest',
-            'capabilities': {'completion_chat': true},
-            'max_context_length': 128000,
-          },
-          {'id': 'mistral-embed', 'capabilities': {'completion_chat': false}},
-        ],
-      }), 200);
+      return http.Response(
+          jsonEncode({
+            'data': [
+              {
+                'id': 'mistral-large-latest',
+                'capabilities': {'completion_chat': true},
+                'max_context_length': 128000,
+              },
+              {
+                'id': 'mistral-embed',
+                'capabilities': {'completion_chat': false}
+              },
+            ],
+          }),
+          200);
     });
     final service = MistralService(client: client);
     addTearDown(service.dispose);
@@ -48,13 +55,22 @@ void _summaryContract() {
     late http.Request request;
     final client = MockClient((captured) async {
       request = captured;
-      return http.Response(jsonEncode({
-        'model': 'mistral-large-served',
-        'choices': [
-          {'finish_reason': 'stop', 'message': {'content': 'Mistral summary'}},
-        ],
-        'usage': {'prompt_tokens': 3, 'completion_tokens': 4, 'total_tokens': 7},
-      }), 200);
+      return http.Response(
+          jsonEncode({
+            'model': 'mistral-large-served',
+            'choices': [
+              {
+                'finish_reason': 'stop',
+                'message': {'content': 'Mistral summary'}
+              },
+            ],
+            'usage': {
+              'prompt_tokens': 3,
+              'completion_tokens': 4,
+              'total_tokens': 7
+            },
+          }),
+          200);
     });
     final service = MistralService(client: client);
     addTearDown(service.dispose);
@@ -63,7 +79,8 @@ void _summaryContract() {
       apiKey: 'mistral-key',
       request: contractRequest(LLMProviderType.mistral),
     );
-    expect(request.url, Uri.parse('https://api.mistral.ai/v1/chat/completions'));
+    expect(
+        request.url, Uri.parse('https://api.mistral.ai/v1/chat/completions'));
     final body = jsonDecode(request.body) as Map<String, dynamic>;
     expect(body['max_tokens'], 321);
     expect(body.containsKey('max_completion_tokens'), isFalse);
@@ -76,7 +93,9 @@ void _summaryContract() {
 void _errorContract() {
   test('maps non-2xx provider responses to failed runs', () async {
     final client = MockClient((_) async => http.Response(
-          jsonEncode({'error': {'message': 'request rejected'}}),
+          jsonEncode({
+            'error': {'message': 'request rejected'}
+          }),
           429,
         ));
     final service = MistralService(client: client);

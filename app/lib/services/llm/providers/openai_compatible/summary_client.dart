@@ -1,12 +1,18 @@
-import 'dart:async';
-import 'dart:convert';
+import 'dart:async' show TimeoutException;
+import 'dart:convert' show jsonEncode;
 
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show debugPrint;
+import 'package:http/http.dart' as http show Client, Response;
 
-import '../../../../models/summary_request.dart';
-import '../../../../models/summary_run.dart';
-import '../../llm_service_helpers.dart';
+import '../../../../models/summary_request.dart' show SummaryRequest;
+import '../../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
+import '../../llm_service_helpers.dart'
+    show
+        apiErrorMessage,
+        decodeJsonObject,
+        newRunId,
+        normalizedTokenUsage,
+        textFromContent;
 
 class OpenAiSummaryClient {
   const OpenAiSummaryClient({
@@ -34,11 +40,16 @@ class OpenAiSummaryClient {
       final response = await _send(apiKey, request);
       timer.stop();
       if (response.statusCode < 200 || response.statusCode >= 300) {
-        return _failed(id, startedAt, request, timer, apiErrorMessage(
-          providerName: providerName,
-          statusCode: response.statusCode,
-          body: response.body,
-        ));
+        return _failed(
+            id,
+            startedAt,
+            request,
+            timer,
+            apiErrorMessage(
+              providerName: providerName,
+              statusCode: response.statusCode,
+              body: response.body,
+            ));
       }
       return _parse(response.body, id, startedAt, request, timer);
     } on TimeoutException {

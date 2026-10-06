@@ -1,6 +1,32 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        Align,
+        Alignment,
+        BorderRadius,
+        BoxDecoration,
+        BuildContext,
+        Colors,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        DropdownButtonFormField,
+        DropdownMenuItem,
+        EdgeInsets,
+        Expanded,
+        FontWeight,
+        InputDecoration,
+        Row,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextOverflow,
+        TextStyle,
+        Theme,
+        ValueChanged,
+        ValueKey,
+        Widget;
 
-import '../../../models/llm_model_info.dart';
+import '../../../models/llm_model_info.dart' show LLMModelInfo;
 
 class ModelSelectorField extends StatelessWidget {
   const ModelSelectorField({
@@ -30,7 +56,8 @@ class ModelSelectorField extends StatelessWidget {
                 .map(
                   (model) => Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(model.displayName, overflow: TextOverflow.ellipsis),
+                    child: Text(model.displayName,
+                        overflow: TextOverflow.ellipsis),
                   ),
                 )
                 .toList(),
@@ -53,7 +80,9 @@ class ModelSelectorField extends StatelessWidget {
         value: model,
         child: Row(
           children: [
-            Expanded(child: Text(model.displayName, overflow: TextOverflow.ellipsis)),
+            Expanded(
+                child:
+                    Text(model.displayName, overflow: TextOverflow.ellipsis)),
             if (model.isFree)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),

@@ -1,7 +1,20 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:app/models/summary_run.dart';
-import 'package:app/services/storage/storage_service_interface.dart';
-import 'package:app/state/runner/runner_notifier.dart';
+import 'package:flutter_test/flutter_test.dart'
+    show
+        contains,
+        expect,
+        group,
+        isA,
+        isEmpty,
+        isFalse,
+        setUp,
+        tearDown,
+        test,
+        throwsA;
+import 'package:app/models/summary_run.dart' show SummaryRun;
+import 'package:app/services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
+import 'package:app/state/runner/runner_notifier.dart'
+    show RunnerNotifier, RunnerProviderActions, RunnerSummaryActions;
 
 class MockStorageService implements StorageServiceInterface {
   SummaryRun? lastSavedRun;
@@ -10,7 +23,7 @@ class MockStorageService implements StorageServiceInterface {
   Future<void> saveRun(SummaryRun run) async {
     lastSavedRun = run;
   }
-  
+
   @override
   Future<List<SummaryRun>> getAllRuns() async => [];
 
@@ -45,11 +58,13 @@ void main() {
           apiKey: 'test_key',
           storageService: MockStorageService(),
         ),
-        throwsA(isA().having((e) => e.toString(), 'message', contains('Source text is empty'))),
+        throwsA(isA().having(
+            (e) => e.toString(), 'message', contains('Source text is empty'))),
       );
     });
 
-    test('executeSummary throws exception when model is not selected', () async {
+    test('executeSummary throws exception when model is not selected',
+        () async {
       runner.setSourceText('Valid text content for summary');
       runner.setSelectedModel(null);
 
@@ -58,11 +73,13 @@ void main() {
           apiKey: 'test_key',
           storageService: MockStorageService(),
         ),
-        throwsA(isA().having((e) => e.toString(), 'message', contains('No target model selected'))),
+        throwsA(isA().having((e) => e.toString(), 'message',
+            contains('No target model selected'))),
       );
     });
 
-    test('fetchAvailableModels sets error state when API key is blank', () async {
+    test('fetchAvailableModels sets error state when API key is blank',
+        () async {
       await runner.fetchAvailableModels('   ');
 
       expect(runner.modelFetchError, contains('API key required'));

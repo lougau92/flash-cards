@@ -1,10 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        ScaffoldMessenger,
+        SnackBar,
+        State,
+        StatefulWidget,
+        Text,
+        TextEditingController,
+        Widget;
+import 'package:provider/provider.dart' show Consumer, ReadContext;
 
-import '../../../core/utils/clipboard_helper.dart';
-import '../../../core/utils/file_helper.dart';
-import '../../../state/runner/runner_notifier.dart';
-import 'content.dart';
+import '../../../core/utils/clipboard_helper.dart' show ClipboardHelper;
+import '../../../core/utils/file_helper.dart' show FileHelper;
+import '../../../state/runner/runner_notifier.dart' show RunnerNotifier;
+import 'content.dart' show InputSourceContent;
 
 class InputSourceSelector extends StatefulWidget {
   const InputSourceSelector({super.key});

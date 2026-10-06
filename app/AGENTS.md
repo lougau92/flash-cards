@@ -22,6 +22,8 @@ not make an oversized unit larger.
 ## Dart and Flutter conventions
 
 - Follow `analysis_options.yaml` and run `dart format` on changed Dart files.
+- Avoid broad imports. Use `show` to import only the symbols used from a
+  library; use `hide` only when `show` is impractical.
 - Keep UI widgets focused on presentation; put state transitions in notifiers
   and provider/network I/O in services.
 - Keep provider request and response handling independently testable. Add or

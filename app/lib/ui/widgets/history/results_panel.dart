@@ -1,10 +1,21 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Center,
+        CircularProgressIndicator,
+        Icons,
+        ListView,
+        RefreshIndicator,
+        StatelessWidget,
+        ValueChanged,
+        Widget;
 
-import '../../../models/summary_run.dart';
-import '../../../services/storage/storage_service_interface.dart';
-import '../../../state/history_notifier.dart';
-import 'empty_state.dart';
-import 'run_card.dart';
+import '../../../models/summary_run.dart' show SummaryRun;
+import '../../../services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
+import '../../../state/history_notifier.dart' show HistoryNotifier;
+import 'empty_state.dart' show HistoryEmptyState;
+import 'run_card.dart' show RunCard;
 
 class HistoryResultsPanel extends StatelessWidget {
   const HistoryResultsPanel({
@@ -22,7 +33,8 @@ class HistoryResultsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (history.isLoading) return const Center(child: CircularProgressIndicator());
+    if (history.isLoading)
+      return const Center(child: CircularProgressIndicator());
     if (history.loadError != null) {
       return HistoryEmptyState(
         icon: Icons.error_outline,

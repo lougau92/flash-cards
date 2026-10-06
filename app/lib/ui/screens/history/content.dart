@@ -1,11 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart'
+    show
+        AlertDialog,
+        BuildContext,
+        Colors,
+        Column,
+        Expanded,
+        Navigator,
+        Scaffold,
+        ScaffoldMessenger,
+        SnackBar,
+        State,
+        StatefulWidget,
+        Text,
+        TextButton,
+        TextEditingController,
+        TextStyle,
+        Widget,
+        WidgetsBinding,
+        showDialog;
+import 'package:provider/provider.dart' show ReadContext, WatchContext;
 
-import '../../../services/storage/storage_service_interface.dart';
-import '../../../state/history_notifier.dart';
-import '../../widgets/history/filter_bar.dart';
-import '../../widgets/history/results_panel.dart';
-import '../../widgets/history/toolbar.dart';
+import '../../../services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
+import '../../../state/history_notifier.dart' show HistoryNotifier;
+import '../../widgets/history/filter_bar.dart' show HistoryFilterBar;
+import '../../widgets/history/results_panel.dart' show HistoryResultsPanel;
+import '../../widgets/history/toolbar.dart' show HistoryToolbar;
 
 class HistoryScreenContent extends StatefulWidget {
   const HistoryScreenContent({super.key, required this.storageService});
@@ -90,7 +110,8 @@ class _HistoryScreenContentState extends State<HistoryScreenContent> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Delete all', style: TextStyle(color: Colors.red)),
+            child:
+                const Text('Delete all', style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -104,6 +125,7 @@ class _HistoryScreenContentState extends State<HistoryScreenContent> {
   }
 
   void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 }

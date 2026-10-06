@@ -1,8 +1,9 @@
-import 'package:app/models/llm_provider_type.dart';
-import 'package:app/models/summary_request.dart';
-import 'package:app/models/summary_run.dart';
-import 'package:app/services/storage/storage_service_interface.dart';
-import 'package:app/state/history_notifier.dart';
+import 'package:app/models/llm_provider_type.dart' show LLMProviderType;
+import 'package:app/models/summary_request.dart' show SummaryRequest;
+import 'package:app/models/summary_run.dart' show SummaryRun, SummaryRunStatus;
+import 'package:app/services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
+import 'package:app/state/history_notifier.dart' show HistoryNotifier;
 
 class HistoryTestStorage implements StorageServiceInterface {
   final List<SummaryRun> runs = [];
@@ -12,7 +13,8 @@ class HistoryTestStorage implements StorageServiceInterface {
   @override
   Future<List<SummaryRun>> getAllRuns() async => List.of(runs);
   @override
-  Future<void> deleteRun(String id) async => runs.removeWhere((run) => run.id == id);
+  Future<void> deleteRun(String id) async =>
+      runs.removeWhere((run) => run.id == id);
   @override
   Future<void> clearAllRuns() async => runs.clear();
   @override
@@ -42,7 +44,8 @@ SummaryRun _sampleRun(String id, {bool mistral = false}) => SummaryRun(
         temperature: 0.7,
         maxTokens: 1000,
         targetModelId: mistral ? 'mistral-tiny' : 'gemini-test',
-        providerType: mistral ? LLMProviderType.mistral : LLMProviderType.gemini,
+        providerType:
+            mistral ? LLMProviderType.mistral : LLMProviderType.gemini,
       ),
       outputText: 'Example result',
       executionTimeMs: 200,

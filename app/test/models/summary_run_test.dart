@@ -1,12 +1,13 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:app/models/llm_provider_type.dart';
-import 'package:app/models/summary_request.dart';
-import 'package:app/models/summary_run.dart';
+import 'package:flutter_test/flutter_test.dart' show expect, group, test;
+import 'package:app/models/llm_provider_type.dart' show LLMProviderType;
+import 'package:app/models/summary_request.dart' show SummaryRequest;
+import 'package:app/models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 
 void main() {
   group('SummaryRun Model Tests', () {
     const sampleRequest = SummaryRequest(
-      sourceText: 'Flutter is an open-source UI software development kit created by Google.',
+      sourceText:
+          'Flutter is an open-source UI software development kit created by Google.',
       inputFileName: 'flutter.txt',
       systemPrompt: 'You are a helpful assistant.',
       instructionPrompt: 'Summarize in 1 sentence.',
@@ -22,7 +23,11 @@ void main() {
       request: sampleRequest,
       outputText: 'Flutter is Google UI toolkit.',
       executionTimeMs: 450,
-      tokenUsage: {'prompt_tokens': 20, 'completion_tokens': 10, 'total_tokens': 30},
+      tokenUsage: {
+        'prompt_tokens': 20,
+        'completion_tokens': 10,
+        'total_tokens': 30
+      },
       status: SummaryRunStatus.success,
       errorMessage: null,
     );

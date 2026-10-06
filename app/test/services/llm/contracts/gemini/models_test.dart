@@ -1,9 +1,11 @@
-import 'dart:convert';
+import 'dart:convert' show jsonEncode;
 
-import 'package:app/services/llm/providers/gemini/service.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
+import 'package:app/services/llm/providers/gemini/service.dart'
+    show GeminiService;
+import 'package:flutter_test/flutter_test.dart'
+    show addTearDown, expect, hasLength, test;
+import 'package:http/http.dart' as http show Request, Response;
+import 'package:http/testing.dart' show MockClient;
 
 void main() {
   test('paginates models and retains only generateContent models', () async {
@@ -12,26 +14,28 @@ void main() {
     final client = MockClient((request) async {
       requests.add(request);
       final firstPage = request.url.queryParameters['pageToken'] == null;
-      return http.Response(jsonEncode(firstPage
-          ? {
-              'models': [
-                {
-                  'name': 'models/gemini-test-model',
-                  'displayName': 'Gemini Test Model',
-                  'inputTokenLimit': 64000,
-                  'supportedGenerationMethods': ['generateContent'],
-                },
-              ],
-              'nextPageToken': 'next page/+ =',
-            }
-          : {
-              'models': [
-                {
-                  'name': 'models/embedding-model',
-                  'supportedGenerationMethods': ['embedContent'],
-                },
-              ],
-            }), 200);
+      return http.Response(
+          jsonEncode(firstPage
+              ? {
+                  'models': [
+                    {
+                      'name': 'models/gemini-test-model',
+                      'displayName': 'Gemini Test Model',
+                      'inputTokenLimit': 64000,
+                      'supportedGenerationMethods': ['generateContent'],
+                    },
+                  ],
+                  'nextPageToken': 'next page/+ =',
+                }
+              : {
+                  'models': [
+                    {
+                      'name': 'models/embedding-model',
+                      'supportedGenerationMethods': ['embedContent'],
+                    },
+                  ],
+                }),
+          200);
     });
     final service = GeminiService(client: client);
     addTearDown(service.dispose);

@@ -1,8 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../models/llm_provider_type.dart';
-import '../../../state/settings_notifier.dart';
-import 'form.dart';
+import 'package:flutter/material.dart'
+    show
+        BorderRadius,
+        BuildContext,
+        Navigator,
+        Radius,
+        RoundedRectangleBorder,
+        ScaffoldMessenger,
+        SnackBar,
+        State,
+        StatefulWidget,
+        Text,
+        TextEditingController,
+        Widget,
+        showModalBottomSheet;
+import 'package:provider/provider.dart' show ReadContext, WatchContext;
+import '../../../models/llm_provider_type.dart' show LLMProviderType;
+import '../../../state/settings_notifier.dart' show SettingsNotifier;
+import 'form.dart' show ApiKeySettingsForm;
 
 Future<void> showApiKeySettingsSheet(BuildContext context) {
   return showModalBottomSheet<void>(
@@ -62,14 +76,16 @@ class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
     setState(() => _isSaving = true);
     try {
       await settings.setApiKeys({
-        for (final entry in _controllers.entries) entry.key: entry.value.text.trim(),
+        for (final entry in _controllers.entries)
+          entry.key: entry.value.text.trim(),
       });
       if (!mounted) return;
       Navigator.of(context).pop();
       messenger.showSnackBar(const SnackBar(content: Text('API keys saved.')));
     } catch (error) {
       if (!mounted) return;
-      messenger.showSnackBar(SnackBar(content: Text('Could not save API keys: $error')));
+      messenger.showSnackBar(
+          SnackBar(content: Text('Could not save API keys: $error')));
     } finally {
       if (mounted) setState(() => _isSaving = false);
     }

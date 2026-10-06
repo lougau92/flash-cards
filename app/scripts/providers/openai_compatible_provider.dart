@@ -1,9 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
+import 'dart:convert' show jsonDecode, jsonEncode;
+import 'dart:io' show HttpException;
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http show Response, get, post;
 
-import 'interface.dart';
+import 'interface.dart' show LlmProvider;
 
 abstract class OpenAiCompatibleProvider implements LlmProvider {
   OpenAiCompatibleProvider({required this.apiKey, required this.baseUrl});
@@ -20,7 +20,8 @@ abstract class OpenAiCompatibleProvider implements LlmProvider {
       headers: {'Authorization': 'Bearer $apiKey', ...customHeaders},
     );
     if (response.statusCode != 200) {
-      throw HttpException('Failed to list models [HTTP ${response.statusCode}]');
+      throw HttpException(
+          'Failed to list models [HTTP ${response.statusCode}]');
     }
     return _modelIds(response.body);
   }
@@ -58,7 +59,10 @@ abstract class OpenAiCompatibleProvider implements LlmProvider {
             'content':
                 'You are a concise assistant. Provide a clear, complete 3-bullet summary.',
           },
-          {'role': 'user', 'content': 'Please summarize the following text:\n\n$text'},
+          {
+            'role': 'user',
+            'content': 'Please summarize the following text:\n\n$text'
+          },
         ],
         'temperature': 0.2,
         'max_tokens': 1000,

@@ -1,8 +1,9 @@
-import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:convert' show utf8;
+import 'dart:typed_data' show Uint8List;
 
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
+import 'package:file_picker/file_picker.dart'
+    show FilePicker, FileType, PlatformFile;
+import 'package:flutter/foundation.dart' show debugPrint;
 
 class PickedFileResult {
   final String fileName;
@@ -28,7 +29,8 @@ class FileHelper {
 
       final PlatformFile file = files.first;
       final Uint8List bytes = await file.readAsBytes();
-      if (bytes.isEmpty) throw const FormatException('The selected file is empty.');
+      if (bytes.isEmpty)
+        throw const FormatException('The selected file is empty.');
 
       final content = _extractTextFromBytes(bytes, file.extension);
       return PickedFileResult(
@@ -43,7 +45,8 @@ class FileHelper {
   }
 
   static String _extractTextFromBytes(Uint8List bytes, String? extension) {
-    if (extension?.toLowerCase() == 'pdf') return _extractPdfTextFallback(bytes);
+    if (extension?.toLowerCase() == 'pdf')
+      return _extractPdfTextFallback(bytes);
     return utf8.decode(bytes, allowMalformed: true);
   }
 

@@ -1,7 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BorderRadius,
+        BoxDecoration,
+        BuildContext,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        FontWeight,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextOverflow,
+        TextStyle,
+        Theme,
+        Widget;
 
-import '../../../models/llm_provider_type.dart';
-import '../../../models/summary_run.dart';
+import '../../../models/llm_provider_type.dart' show LLMProviderTypeX;
+import '../../../models/summary_run.dart' show SummaryRun;
 
 class ComparisonRunHeader extends StatelessWidget {
   const ComparisonRunHeader({super.key, required this.run});

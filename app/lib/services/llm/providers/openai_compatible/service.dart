@@ -1,12 +1,12 @@
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show protected;
+import 'package:http/http.dart' as http show Client;
 
-import '../../../../models/llm_model_info.dart';
-import '../../../../models/summary_request.dart';
-import '../../../../models/summary_run.dart';
-import '../../llm_service_interface.dart';
-import 'model_client.dart';
-import 'summary_client.dart';
+import '../../../../models/llm_model_info.dart' show LLMModelInfo;
+import '../../../../models/summary_request.dart' show SummaryRequest;
+import '../../../../models/summary_run.dart' show SummaryRun;
+import '../../llm_service_interface.dart' show LLMServiceInterface;
+import 'model_client.dart' show OpenAiModelClient;
+import 'summary_client.dart' show OpenAiSummaryClient;
 
 abstract class OpenAiCompatibleService implements LLMServiceInterface {
   OpenAiCompatibleService({

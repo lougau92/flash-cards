@@ -1,5 +1,5 @@
-import '../../../../models/summary_request.dart';
-import '../../../../models/summary_run.dart';
+import '../../../../models/summary_request.dart' show SummaryRequest;
+import '../../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 
 class GeminiSummaryParser {
   static Map<String, dynamic> requestBody(SummaryRequest request) {
@@ -41,9 +41,11 @@ class GeminiSummaryParser {
     final output = _candidateText(candidate);
     if (output == null) {
       final feedback = payload['promptFeedback'];
-      final reason = feedback is Map ? feedback['blockReason']?.toString() : null;
+      final reason =
+          feedback is Map ? feedback['blockReason']?.toString() : null;
       final detail = reason == null ? '' : ' (blocked: $reason)';
-      return _failed(id, startedAt, request, timer, 'Google Gemini returned no text output$detail.');
+      return _failed(id, startedAt, request, timer,
+          'Google Gemini returned no text output$detail.');
     }
     return SummaryRun(
       id: id,

@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'dart:io';
+import 'dart:io' show Platform, stdout;
 
-import 'providers.dart';
+import 'providers.dart' show GroqCloudProvider, LlmProvider, MistralAiProvider;
 
 const _sampleText = '''
 The James Webb Space Telescope (JWST) is a space telescope designed primarily to

@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart'
+    show BuildContext, State, StatefulWidget, TextEditingController, Widget;
+import 'package:provider/provider.dart' show ReadContext;
 
-import '../../../core/constants/prompt_presets.dart';
-import '../../../state/runner/runner_notifier.dart';
-import 'form.dart';
+import '../../../core/constants/prompt_presets.dart' show PromptPreset;
+import '../../../state/runner/runner_notifier.dart' show RunnerNotifier;
+import 'form.dart' show PromptEditorForm;
 
 class PromptEditor extends StatefulWidget {
   const PromptEditor({super.key});
@@ -21,7 +22,8 @@ class _PromptEditorState extends State<PromptEditor> {
     super.initState();
     final runner = context.read<RunnerNotifier>();
     _systemController = TextEditingController(text: runner.systemPrompt);
-    _instructionController = TextEditingController(text: runner.instructionPrompt);
+    _instructionController =
+        TextEditingController(text: runner.instructionPrompt);
     _systemController.addListener(_onSystemPromptChanged);
     _instructionController.addListener(_onInstructionPromptChanged);
   }
@@ -31,7 +33,9 @@ class _PromptEditorState extends State<PromptEditor> {
   }
 
   void _onInstructionPromptChanged() {
-    context.read<RunnerNotifier>().setInstructionPrompt(_instructionController.text);
+    context
+        .read<RunnerNotifier>()
+        .setInstructionPrompt(_instructionController.text);
   }
 
   void _applyPreset(PromptPreset preset) {

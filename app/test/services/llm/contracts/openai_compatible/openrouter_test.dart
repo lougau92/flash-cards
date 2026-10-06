@@ -1,13 +1,15 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode, jsonEncode;
 
-import 'package:app/models/llm_provider_type.dart';
-import 'package:app/models/summary_run.dart';
-import 'package:app/services/llm/providers/openai_compatible/openrouter_service.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/testing.dart';
+import 'package:app/models/llm_provider_type.dart' show LLMProviderType;
+import 'package:app/models/summary_run.dart' show SummaryRunStatus;
+import 'package:app/services/llm/providers/openai_compatible/openrouter_service.dart'
+    show OpenRouterService;
+import 'package:flutter_test/flutter_test.dart'
+    show addTearDown, contains, expect, hasLength, test;
+import 'package:http/http.dart' as http show Request, Response;
+import 'package:http/testing.dart' show MockClient;
 
-import '../support.dart';
+import '../support.dart' show contractHeader, contractRequest;
 
 void main() {
   _modelListContract();
@@ -20,24 +22,28 @@ void _modelListContract() {
     late http.Request request;
     final client = MockClient((captured) async {
       request = captured;
-      return http.Response(jsonEncode({
-        'data': [
-          {
-            'id': 'research/model-a',
-            'name': 'Research Model A',
-            'context_length': 32000,
-            'pricing': {'prompt': '0.00003', 'completion': '0.00006'},
-            'architecture': {
-              'input_modalities': ['text'],
-              'output_modalities': ['text'],
-            },
-          },
-          {
-            'id': 'provider/embedding-model',
-            'architecture': {'output_modalities': ['embedding']},
-          },
-        ],
-      }), 200);
+      return http.Response(
+          jsonEncode({
+            'data': [
+              {
+                'id': 'research/model-a',
+                'name': 'Research Model A',
+                'context_length': 32000,
+                'pricing': {'prompt': '0.00003', 'completion': '0.00006'},
+                'architecture': {
+                  'input_modalities': ['text'],
+                  'output_modalities': ['text'],
+                },
+              },
+              {
+                'id': 'provider/embedding-model',
+                'architecture': {
+                  'output_modalities': ['embedding']
+                },
+              },
+            ],
+          }),
+          200);
     });
     final service = OpenRouterService(client: client);
     addTearDown(service.dispose);
@@ -45,13 +51,16 @@ void _modelListContract() {
     final models = await service.fetchAvailableModels('provider-test-key');
     expect(request.method, 'GET');
     expect(request.url, Uri.parse('https://openrouter.ai/api/v1/models'));
-    expect(contractHeader(request, 'authorization'), 'Bearer provider-test-key');
-    expect(contractHeader(request, 'HTTP-Referer'), 'https://github.com/dart-llm-tester');
+    expect(
+        contractHeader(request, 'authorization'), 'Bearer provider-test-key');
+    expect(contractHeader(request, 'HTTP-Referer'),
+        'https://github.com/dart-llm-tester');
     expect(contractHeader(request, 'X-Title'), 'LLM Summary Lab');
     expect(models, hasLength(1));
     expect(models.single.id, 'research/model-a');
     expect(models.single.maxContextTokens, 32000);
-    expect(models.single.costDescription, '\$30.00 / 1M input, \$60.00 / 1M output');
+    expect(models.single.costDescription,
+        '\$30.00 / 1M input, \$60.00 / 1M output');
   });
 }
 
@@ -60,13 +69,22 @@ void _summaryContract() {
     late http.Request request;
     final client = MockClient((captured) async {
       request = captured;
-      return http.Response(jsonEncode({
-        'model': 'provider-served-model',
-        'choices': [
-          {'finish_reason': 'stop', 'message': {'content': 'Summary text'}},
-        ],
-        'usage': {'prompt_tokens': 22, 'completion_tokens': 11, 'total_tokens': 33},
-      }), 200);
+      return http.Response(
+          jsonEncode({
+            'model': 'provider-served-model',
+            'choices': [
+              {
+                'finish_reason': 'stop',
+                'message': {'content': 'Summary text'}
+              },
+            ],
+            'usage': {
+              'prompt_tokens': 22,
+              'completion_tokens': 11,
+              'total_tokens': 33
+            },
+          }),
+          200);
     });
     final service = OpenRouterService(client: client);
     addTearDown(service.dispose);
@@ -75,14 +93,18 @@ void _summaryContract() {
       apiKey: 'provider-test-key',
       request: contractRequest(LLMProviderType.openRouter),
     );
-    expect(request.url, Uri.parse('https://openrouter.ai/api/v1/chat/completions'));
-    expect(contractHeader(request, 'authorization'), 'Bearer provider-test-key');
-    expect(contractHeader(request, 'HTTP-Referer'), 'https://github.com/dart-llm-tester');
+    expect(request.url,
+        Uri.parse('https://openrouter.ai/api/v1/chat/completions'));
+    expect(
+        contractHeader(request, 'authorization'), 'Bearer provider-test-key');
+    expect(contractHeader(request, 'HTTP-Referer'),
+        'https://github.com/dart-llm-tester');
     final body = jsonDecode(request.body) as Map<String, dynamic>;
     expect(body['model'], 'test-model');
     expect(body['temperature'], 0.35);
     expect(body['max_tokens'], 321);
-    expect(body['messages'][1]['content'], contains('Source text for the test.'));
+    expect(
+        body['messages'][1]['content'], contains('Source text for the test.'));
     expect(run.status, SummaryRunStatus.success);
     expect(run.outputText, 'Summary text');
     expect(run.tokenUsage?['total_tokens'], 33);
@@ -93,7 +115,9 @@ void _summaryContract() {
 void _errorContract() {
   test('returns non-2xx responses as failed runs', () async {
     final client = MockClient((_) async => http.Response(
-          jsonEncode({'error': {'message': 'request rejected'}}),
+          jsonEncode({
+            'error': {'message': 'request rejected'}
+          }),
           429,
         ));
     final service = OpenRouterService(client: client);

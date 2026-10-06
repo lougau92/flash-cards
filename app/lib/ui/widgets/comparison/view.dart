@@ -1,7 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        Axis,
+        BuildContext,
+        CrossAxisAlignment,
+        EdgeInsets,
+        Row,
+        SingleChildScrollView,
+        StatelessWidget,
+        Widget;
 
-import '../../../models/summary_run.dart';
-import 'column.dart';
+import '../../../models/summary_run.dart' show SummaryRun;
+import 'column.dart' show ComparisonColumn;
 
 class ComparisonView extends StatelessWidget {
   const ComparisonView({super.key, required this.runs});

@@ -1,8 +1,8 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode;
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http show get;
 
-import 'openai_compatible_provider.dart';
+import 'openai_compatible_provider.dart' show OpenAiCompatibleProvider;
 
 class OpenRouterProvider extends OpenAiCompatibleProvider {
   OpenRouterProvider(String apiKey)

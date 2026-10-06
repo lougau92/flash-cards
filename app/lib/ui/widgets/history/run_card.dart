@@ -1,8 +1,26 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BorderRadius,
+        BorderSide,
+        BuildContext,
+        Card,
+        Colors,
+        Column,
+        CrossAxisAlignment,
+        Divider,
+        EdgeInsets,
+        InkWell,
+        Padding,
+        RoundedRectangleBorder,
+        StatelessWidget,
+        Theme,
+        ValueChanged,
+        VoidCallback,
+        Widget;
 
-import '../../../models/summary_run.dart';
-import 'run_card_header.dart';
-import 'run_card_result.dart';
+import '../../../models/summary_run.dart' show SummaryRun;
+import 'run_card_header.dart' show RunCardHeader;
+import 'run_card_result.dart' show RunCardResult;
 
 class RunCard extends StatelessWidget {
   const RunCard({
@@ -29,7 +47,9 @@ class RunCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: isSelectedForComparison ? colorScheme.primary : Colors.transparent,
+          color: isSelectedForComparison
+              ? colorScheme.primary
+              : Colors.transparent,
           width: 2,
         ),
       ),

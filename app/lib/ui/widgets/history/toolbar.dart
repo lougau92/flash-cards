@@ -1,6 +1,27 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        AppBar,
+        Badge,
+        BuildContext,
+        Colors,
+        EdgeInsets,
+        Icon,
+        IconButton,
+        Icons,
+        ListTile,
+        MaterialPageRoute,
+        Navigator,
+        PopupMenuButton,
+        PopupMenuItem,
+        PreferredSizeWidget,
+        Size,
+        StatelessWidget,
+        Text,
+        VoidCallback,
+        Widget,
+        kToolbarHeight;
 
-import '../../screens/comparison/screen.dart';
+import '../../screens/comparison/screen.dart' show ComparisonScreen;
 
 class HistoryToolbar extends StatelessWidget implements PreferredSizeWidget {
   const HistoryToolbar({

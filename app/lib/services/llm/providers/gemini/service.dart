@@ -1,11 +1,11 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http show Client;
 
-import '../../../../models/llm_model_info.dart';
-import '../../../../models/summary_request.dart';
-import '../../../../models/summary_run.dart';
-import 'model_client.dart';
-import 'summary_client.dart';
-import '../../llm_service_interface.dart';
+import '../../../../models/llm_model_info.dart' show LLMModelInfo;
+import '../../../../models/summary_request.dart' show SummaryRequest;
+import '../../../../models/summary_run.dart' show SummaryRun;
+import 'model_client.dart' show GeminiModelClient;
+import 'summary_client.dart' show GeminiSummaryClient;
+import '../../llm_service_interface.dart' show LLMServiceInterface;
 
 class GeminiService implements LLMServiceInterface {
   GeminiService({http.Client? client})

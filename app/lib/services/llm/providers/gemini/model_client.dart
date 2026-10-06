@@ -1,9 +1,10 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http show Client, Response;
 
-import '../../../../models/llm_model_info.dart';
-import '../../../../models/llm_provider_type.dart';
-import 'error_helpers.dart';
-import '../../llm_service_helpers.dart';
+import '../../../../models/llm_model_info.dart' show LLMModelInfo;
+import '../../../../models/llm_provider_type.dart'
+    show LLMProviderType, LLMProviderTypeX;
+import 'error_helpers.dart' show redactGeminiKey;
+import '../../llm_service_helpers.dart' show apiErrorMessage, decodeJsonObject;
 
 class GeminiModelClient {
   GeminiModelClient(this._client);
@@ -47,7 +48,8 @@ class GeminiModelClient {
     }
     final payload = decodeJsonObject(response.body);
     final rawModels = payload['models'];
-    if (rawModels is! List) throw const FormatException('Gemini returned no model list.');
+    if (rawModels is! List)
+      throw const FormatException('Gemini returned no model list.');
     return _ModelPage(
       models: _parseModels(rawModels),
       nextPageToken: payload['nextPageToken']?.toString(),

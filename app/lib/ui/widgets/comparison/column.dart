@@ -1,10 +1,24 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        Border,
+        BorderRadius,
+        BoxDecoration,
+        BuildContext,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        SingleChildScrollView,
+        SizedBox,
+        StatelessWidget,
+        Theme,
+        Widget;
 
-import '../../../models/summary_run.dart';
-import 'output_panel.dart';
-import 'prompt_details.dart';
-import 'run_header.dart';
-import 'run_metrics.dart';
+import '../../../models/summary_run.dart' show SummaryRun;
+import 'output_panel.dart' show ComparisonOutputPanel;
+import 'prompt_details.dart' show ComparisonPromptDetails;
+import 'run_header.dart' show ComparisonRunHeader;
+import 'run_metrics.dart' show ComparisonRunMetrics;
 
 class ComparisonColumn extends StatelessWidget {
   const ComparisonColumn({super.key, required this.run});

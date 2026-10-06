@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show BuildContext, Column, SizedBox, StatelessWidget, Widget;
 
-import '../../../state/runner/runner_notifier.dart';
-import 'parameter_slider.dart';
+import '../../../state/runner/runner_notifier.dart' show RunnerNotifier;
+import 'parameter_slider.dart' show ParameterSlider;
 
 class GenerationParameterControls extends StatelessWidget {
   const GenerationParameterControls({super.key, required this.runner});

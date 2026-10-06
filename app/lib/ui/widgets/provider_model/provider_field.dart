@@ -1,6 +1,17 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        DropdownButtonFormField,
+        DropdownMenuItem,
+        InputDecoration,
+        StatelessWidget,
+        Text,
+        TextOverflow,
+        ValueChanged,
+        Widget;
 
-import '../../../models/llm_provider_type.dart';
+import '../../../models/llm_provider_type.dart'
+    show LLMProviderType, LLMProviderTypeX;
 
 class ProviderSelectorField extends StatelessWidget {
   const ProviderSelectorField({
@@ -13,7 +24,8 @@ class ProviderSelectorField extends StatelessWidget {
   final ValueChanged<LLMProviderType> onChanged;
 
   @override
-  Widget build(BuildContext context) => DropdownButtonFormField<LLMProviderType>(
+  Widget build(BuildContext context) =>
+      DropdownButtonFormField<LLMProviderType>(
         initialValue: value,
         isExpanded: true,
         decoration: const InputDecoration(labelText: 'Provider'),
@@ -21,7 +33,8 @@ class ProviderSelectorField extends StatelessWidget {
             .map(
               (provider) => DropdownMenuItem(
                 value: provider,
-                child: Text(provider.displayName, overflow: TextOverflow.ellipsis),
+                child:
+                    Text(provider.displayName, overflow: TextOverflow.ellipsis),
               ),
             )
             .toList(),

@@ -1,7 +1,31 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BorderRadius,
+        BoxDecoration,
+        BuildContext,
+        Checkbox,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        Expanded,
+        FontWeight,
+        Icon,
+        IconButton,
+        Icons,
+        Row,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextOverflow,
+        TextStyle,
+        Theme,
+        ValueChanged,
+        VoidCallback,
+        Widget;
 
-import '../../../models/llm_provider_type.dart';
-import '../../../models/summary_run.dart';
+import '../../../models/llm_provider_type.dart' show LLMProviderTypeX;
+import '../../../models/summary_run.dart' show SummaryRun;
 
 class RunCardHeader extends StatelessWidget {
   const RunCardHeader({
@@ -26,10 +50,14 @@ class RunCardHeader extends StatelessWidget {
         : '${run.request.targetModelId} → ${run.servedModelId}';
     return Row(
       children: [
-        Checkbox(value: selected, onChanged: onSelected, activeColor: colors.primary),
+        Checkbox(
+            value: selected,
+            onChanged: onSelected,
+            activeColor: colors.primary),
         Expanded(child: _ProviderAndModel(run: run, modelLabel: modelLabel)),
         IconButton(
-          icon: Icon(Icons.delete_outline, size: 20, color: colors.onSurfaceVariant),
+          icon: Icon(Icons.delete_outline,
+              size: 20, color: colors.onSurfaceVariant),
           onPressed: onDelete,
           tooltip: 'Delete Run',
         ),
@@ -71,7 +99,8 @@ class _ProviderAndModel extends StatelessWidget {
             Expanded(
               child: Text(
                 modelLabel,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
               ),
             ),

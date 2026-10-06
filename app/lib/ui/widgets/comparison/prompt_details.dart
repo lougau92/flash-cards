@@ -1,6 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        Border,
+        BorderRadius,
+        BoxDecoration,
+        BuildContext,
+        Column,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        FontWeight,
+        SelectableText,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextStyle,
+        Theme,
+        Widget;
 
-import '../../../models/summary_run.dart';
+import '../../../models/summary_run.dart' show SummaryRun;
 
 class ComparisonPromptDetails extends StatelessWidget {
   const ComparisonPromptDetails({super.key, required this.run});
@@ -75,7 +92,8 @@ class _TextPanel extends StatelessWidget {
             Text(caption!, style: theme.textTheme.labelSmall),
             const SizedBox(height: 4),
           ],
-          SelectableText(text, maxLines: maxLines, style: const TextStyle(fontSize: 12)),
+          SelectableText(text,
+              maxLines: maxLines, style: const TextStyle(fontSize: 12)),
         ],
       ),
     );

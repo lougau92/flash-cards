@@ -1,7 +1,39 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        CircularProgressIndicator,
+        Colors,
+        Column,
+        CrossAxisAlignment,
+        Divider,
+        EdgeInsets,
+        Expanded,
+        FilledButton,
+        FontWeight,
+        Icon,
+        IconButton,
+        Icons,
+        InputDecoration,
+        MainAxisSize,
+        MediaQuery,
+        OutlineInputBorder,
+        Padding,
+        Row,
+        SingleChildScrollView,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextEditingController,
+        TextField,
+        TextStyle,
+        Theme,
+        ValueChanged,
+        VoidCallback,
+        Widget;
 
-import '../../../models/llm_provider_type.dart';
-import '../../../state/settings_notifier.dart';
+import '../../../models/llm_provider_type.dart'
+    show LLMProviderType, LLMProviderTypeX;
+import '../../../state/settings_notifier.dart' show SettingsNotifier;
 
 class ApiKeySettingsForm extends StatelessWidget {
   const ApiKeySettingsForm({
@@ -92,7 +124,8 @@ class _LoadError extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
-        child: Text(message, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+        child: Text(message,
+            style: TextStyle(color: Theme.of(context).colorScheme.error)),
       );
 }
 
@@ -124,7 +157,8 @@ class _ProviderKeyField extends StatelessWidget {
             helperText: _helperText(),
             border: const OutlineInputBorder(),
             suffixIcon: IconButton(
-              icon: Icon(revealed ? Icons.visibility_off : Icons.visibility, size: 20),
+              icon: Icon(revealed ? Icons.visibility_off : Icons.visibility,
+                  size: 20),
               onPressed: onToggleReveal,
             ),
           ),

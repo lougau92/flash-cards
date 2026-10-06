@@ -1,7 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../models/llm_provider_type.dart';
+import 'package:flutter/foundation.dart' show ChangeNotifier, debugPrint;
+import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
+import '../models/llm_provider_type.dart'
+    show LLMProviderType, LLMProviderTypeX;
 
 class SettingsNotifier extends ChangeNotifier {
   final Map<LLMProviderType, String> _apiKeys = {};
@@ -12,7 +14,8 @@ class SettingsNotifier extends ChangeNotifier {
   bool get isLoaded => _isLoaded;
   String? get loadError => _loadError;
 
-  bool usesBuiltInApiKey(LLMProviderType provider) => _builtInKeys.contains(provider);
+  bool usesBuiltInApiKey(LLMProviderType provider) =>
+      _builtInKeys.contains(provider);
 
   String getApiKey(LLMProviderType provider) {
     return _apiKeys[provider] ?? '';
@@ -56,7 +59,8 @@ class SettingsNotifier extends ChangeNotifier {
         entry.value.trim(),
       );
       if (!saved) {
-        throw StateError('Could not save the ${entry.key.displayName} API key.');
+        throw StateError(
+            'Could not save the ${entry.key.displayName} API key.');
       }
     }
     for (final entry in keys.entries) {

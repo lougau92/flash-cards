@@ -1,15 +1,17 @@
-import 'dart:async';
-import 'dart:convert';
+import 'dart:async' show TimeoutException;
+import 'dart:convert' show jsonEncode;
 
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show debugPrint;
+import 'package:http/http.dart' as http show Client, Response;
 
-import '../../../../models/llm_provider_type.dart';
-import '../../../../models/summary_request.dart';
-import '../../../../models/summary_run.dart';
-import 'error_helpers.dart';
-import 'summary_parser.dart';
-import '../../llm_service_helpers.dart';
+import '../../../../models/llm_provider_type.dart'
+    show LLMProviderType, LLMProviderTypeX;
+import '../../../../models/summary_request.dart' show SummaryRequest;
+import '../../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
+import 'error_helpers.dart' show redactGeminiKey;
+import 'summary_parser.dart' show GeminiSummaryParser;
+import '../../llm_service_helpers.dart'
+    show apiErrorMessage, decodeJsonObject, newRunId;
 
 class GeminiSummaryClient {
   GeminiSummaryClient(this._client);
@@ -33,7 +35,8 @@ class GeminiSummaryClient {
           statusCode: response.statusCode,
           body: response.body,
         );
-        return _failure(id, startedAt, request, timer, redactGeminiKey(message, apiKey));
+        return _failure(
+            id, startedAt, request, timer, redactGeminiKey(message, apiKey));
       }
       return GeminiSummaryParser.parse(
         id: id,

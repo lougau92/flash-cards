@@ -1,4 +1,38 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        Align,
+        Alignment,
+        BorderRadius,
+        BuildContext,
+        Card,
+        Chip,
+        Colors,
+        Column,
+        CrossAxisAlignment,
+        EdgeInsets,
+        FontWeight,
+        Icon,
+        IconButton,
+        Icons,
+        InputDecoration,
+        LayoutBuilder,
+        MainAxisAlignment,
+        MainAxisSize,
+        OutlineInputBorder,
+        OutlinedButton,
+        Padding,
+        RoundedRectangleBorder,
+        Row,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        TextEditingController,
+        TextField,
+        TextOverflow,
+        TextStyle,
+        Theme,
+        VoidCallback,
+        Widget;
 
 class InputSourceContent extends StatelessWidget {
   const InputSourceContent({
@@ -82,7 +116,10 @@ class InputSourceHeader extends StatelessWidget {
         return constraints.maxWidth < 360
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [_title(), Align(alignment: Alignment.centerRight, child: actions)],
+                children: [
+                  _title(),
+                  Align(alignment: Alignment.centerRight, child: actions)
+                ],
               )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

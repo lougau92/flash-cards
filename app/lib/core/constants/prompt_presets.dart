@@ -13,8 +13,7 @@ class PromptPreset {
 abstract final class PromptPresets {
   static const defaultSystemPrompt =
       'You are an expert concise technical summarizer.';
-  static const defaultInstructionPrompt =
-      'Extract from the following text:\n'
+  static const defaultInstructionPrompt = 'Extract from the following text:\n'
       '- 3 key takeaways\n'
       '- 5 meaningful facts to share with a friend or colleague.';
 
