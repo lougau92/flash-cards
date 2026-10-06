@@ -1,4 +1,4 @@
-import 'package:app/app.dart' show App;
+import 'package:app/ui/app.dart' show App;
 import 'package:app/models/summary_run.dart' show SummaryRun;
 import 'package:app/services/storage/storage_service_interface.dart'
     show StorageServiceInterface;

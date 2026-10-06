@@ -16,9 +16,9 @@ import 'package:flutter/material.dart'
         ThemeMode,
         VoidCallback,
         Widget;
-import 'services/storage/storage_service_interface.dart'
+import '../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
-import 'ui/screens/main_layout_screen.dart' show MainLayoutScreen;
+import 'screens/main_layout_screen.dart' show MainLayoutScreen;
 
 class App extends StatelessWidget {
   final StorageServiceInterface storageService;

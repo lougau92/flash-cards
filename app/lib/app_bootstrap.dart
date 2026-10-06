@@ -3,12 +3,12 @@ import 'package:flutter/material.dart'
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
 
-import 'app.dart' show App;
-import 'app_provider_scope.dart' show AppProviderScope;
 import 'models/llm_provider_type.dart' show LLMProviderType;
 import 'services/storage/local_run_storage.dart' show LocalRunStorage;
 import 'services/storage/supabase_run_storage.dart' show SupabaseRunStorage;
 import 'state/settings_notifier.dart' show SettingsNotifier;
+import 'ui/app.dart' show App;
+import 'ui/app_provider_scope.dart' show AppProviderScope;
 import 'ui/screens/supabase_auth_gate.dart' show SupabaseAuthGate;
 
 abstract final class AppBootstrap {

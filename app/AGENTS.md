@@ -32,3 +32,6 @@ not make an oversized unit larger.
 - Keep secrets out of source control. Read development API keys from the
   configured `.env` asset and never include key values in logs or test output.
 - Preserve cross-platform behavior, especially for file picking and storage.
+- Put all UI code under `lib/ui/`, including app shells, screens, widgets, and
+  UI composition widgets. Keep services, state, models, and startup-only
+  bootstrap code in their corresponding non-UI folders.

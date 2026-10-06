@@ -3,12 +3,12 @@ import 'package:provider/provider.dart'
 import 'package:flutter/widgets.dart'
     show BuildContext, StatelessWidget, Widget;
 
-import 'models/llm_provider_type.dart' show LLMProviderType;
-import 'services/storage/storage_service_interface.dart'
+import '../models/llm_provider_type.dart' show LLMProviderType;
+import '../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
-import 'state/history_notifier.dart' show HistoryNotifier;
-import 'state/runner/runner_notifier.dart' show RunnerNotifier;
-import 'state/settings_notifier.dart' show SettingsNotifier;
+import '../state/history_notifier.dart' show HistoryNotifier;
+import '../state/runner/runner_notifier.dart' show RunnerNotifier;
+import '../state/settings_notifier.dart' show SettingsNotifier;
 
 class AppProviderScope extends StatelessWidget {
   const AppProviderScope({

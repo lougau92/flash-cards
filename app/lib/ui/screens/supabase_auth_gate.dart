@@ -4,8 +4,8 @@ import 'package:flutter/material.dart'
     show BuildContext, State, StatefulWidget, Widget;
 import 'package:supabase_flutter/supabase_flutter.dart' show SupabaseClient;
 
-import '../../app.dart' show App;
-import '../../app_provider_scope.dart' show AppProviderScope;
+import '../app.dart' show App;
+import '../app_provider_scope.dart' show AppProviderScope;
 import '../../models/llm_provider_type.dart' show LLMProviderType;
 import '../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
