@@ -1,6 +1,7 @@
 import 'dart:async' show unawaited;
 
 import 'package:flutter/foundation.dart' show ChangeNotifier, debugPrint;
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
@@ -13,9 +14,11 @@ class SettingsNotifier extends ChangeNotifier {
   final Set<LLMProviderType> _builtInKeys = {};
   bool _isLoaded = false;
   String? _loadError;
+  ThemeMode _themeMode = ThemeMode.light;
 
   bool get isLoaded => _isLoaded;
   String? get loadError => _loadError;
+  ThemeMode get themeMode => _themeMode;
 
   bool usesBuiltInApiKey(LLMProviderType provider) =>
       _builtInKeys.contains(provider);
@@ -34,6 +37,9 @@ class SettingsNotifier extends ChangeNotifier {
 
     try {
       final preferences = await SharedPreferences.getInstance();
+      _themeMode = preferences.getBool('use_dark_theme') == true
+          ? ThemeMode.dark
+          : ThemeMode.light;
       for (final provider in LLMProviderType.values) {
         final keyName = _keyFor(provider);
         final savedKey = preferences.getString(keyName)?.trim() ?? '';
@@ -58,6 +64,19 @@ class SettingsNotifier extends ChangeNotifier {
 
   Future<void> setApiKey(LLMProviderType provider, String key) =>
       setApiKeys({provider: key});
+
+  Future<void> toggleThemeMode() async {
+    final nextMode = _themeMode == ThemeMode.light
+        ? ThemeMode.dark
+        : ThemeMode.light;
+    final saved = await (await SharedPreferences.getInstance()).setBool(
+      'use_dark_theme',
+      nextMode == ThemeMode.dark,
+    );
+    if (!saved) throw StateError('Could not save the theme preference.');
+    _themeMode = nextMode;
+    notifyListeners();
+  }
 
   Future<void> setApiKeys(Map<LLMProviderType, String> keys) async {
     final preferences = await SharedPreferences.getInstance();

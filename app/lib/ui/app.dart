@@ -13,11 +13,12 @@ import 'package:flutter/material.dart'
         RoundedRectangleBorder,
         StatelessWidget,
         ThemeData,
-        ThemeMode,
         VoidCallback,
         Widget;
+import 'package:provider/provider.dart' show Consumer;
 import '../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
+import '../state/settings_notifier.dart' show SettingsNotifier;
 import 'screens/main_layout_screen.dart' show MainLayoutScreen;
 
 class App extends StatelessWidget {
@@ -34,55 +35,57 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'LLM Summary Lab',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF087F8C),
-          brightness: Brightness.light,
-        ),
-        cardTheme: CardThemeData(
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+    return Consumer<SettingsNotifier>(
+      builder: (context, settings, _) => MaterialApp(
+        title: 'LLM Summary Lab',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF087F8C),
+            brightness: Brightness.light,
+          ),
+          cardTheme: CardThemeData(
+            elevation: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           ),
         ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFD0BCFF),
+            brightness: Brightness.dark,
           ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          cardTheme: CardThemeData(
+            elevation: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          ),
         ),
+        themeMode: settings.themeMode,
+        home: home ??
+            MainLayoutScreen(
+              storageService: storageService,
+              onSignOut: onSignOut,
+            ),
       ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFD0BCFF),
-          brightness: Brightness.dark,
-        ),
-        cardTheme: CardThemeData(
-          elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        ),
-      ),
-      themeMode: ThemeMode.system,
-      home: home ??
-          MainLayoutScreen(
-            storageService: storageService,
-            onSignOut: onSignOut,
-          ),
     );
   }
 }
