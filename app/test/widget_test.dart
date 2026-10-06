@@ -2,7 +2,7 @@ import 'package:app/app.dart';
 import 'package:app/models/summary_run.dart';
 import 'package:app/services/storage/storage_service_interface.dart';
 import 'package:app/state/history_notifier.dart';
-import 'package:app/state/runner_notifier.dart';
+import 'package:app/state/runner/runner_notifier.dart';
 import 'package:app/state/settings_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

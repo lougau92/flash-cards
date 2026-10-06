@@ -5,7 +5,7 @@ import 'app.dart';
 import 'models/llm_provider_type.dart';
 import 'services/storage/local_run_storage.dart';
 import 'state/history_notifier.dart';
-import 'state/runner_notifier.dart';
+import 'state/runner/runner_notifier.dart';
 import 'state/settings_notifier.dart';
 
 void main() async {
