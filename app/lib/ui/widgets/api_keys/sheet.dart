@@ -18,10 +18,13 @@ import 'package:flutter/material.dart'
 import 'package:provider/provider.dart' show ReadContext, WatchContext;
 import '../../../models/llm_provider_type.dart' show LLMProviderType;
 import '../../../services/diagnostics/app_error_log.dart' show AppErrorLog;
+import '../../../services/feedback/feedback_sender.dart' show FeedbackSender;
 import '../../../state/settings_notifier.dart' show SettingsNotifier;
+import '../../screens/feedback/sheet.dart' show showFeedbackSheet;
 import 'form.dart' show ApiKeySettingsForm;
 
 Future<void> showApiKeySettingsSheet(BuildContext context) {
+  final sender = context.read<FeedbackSender>();
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -29,12 +32,14 @@ Future<void> showApiKeySettingsSheet(BuildContext context) {
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
-    builder: (_) => const ApiKeySettingsSheet(),
+    builder: (_) => ApiKeySettingsSheet(feedbackSender: sender),
   );
 }
 
 class ApiKeySettingsSheet extends StatefulWidget {
-  const ApiKeySettingsSheet({super.key});
+  const ApiKeySettingsSheet({super.key, required this.feedbackSender});
+
+  final FeedbackSender feedbackSender;
 
   @override
   State<ApiKeySettingsSheet> createState() => _ApiKeySettingsSheetState();
@@ -106,6 +111,10 @@ class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
       onToggleReveal: _toggleReveal,
       onSave: _saveAll,
       onClose: () => Navigator.of(context).pop(),
+      onFeedback: () => showFeedbackSheet(
+        context,
+        sender: widget.feedbackSender,
+      ),
     );
   }
 }

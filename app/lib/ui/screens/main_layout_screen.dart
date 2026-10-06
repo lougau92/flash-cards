@@ -16,9 +16,12 @@ import 'package:flutter/material.dart'
         TextStyle,
         VoidCallback,
         Widget;
+import 'package:provider/provider.dart' show ReadContext;
 import '../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
 import '../widgets/api_keys/sheet.dart' show showApiKeySettingsSheet;
+import '../../services/feedback/feedback_sender.dart' show FeedbackSender;
+import 'feedback/sheet.dart' show feedbackButton;
 import 'history/screen.dart' show HistoryScreen;
 import 'error_log/screen.dart' show errorLogButton;
 import 'runner_screen.dart' show RunnerScreen;
@@ -85,7 +88,8 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
   }
 
   List<Widget> _appBarActions(BuildContext context) => [
-        errorLogButton(context),
+        errorLogButton(context, context.read<FeedbackSender>()),
+        feedbackButton(context, sender: context.read<FeedbackSender>()),
         IconButton(
           icon: const Icon(Icons.vpn_key_outlined),
           tooltip: 'Configure API Keys',

@@ -26,18 +26,25 @@ import 'package:flutter/material.dart'
         showDialog;
 
 import '../../../services/diagnostics/app_error_log.dart' show AppErrorLog;
+import '../../../services/feedback/feedback_sender.dart' show FeedbackSender;
+import '../feedback/sheet.dart' show feedbackButton;
 import 'entry_card.dart' show ErrorEntryCard;
 
-Widget errorLogButton(BuildContext context) => IconButton(
+Widget errorLogButton(BuildContext context, FeedbackSender sender) =>
+    IconButton(
       icon: const Icon(Icons.bug_report_outlined),
       tooltip: 'View app errors',
       onPressed: () => Navigator.of(context).push<void>(
-        MaterialPageRoute<void>(builder: (_) => const ErrorLogScreen()),
+        MaterialPageRoute<void>(
+          builder: (_) => ErrorLogScreen(feedbackSender: sender),
+        ),
       ),
     );
 
 class ErrorLogScreen extends StatelessWidget {
-  const ErrorLogScreen({super.key});
+  const ErrorLogScreen({super.key, required this.feedbackSender});
+
+  final FeedbackSender feedbackSender;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +55,7 @@ class ErrorLogScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Error log (${log.entries.length})'),
           actions: [
+            feedbackButton(context, sender: feedbackSender),
             IconButton(
               tooltip: 'Export errors as JSON',
               onPressed: log.entries.isEmpty ? null : () => _export(context),

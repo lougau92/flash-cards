@@ -45,6 +45,7 @@ class ApiKeySettingsForm extends StatelessWidget {
     required this.onToggleReveal,
     required this.onSave,
     required this.onClose,
+    required this.onFeedback,
   });
 
   final SettingsNotifier settings;
@@ -54,6 +55,7 @@ class ApiKeySettingsForm extends StatelessWidget {
   final ValueChanged<LLMProviderType> onToggleReveal;
   final VoidCallback onSave;
   final VoidCallback onClose;
+  final VoidCallback onFeedback;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -68,7 +70,7 @@ class ApiKeySettingsForm extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _SettingsHeader(onClose: onClose),
+              _SettingsHeader(onClose: onClose, onFeedback: onFeedback),
               const _SecurityNote(),
               if (settings.loadError case final error?)
                 _LoadError(message: error),
@@ -89,8 +91,9 @@ class ApiKeySettingsForm extends StatelessWidget {
 }
 
 class _SettingsHeader extends StatelessWidget {
-  const _SettingsHeader({required this.onClose});
+  const _SettingsHeader({required this.onClose, required this.onFeedback});
   final VoidCallback onClose;
+  final VoidCallback onFeedback;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -100,6 +103,11 @@ class _SettingsHeader extends StatelessWidget {
               'API Key Settings',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.feedback_outlined),
+            tooltip: 'Send feedback',
+            onPressed: onFeedback,
           ),
           IconButton(icon: const Icon(Icons.close), onPressed: onClose),
         ],

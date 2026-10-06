@@ -28,12 +28,19 @@ import 'package:flutter/material.dart'
 import 'package:supabase_flutter/supabase_flutter.dart' show SupabaseClient;
 
 import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
+import '../../services/feedback/feedback_sender.dart' show FeedbackSender;
 import 'error_log/screen.dart' show errorLogButton;
+import 'feedback/sheet.dart' show feedbackButton;
 
 class SupabaseAuthScreen extends StatefulWidget {
-  const SupabaseAuthScreen({super.key, required this.client});
+  const SupabaseAuthScreen({
+    super.key,
+    required this.client,
+    required this.feedbackSender,
+  });
 
   final SupabaseClient client;
+  final FeedbackSender feedbackSender;
 
   @override
   State<SupabaseAuthScreen> createState() => _SupabaseAuthScreenState();
@@ -102,7 +109,10 @@ class _SupabaseAuthScreenState extends State<SupabaseAuthScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        actions: [errorLogButton(context)],
+        actions: [
+          errorLogButton(context, widget.feedbackSender),
+          feedbackButton(context, sender: widget.feedbackSender),
+        ],
       ),
       body: Center(
         child: SingleChildScrollView(

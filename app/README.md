@@ -38,10 +38,11 @@ are set in `.env`. For remote history:
 1. Create a Supabase project and copy its project URL and publishable API key
    into those two `.env` entries. Never put a Supabase secret API key in this
    Flutter app; secret keys belong only in trusted server environments.
-2. Run `supabase/migrations/202610060001_create_summary_runs.sql` in the
-   Supabase SQL editor.
-3. Enable email/password sign-in in Supabase Auth. Create an account in the app
-   and sign in with the same account on each device that should share history.
+2. Run both SQL migrations in `supabase/migrations` in the Supabase SQL editor.
+3. Enable email/password sign-in in Supabase Auth. Enable anonymous sign-ins
+   too, so people can submit feedback from the sign-in screen without creating
+   an account. Consider enabling CAPTCHA to reduce anonymous sign-in abuse.
+   Sign in with the same account on each device that should share history.
 
 The migration enables row-level security and limits every run operation to the
 signed-in owner. Run records include full source text, prompts, and summaries,
@@ -50,6 +51,10 @@ research policy. A local `.env` is ignored by Git; the public Supabase key is
 still bundled into the client, where it is protected by Auth and database
 policies rather than secrecy. Supabase secret API keys bypass row-level
 security and must remain on a trusted backend.
+
+Feedback is stored in the `app_feedback` table with row-level security. Signed-in
+users and anonymous users can submit feedback; the app cannot read or edit the
+inbox. Anonymous feedback sessions are created on first submission.
 
 ## Model catalog
 

@@ -7,6 +7,9 @@ import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
 
 import 'models/llm_provider_type.dart' show LLMProviderType;
 import 'services/diagnostics/app_error_log.dart' show AppErrorLog;
+import 'services/feedback/feedback_sender.dart' show UnavailableFeedbackSender;
+import 'services/feedback/supabase_feedback_service.dart'
+    show SupabaseFeedbackService;
 import 'services/storage/local_run_storage.dart' show LocalRunStorage;
 import 'services/storage/supabase_run_storage.dart' show SupabaseRunStorage;
 import 'state/settings_notifier.dart' show SettingsNotifier;
@@ -68,6 +71,7 @@ abstract final class AppBootstrap {
     runApp(
       AppProviderScope(
         storageService: storage,
+        feedbackSender: const UnavailableFeedbackSender(),
         settingsNotifier: settings,
         initialProvider: _initialProvider(settings),
         child: App(storageService: storage),
@@ -83,10 +87,12 @@ abstract final class AppBootstrap {
       publishableKey: configuration.publishableKey,
     );
     final client = Supabase.instance.client;
+    final feedbackSender = SupabaseFeedbackService(client);
     final settings = await _loadSettings();
     runApp(
       SupabaseAuthGate(
         client: client,
+        feedbackSender: feedbackSender,
         storageService: SupabaseRunStorage(client),
         settingsNotifier: settings,
         initialProvider: _initialProvider(settings),

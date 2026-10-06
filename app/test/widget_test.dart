@@ -2,6 +2,8 @@ import 'package:app/ui/app.dart' show App;
 import 'package:app/models/summary_run.dart' show SummaryRun;
 import 'package:app/services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
+import 'package:app/services/feedback/feedback_sender.dart'
+    show FeedbackSender, UnavailableFeedbackSender;
 import 'package:app/state/history_notifier.dart' show HistoryNotifier;
 import 'package:app/state/runner/runner_notifier.dart' show RunnerNotifier;
 import 'package:app/state/settings_notifier.dart' show SettingsNotifier;
@@ -9,7 +11,7 @@ import 'package:flutter/material.dart' show Icons, Size;
 import 'package:flutter_test/flutter_test.dart'
     show addTearDown, expect, find, findsOneWidget, isNull, testWidgets;
 import 'package:provider/provider.dart'
-    show ChangeNotifierProvider, MultiProvider;
+    show ChangeNotifierProvider, MultiProvider, Provider;
 
 class _MemoryStorage implements StorageServiceInterface {
   final List<SummaryRun> runs = [];
@@ -50,6 +52,9 @@ void main() {
           ChangeNotifierProvider<RunnerNotifier>.value(value: runner),
           ChangeNotifierProvider<HistoryNotifier>.value(value: history),
           ChangeNotifierProvider(create: (_) => SettingsNotifier()),
+          Provider<FeedbackSender>.value(
+            value: const UnavailableFeedbackSender(),
+          ),
         ],
         child: App(storageService: storage),
       ),

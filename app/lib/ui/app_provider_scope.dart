@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart'
 import '../models/llm_provider_type.dart' show LLMProviderType;
 import '../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
+import '../services/feedback/feedback_sender.dart' show FeedbackSender;
 import '../state/history_notifier.dart' show HistoryNotifier;
 import '../state/runner/runner_notifier.dart' show RunnerNotifier;
 import '../state/settings_notifier.dart' show SettingsNotifier;
@@ -14,12 +15,14 @@ class AppProviderScope extends StatelessWidget {
   const AppProviderScope({
     super.key,
     required this.storageService,
+    required this.feedbackSender,
     required this.settingsNotifier,
     required this.initialProvider,
     required this.child,
   });
 
   final StorageServiceInterface storageService;
+  final FeedbackSender feedbackSender;
   final SettingsNotifier settingsNotifier;
   final LLMProviderType initialProvider;
   final Widget child;
@@ -33,6 +36,7 @@ class AppProviderScope extends StatelessWidget {
           ),
           ChangeNotifierProvider(create: (_) => HistoryNotifier()),
           Provider<StorageServiceInterface>.value(value: storageService),
+          Provider<FeedbackSender>.value(value: feedbackSender),
         ],
         child: child,
       );
