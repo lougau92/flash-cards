@@ -62,9 +62,12 @@ class _SupabaseAuthGateState extends State<SupabaseAuthGate> {
   @override
   Widget build(BuildContext context) {
     if (!_hasAccount) {
-      return SupabaseAuthScreen(
-        client: widget.client,
-        feedbackSender: widget.feedbackSender,
+      return App(
+        storageService: widget.storageService,
+        home: SupabaseAuthScreen(
+          client: widget.client,
+          feedbackSender: widget.feedbackSender,
+        ),
       );
     }
     return AppProviderScope(

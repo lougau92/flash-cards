@@ -21,10 +21,16 @@ import '../services/storage/storage_service_interface.dart'
 import 'screens/main_layout_screen.dart' show MainLayoutScreen;
 
 class App extends StatelessWidget {
+  const App({
+    super.key,
+    required this.storageService,
+    this.onSignOut,
+    this.home,
+  });
+
   final StorageServiceInterface storageService;
   final VoidCallback? onSignOut;
-
-  const App({super.key, required this.storageService, this.onSignOut});
+  final Widget? home;
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +78,11 @@ class App extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      home: MainLayoutScreen(
-        storageService: storageService,
-        onSignOut: onSignOut,
-      ),
+      home: home ??
+          MainLayoutScreen(
+            storageService: storageService,
+            onSignOut: onSignOut,
+          ),
     );
   }
 }
