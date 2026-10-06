@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart'
-    show BuildContext, LinearProgressIndicator, StatelessWidget, Widget;
+    show
+        BuildContext,
+        LinearProgressIndicator,
+        StatelessWidget,
+        ValueKey,
+        Widget;
 
 import '../../../state/runner/runner_notifier.dart'
     show RunnerNotifier, RunnerProviderActions;
+import '../../../models/llm_provider_type.dart' show LLMProviderType;
 import '../api_keys/sheet.dart' show showApiKeySettingsSheet;
 import 'load_message.dart' show ModelLoadMessage;
 import 'model_field.dart' show ModelSelectorField;
@@ -37,9 +43,11 @@ class ModelAvailabilitySection extends StatelessWidget {
       );
     }
     return ModelSelectorField(
+      key: ValueKey(runner.selectedProvider),
       providerName: runner.selectedProvider.name,
       models: runner.availableModels,
       selectedModel: runner.selectedModel,
+      isOpenRouter: runner.selectedProvider == LLMProviderType.openRouter,
       onChanged: runner.setSelectedModel,
     );
   }

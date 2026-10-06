@@ -29,9 +29,10 @@ void _modelListContract() {
                 'id': 'research/model-a',
                 'name': 'Research Model A',
                 'context_length': 32000,
+                'created': 1740000000,
                 'pricing': {'prompt': '0.00003', 'completion': '0.00006'},
                 'architecture': {
-                  'input_modalities': ['text'],
+                  'input_modalities': ['text', 'image'],
                   'output_modalities': ['text'],
                 },
               },
@@ -59,6 +60,12 @@ void _modelListContract() {
     expect(models, hasLength(1));
     expect(models.single.id, 'research/model-a');
     expect(models.single.maxContextTokens, 32000);
+    expect(models.single.inputModalities, ['text', 'image']);
+    expect(models.single.outputModalities, ['text']);
+    expect(models.single.listedAt,
+        DateTime.fromMillisecondsSinceEpoch(1740000000000, isUtc: true));
+    expect(models.single.inputCostPerMillion, 30);
+    expect(models.single.outputCostPerMillion, 60);
     expect(models.single.costDescription,
         '\$30.00 / 1M input, \$60.00 / 1M output');
   });

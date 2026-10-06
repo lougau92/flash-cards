@@ -25,13 +25,37 @@ class OpenAiModelParser {
     final context = model['context_length'] ??
         model['context_window'] ??
         model['max_context_length'];
+    final architecture = model['architecture'];
+    final created = model['created'];
     return LLMModelInfo(
       id: id,
       displayName: model['name']?.toString() ?? id,
       maxContextTokens: context is num ? context.toInt() : null,
       costDescription: _priceDescription(free, input, output),
       isFree: free,
+      listedAt: created is num
+          ? DateTime.fromMillisecondsSinceEpoch(
+              created.toInt() * 1000,
+              isUtc: true,
+            )
+          : null,
+      parameterCount: _parameterCount(model),
+      inputModalities: _modalities(architecture, 'input_modalities'),
+      outputModalities: _modalities(architecture, 'output_modalities'),
+      inputCostPerMillion: input,
+      outputCostPerMillion: output,
     );
+  }
+
+  static int? _parameterCount(Map model) {
+    final value = model['parameter_count'] ?? model['parameters'];
+    if (value is num) return value.toInt();
+    return int.tryParse('$value');
+  }
+
+  static List<String> _modalities(dynamic architecture, String key) {
+    if (architecture is! Map || architecture[key] is! List) return const [];
+    return (architecture[key] as List).whereType<String>().toList();
   }
 
   static bool _supportsTextModality(Map model) {

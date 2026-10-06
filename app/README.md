@@ -43,6 +43,11 @@ are set in `.env`. For remote history:
 3. Enable email/password sign-in in Supabase Auth. Create an account in the app
    and sign in with the same account on each device that should share history.
 
+The model picker can sort by name and by metadata returned from a provider,
+such as modality, context size, catalog date, and price. OpenRouter shows free
+models by default; use **Include paid models** to add paid options. A sort field
+is offered only when the loaded model list includes that metadata.
+
 The migration enables row-level security and limits every run operation to the
 signed-in owner. Run records include full source text, prompts, and summaries,
 so only use remote history for data approved for your Supabase project and
