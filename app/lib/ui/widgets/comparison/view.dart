@@ -4,6 +4,7 @@ import 'package:flutter/material.dart'
         BuildContext,
         CrossAxisAlignment,
         EdgeInsets,
+        LayoutBuilder,
         Row,
         SingleChildScrollView,
         StatelessWidget,
@@ -18,14 +19,23 @@ class ComparisonView extends StatelessWidget {
   final List<SummaryRun> runs;
 
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.all(12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: runs.map((run) => ComparisonColumn(run: run)).toList(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => LayoutBuilder(
+        builder: (context, constraints) {
+          final columnWidth =
+              (constraints.maxWidth - 36).clamp(240.0, 320.0).toDouble();
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: runs
+                  .map((run) => ComparisonColumn(
+                        run: run,
+                        width: columnWidth,
+                      ))
+                  .toList(),
+            ),
+          );
+        },
+      );
 }

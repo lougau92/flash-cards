@@ -4,16 +4,23 @@ import 'package:flutter/material.dart'
         BuildContext,
         FontWeight,
         Icon,
-        IconButton,
+        IconData,
         Icons,
         IndexedStack,
+        MaterialPageRoute,
         NavigationBar,
         NavigationDestination,
+        Navigator,
+        PopupMenuButton,
+        PopupMenuItem,
+        Row,
         Scaffold,
+        SizedBox,
         State,
         StatefulWidget,
         ThemeMode,
         Text,
+        TextOverflow,
         TextStyle,
         VoidCallback,
         Widget;
@@ -23,9 +30,9 @@ import '../../services/storage/storage_service_interface.dart'
 import '../widgets/api_keys/sheet.dart' show showApiKeySettingsSheet;
 import '../../services/feedback/feedback_sender.dart' show FeedbackSender;
 import '../../state/settings_notifier.dart' show SettingsNotifier;
-import 'feedback/sheet.dart' show feedbackButton;
+import 'feedback/sheet.dart' show showFeedbackSheet;
 import 'history/screen.dart' show HistoryScreen;
-import 'error_log/screen.dart' show errorLogButton;
+import 'error_log/screen.dart' show ErrorLogScreen;
 import 'runner_screen.dart' show RunnerScreen;
 
 class MainLayoutScreen extends StatefulWidget {
@@ -74,11 +81,11 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
       appBar: AppBar(
         title: const Text(
           'LLM Summary Lab',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        actions: [
-          ..._appBarActions(context),
-        ],
+        actions: [_appBarMenu(context)],
       ),
       body: IndexedStack(index: _currentIndex, children: _screens),
       bottomNavigationBar: NavigationBar(
@@ -89,28 +96,66 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
     );
   }
 
-  List<Widget> _appBarActions(BuildContext context) {
+  Widget _appBarMenu(BuildContext context) {
     final settings = context.watch<SettingsNotifier>();
     final isLight = settings.themeMode == ThemeMode.light;
-    return [
-      IconButton(
-        icon: Icon(isLight ? Icons.light_mode : Icons.dark_mode),
-        tooltip: isLight ? 'Switch to dark mode' : 'Switch to light mode',
-        onPressed: () => context.read<SettingsNotifier>().toggleThemeMode(),
-      ),
-      errorLogButton(context, context.read<FeedbackSender>()),
-      feedbackButton(context, sender: context.read<FeedbackSender>()),
-      IconButton(
-        icon: const Icon(Icons.vpn_key_outlined),
-        tooltip: 'Configure API Keys',
-        onPressed: () => showApiKeySettingsSheet(context),
-      ),
-      if (widget.onSignOut != null)
-        IconButton(
-          icon: const Icon(Icons.logout),
-          tooltip: 'Sign out',
-          onPressed: widget.onSignOut,
+    final sender = context.read<FeedbackSender>();
+    return PopupMenuButton<_MainMenuAction>(
+      tooltip: 'App options',
+      icon: const Icon(Icons.more_vert),
+      onSelected: (action) => _handleMenuAction(context, action, sender),
+      itemBuilder: (context) => [
+        _menuItem(
+          _MainMenuAction.toggleTheme,
+          isLight ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
+          isLight ? 'Switch to dark mode' : 'Switch to light mode',
         ),
-    ];
+        _menuItem(_MainMenuAction.feedback, Icons.feedback_outlined, 'Feedback'),
+        _menuItem(_MainMenuAction.errors, Icons.bug_report_outlined, 'Error log'),
+        _menuItem(_MainMenuAction.apiKeys, Icons.vpn_key_outlined, 'API keys'),
+        if (widget.onSignOut != null)
+          _menuItem(_MainMenuAction.signOut, Icons.logout, 'Sign out'),
+      ],
+    );
+  }
+
+  PopupMenuItem<_MainMenuAction> _menuItem(
+    _MainMenuAction action,
+    IconData icon,
+    String label,
+  ) =>
+      PopupMenuItem(
+        value: action,
+        child: Row(
+          children: [Icon(icon), const SizedBox(width: 12), Text(label)],
+        ),
+      );
+
+  void _handleMenuAction(
+    BuildContext context,
+    _MainMenuAction action,
+    FeedbackSender sender,
+  ) {
+    switch (action) {
+      case _MainMenuAction.toggleTheme:
+        context.read<SettingsNotifier>().toggleThemeMode();
+        break;
+      case _MainMenuAction.feedback:
+        showFeedbackSheet(context, sender: sender);
+        break;
+      case _MainMenuAction.errors:
+        Navigator.of(context).push<void>(MaterialPageRoute<void>(
+          builder: (_) => ErrorLogScreen(feedbackSender: sender),
+        ));
+        break;
+      case _MainMenuAction.apiKeys:
+        showApiKeySettingsSheet(context);
+        break;
+      case _MainMenuAction.signOut:
+        widget.onSignOut?.call();
+        break;
+    }
   }
 }
+
+enum _MainMenuAction { toggleTheme, feedback, errors, apiKeys, signOut }

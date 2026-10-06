@@ -3,10 +3,12 @@ import 'dart:async' show unawaited;
 import 'package:flutter/material.dart'
     show
         AppBar,
+        BoxConstraints,
         BuildContext,
         Center,
         CircularProgressIndicator,
         Column,
+        ConstrainedBox,
         EdgeInsets,
         ElevatedButton,
         InputDecoration,
@@ -24,13 +26,13 @@ import 'package:flutter/material.dart'
         TextField,
         TextInputAction,
         TextInputType,
+        TextOverflow,
         Widget;
 import 'package:supabase_flutter/supabase_flutter.dart' show SupabaseClient;
 
 import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 import '../../services/feedback/feedback_sender.dart' show FeedbackSender;
-import 'error_log/screen.dart' show errorLogButton;
-import 'feedback/sheet.dart' show feedbackButton;
+import '../widgets/auth_support_menu.dart' show authSupportMenu;
 
 class SupabaseAuthScreen extends StatefulWidget {
   const SupabaseAuthScreen({
@@ -108,17 +110,18 @@ class _SupabaseAuthScreenState extends State<SupabaseAuthScreen> {
     final title = _isSignUp ? 'Create research account' : 'Sign in';
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
-        actions: [
-          errorLogButton(context, widget.feedbackSender),
-          feedbackButton(context, sender: widget.feedbackSender),
-        ],
+        title: Text(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        actions: [authSupportMenu(context, widget.feedbackSender)],
       ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
-          child: SizedBox(
-            width: 420,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 420),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

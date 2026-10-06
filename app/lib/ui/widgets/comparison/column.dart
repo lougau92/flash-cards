@@ -21,15 +21,20 @@ import 'run_header.dart' show ComparisonRunHeader;
 import 'run_metrics.dart' show ComparisonRunMetrics;
 
 class ComparisonColumn extends StatelessWidget {
-  const ComparisonColumn({super.key, required this.run});
+  const ComparisonColumn({
+    super.key,
+    required this.run,
+    required this.width,
+  });
 
   final SummaryRun run;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return Container(
-      width: 320,
+      width: width,
       margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
         color: colors.surfaceContainerLow,
