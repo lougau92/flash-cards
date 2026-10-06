@@ -101,7 +101,7 @@ class _HistoryScreenContentState extends State<HistoryScreenContent> {
       builder: (dialogContext) => AlertDialog(
         title: const Text('Clear all runs?'),
         content: const Text(
-          'This permanently deletes every saved run from this device.',
+          'This permanently deletes every saved run in the configured storage.',
         ),
         actions: [
           TextButton(

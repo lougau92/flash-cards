@@ -1,18 +1,18 @@
 import '../../models/summary_run.dart' show SummaryRun;
 
 abstract class StorageServiceInterface {
-  /// Initializes local storage directory/database if needed.
+  /// Initializes the backing store if it requires setup.
   Future<void> init();
 
-  /// Saves a single summary run to disk storage.
+  /// Saves or updates a summary run for the current user.
   Future<void> saveRun(SummaryRun run);
 
-  /// Retrieves all historical summary runs ordered by timestamp (newest first).
+  /// Retrieves the current user's runs, newest first.
   Future<List<SummaryRun>> getAllRuns();
 
-  /// Deletes a specific summary run by its unique identifier.
+  /// Deletes a specific summary run by its identifier.
   Future<void> deleteRun(String id);
 
-  /// Clears all stored summary runs from local storage.
+  /// Clears the current user's summary runs.
   Future<void> clearAllRuns();
 }

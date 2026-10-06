@@ -14,6 +14,7 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         ThemeData,
         ThemeMode,
+        VoidCallback,
         Widget;
 import 'services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
@@ -21,8 +22,9 @@ import 'ui/screens/main_layout_screen.dart' show MainLayoutScreen;
 
 class App extends StatelessWidget {
   final StorageServiceInterface storageService;
+  final VoidCallback? onSignOut;
 
-  const App({super.key, required this.storageService});
+  const App({super.key, required this.storageService, this.onSignOut});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,10 @@ class App extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      home: MainLayoutScreen(storageService: storageService),
+      home: MainLayoutScreen(
+        storageService: storageService,
+        onSignOut: onSignOut,
+      ),
     );
   }
 }

@@ -41,7 +41,7 @@ class RunnerScreen extends StatelessWidget {
           RunSummaryButton(storageService: storageService),
           const SizedBox(height: 8),
           Text(
-            'Source text and prompts are sent to the selected provider and saved in local run history.',
+            'Source text and prompts are sent to the selected provider and saved to the configured run history.',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.outline,
                 ),

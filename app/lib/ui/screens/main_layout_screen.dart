@@ -14,6 +14,7 @@ import 'package:flutter/material.dart'
         StatefulWidget,
         Text,
         TextStyle,
+        VoidCallback,
         Widget;
 import '../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
@@ -22,9 +23,14 @@ import 'history/screen.dart' show HistoryScreen;
 import 'runner_screen.dart' show RunnerScreen;
 
 class MainLayoutScreen extends StatefulWidget {
-  const MainLayoutScreen({super.key, required this.storageService});
+  const MainLayoutScreen({
+    super.key,
+    required this.storageService,
+    this.onSignOut,
+  });
 
   final StorageServiceInterface storageService;
+  final VoidCallback? onSignOut;
 
   @override
   State<MainLayoutScreen> createState() => _MainLayoutScreenState();
@@ -65,11 +71,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.vpn_key_outlined),
-            tooltip: 'Configure API Keys',
-            onPressed: () => showApiKeySettingsSheet(context),
-          ),
+          ..._appBarActions(context),
         ],
       ),
       body: IndexedStack(index: _currentIndex, children: _screens),
@@ -80,4 +82,18 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
       ),
     );
   }
+
+  List<Widget> _appBarActions(BuildContext context) => [
+        IconButton(
+          icon: const Icon(Icons.vpn_key_outlined),
+          tooltip: 'Configure API Keys',
+          onPressed: () => showApiKeySettingsSheet(context),
+        ),
+        if (widget.onSignOut != null)
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Sign out',
+            onPressed: widget.onSignOut,
+          ),
+      ];
 }

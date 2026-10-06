@@ -29,6 +29,28 @@ flutter pub get
 flutter run
 ```
 
+## Supabase run history
+
+Run history uses local storage until both `SUPABASE_URL` and
+`SUPABASE_PUBLISHABLE_KEY`
+are set in `.env`. For remote history:
+
+1. Create a Supabase project and copy its project URL and publishable API key
+   into those two `.env` entries. Never put a Supabase secret API key in this
+   Flutter app; secret keys belong only in trusted server environments.
+2. Run `supabase/migrations/202610060001_create_summary_runs.sql` in the
+   Supabase SQL editor.
+3. Enable email/password sign-in in Supabase Auth. Create an account in the app
+   and sign in with the same account on each device that should share history.
+
+The migration enables row-level security and limits every run operation to the
+signed-in owner. Run records include full source text, prompts, and summaries,
+so only use remote history for data approved for your Supabase project and
+research policy. A local `.env` is ignored by Git; the public Supabase key is
+still bundled into the client, where it is protected by Auth and database
+policies rather than secrecy. Supabase secret API keys bypass row-level
+security and must remain on a trusted backend.
+
 ## Tests
 
 Run `flutter test` from the `app` directory. Provider contract tests use mocked HTTP responses, so they do not require API keys or contact live providers. They check each provider's model-list response, request format, output parsing, token metadata, and failed HTTP responses.
@@ -37,9 +59,10 @@ Run `flutter test` from the `app` directory. Provider contract tests use mocked 
 
 1. Select a provider and refresh its available text models.
 2. Load or paste source text, edit the system and instruction prompts, and set temperature and output-token limit.
-3. Run a summary. Successful and failed provider attempts are retained in local history.
+3. Run a summary. Successful and failed provider attempts are retained in local
+history or in the signed-in Supabase account when configured.
 4. Select up to four runs in history to compare their models, input preview, prompts, settings, output, latency, token counts, and finish reason.
 
-Run history stores the complete source text and prompt locally. The text and prompts are also sent to the selected provider when you run a request. Token estimates shown before a run are approximate; final counts come from provider responses when available. Model availability, pricing, and serving routes can change over time, so retain the saved run metadata when reporting an experiment.
+Run history stores the complete source text and prompt in the configured store. The text and prompts are also sent to the selected provider when you run a request. Token estimates shown before a run are approximate; final counts come from provider responses when available. Model availability, pricing, and serving routes can change over time, so retain the saved run metadata when reporting an experiment.
 
 The file picker accepts text, Markdown, JSON, and PDF files. PDF extraction is a lightweight fallback and may not read scanned, compressed, or complex PDFs accurately; verify imported text before using it in an experiment.
