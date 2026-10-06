@@ -48,8 +48,9 @@ class GeminiModelClient {
     }
     final payload = decodeJsonObject(response.body);
     final rawModels = payload['models'];
-    if (rawModels is! List)
+    if (rawModels is! List) {
       throw const FormatException('Gemini returned no model list.');
+    }
     return _ModelPage(
       models: _parseModels(rawModels),
       nextPageToken: payload['nextPageToken']?.toString(),

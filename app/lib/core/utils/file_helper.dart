@@ -32,8 +32,9 @@ class FileHelper {
 
       final PlatformFile file = files.first;
       final Uint8List bytes = await file.readAsBytes();
-      if (bytes.isEmpty)
+      if (bytes.isEmpty) {
         throw const FormatException('The selected file is empty.');
+      }
 
       final content = _extractTextFromBytes(bytes, file.extension);
       return PickedFileResult(
@@ -52,8 +53,9 @@ class FileHelper {
   }
 
   static String _extractTextFromBytes(Uint8List bytes, String? extension) {
-    if (extension?.toLowerCase() == 'pdf')
+    if (extension?.toLowerCase() == 'pdf') {
       return _extractPdfTextFallback(bytes);
+    }
     return utf8.decode(bytes, allowMalformed: true);
   }
 

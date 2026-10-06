@@ -1,15 +1,12 @@
-import 'package:http/http.dart' as http show Client;
-
 import 'service.dart' show OpenAiCompatibleService;
 import '../../../../models/llm_provider_type.dart'
     show LLMProviderType, LLMProviderTypeX;
 
 class GroqService extends OpenAiCompatibleService {
-  GroqService({http.Client? client})
+  GroqService({super.client})
       : super(
           providerName: LLMProviderType.groq.displayName,
           baseUrl: LLMProviderType.groq.defaultBaseUrl,
-          client: client,
         );
 
   @override

@@ -36,8 +36,9 @@ class OpenAiModelClient {
       ));
     }
     final models = decodeJsonObject(response.body)['data'];
-    if (models is! List)
+    if (models is! List) {
       throw FormatException('$providerName returned no model list.');
+    }
     return OpenAiModelParser.parse(models, supportsModel);
   }
 }
