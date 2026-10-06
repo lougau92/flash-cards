@@ -34,7 +34,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4),
+          seedColor: const Color(0xFF087F8C),
           brightness: Brightness.light,
         ),
         cardTheme: CardThemeData(
