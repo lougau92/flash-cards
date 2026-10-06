@@ -17,8 +17,7 @@ class _LocalRunStorageIO implements StorageServiceInterface {
   static const _runsDirectoryName = 'app_runs';
   Directory? _runsDirectory;
 
-  @override
-  Future<void> init() async {
+  Future<void> _initializeDirectory() async {
     final appDirectory = await getApplicationDocumentsDirectory();
     final directory = Directory(p.join(appDirectory.path, _runsDirectoryName));
     await directory.create(recursive: true);
@@ -26,7 +25,7 @@ class _LocalRunStorageIO implements StorageServiceInterface {
   }
 
   Future<Directory> _ensureDirectory() async {
-    if (_runsDirectory == null) await init();
+    if (_runsDirectory == null) await _initializeDirectory();
     return _runsDirectory!;
   }
 

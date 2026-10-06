@@ -11,9 +11,6 @@ class LocalRunStorage implements StorageServiceInterface {
   final StorageServiceInterface _storage;
 
   @override
-  Future<void> init() => _storage.init();
-
-  @override
   Future<void> saveRun(SummaryRun run) => _storage.saveRun(run);
 
   @override

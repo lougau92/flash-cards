@@ -17,9 +17,6 @@ class _MemoryStorage implements StorageServiceInterface {
   final List<SummaryRun> runs = [];
 
   @override
-  Future<void> init() async {}
-
-  @override
   Future<void> saveRun(SummaryRun run) async => runs.add(run);
 
   @override

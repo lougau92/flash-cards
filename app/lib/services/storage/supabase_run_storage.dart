@@ -10,9 +10,6 @@ class SupabaseRunStorage implements StorageServiceInterface {
   final SupabaseClient _client;
 
   @override
-  Future<void> init() async {}
-
-  @override
   Future<void> saveRun(SummaryRun run) async {
     final userId = _requireUserId();
     await _client.from(_table).upsert({

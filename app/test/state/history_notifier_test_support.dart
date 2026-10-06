@@ -17,8 +17,6 @@ class HistoryTestStorage implements StorageServiceInterface {
       runs.removeWhere((run) => run.id == id);
   @override
   Future<void> clearAllRuns() async => runs.clear();
-  @override
-  Future<void> init() async {}
 }
 
 class HistoryTestFixture {

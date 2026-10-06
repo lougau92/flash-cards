@@ -15,9 +15,6 @@ class _LocalRunStorageWeb implements StorageServiceInterface {
   static const _storageKey = 'app_runs_storage_web';
 
   @override
-  Future<void> init() async {}
-
-  @override
   Future<void> saveRun(SummaryRun run) async {
     final preferences = await SharedPreferences.getInstance();
     final runs = await getAllRuns();

@@ -32,12 +32,6 @@ class MockStorageService implements StorageServiceInterface {
 
   @override
   Future<void> clearAllRuns() async {}
-
-  @override
-  Future<void> init() {
-    // No initialization needed for the mock service.
-    return Future<void>.value();
-  }
 }
 
 void main() {
