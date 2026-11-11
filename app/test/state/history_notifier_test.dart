@@ -1,8 +1,9 @@
 import 'package:app/models/llm_provider_type.dart' show LLMProviderType;
 import 'package:flutter_test/flutter_test.dart'
-    show addTearDown, expect, hasLength, test;
+    show addTearDown, expect, hasLength, isFalse, test;
 
-import 'history_notifier_test_support.dart' show createHistoryFixture;
+import 'history_notifier_test_support.dart'
+    show createHistoryFixture, sampleRun;
 
 void main() {
   _loadHistoryTest();
@@ -44,12 +45,18 @@ void _searchFilterTest() {
 }
 
 void _selectionLimitTest() {
-  test('comparison selection is limited to four runs', () {
+  test('comparison selection is limited to four loaded runs', () async {
     final fixture = createHistoryFixture();
     addTearDown(fixture.notifier.dispose);
-    for (var index = 0; index < 6; index++) {
+    fixture.storage.runs
+      ..clear()
+      ..addAll(List.generate(6, (index) => sampleRun('run_$index')));
+    await fixture.notifier.loadHistory(fixture.storage);
+    for (var index = 0; index < 4; index++) {
       fixture.notifier.toggleRunSelectionForComparison('run_$index');
     }
+    expect(fixture.notifier.toggleRunSelectionForComparison('run_4'), isFalse);
+    expect(fixture.notifier.toggleRunSelectionForComparison('run_5'), isFalse);
     expect(fixture.notifier.selectedRunIdsForComparison, hasLength(4));
   });
 }

@@ -28,11 +28,11 @@ class HistoryTestFixture {
 
 HistoryTestFixture createHistoryFixture() {
   final storage = HistoryTestStorage()
-    ..runs.addAll([_sampleRun('1'), _sampleRun('2', mistral: true)]);
+    ..runs.addAll([sampleRun('1'), sampleRun('2', mistral: true)]);
   return HistoryTestFixture(HistoryNotifier(), storage);
 }
 
-SummaryRun _sampleRun(String id, {bool mistral = false}) => SummaryRun(
+SummaryRun sampleRun(String id, {bool mistral = false}) => SummaryRun(
       id: id,
       timestamp: DateTime.now(),
       request: SummaryRequest(

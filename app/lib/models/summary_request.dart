@@ -21,6 +21,9 @@ class SummaryRequest {
     required this.providerType,
   });
 
+  String get userPrompt =>
+      '$instructionPrompt\n\n--- SOURCE TEXT ---\n$sourceText';
+
   Map<String, dynamic> toJson() {
     return {
       'sourceText': sourceText,

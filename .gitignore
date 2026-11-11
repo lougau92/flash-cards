@@ -38,3 +38,7 @@ __pycache__/
 # Local shared-package development and CI checkouts
 **/pubspec_overrides.yaml
 .dependencies/
+
+# PWA verification tools
+node_modules/
+!app/web/flutter_bootstrap.js

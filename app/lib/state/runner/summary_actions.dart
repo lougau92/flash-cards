@@ -42,6 +42,10 @@ extension RunnerSummaryActions on RunnerNotifier {
       throw StateError(
           'API key for ${_selectedProvider.displayName} is missing.');
     }
+    final budget = contextBudget;
+    if (budget != null && budget.exceedsLimit) {
+      throw StateError(budget.message);
+    }
     return SummaryRequest(
       sourceText: _sourceText,
       inputFileName: _inputFileName,

@@ -1,0 +1,11 @@
+{
+  "name": "flash-cards-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:pwa": "node tool/test-pwa.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.57.0"
+  }
+}

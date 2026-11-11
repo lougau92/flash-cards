@@ -9,8 +9,7 @@ class GeminiSummaryParser {
           'role': 'user',
           'parts': [
             {
-              'text': '${request.instructionPrompt}\n\n--- SOURCE TEXT ---\n'
-                  '${request.sourceText}',
+              'text': request.userPrompt,
             },
           ],
         },

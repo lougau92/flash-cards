@@ -75,8 +75,7 @@ class OpenAiSummaryClient {
     }
     messages.add({
       'role': 'user',
-      'content': '${request.instructionPrompt}\n\n--- SOURCE TEXT ---\n'
-          '${request.sourceText}',
+      'content': request.userPrompt,
     });
     final body = {
       'model': request.targetModelId,

@@ -6,6 +6,7 @@ import '../../core/constants/prompt_presets.dart' show PromptPresets;
 import '../../models/llm_model_info.dart' show LLMModelInfo;
 import '../../models/llm_provider_type.dart'
     show LLMProviderType, LLMProviderTypeX;
+import '../../models/context_budget.dart' show ContextBudget;
 import '../../models/summary_request.dart' show SummaryRequest;
 import '../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 import '../../services/llm/providers/gemini/service.dart' show GeminiService;
@@ -23,6 +24,7 @@ import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 
 part 'provider_actions.dart';
 part 'summary_actions.dart';
+part 'context_actions.dart';
 
 class RunnerNotifier extends ChangeNotifier {
   RunnerNotifier({

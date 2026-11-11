@@ -1,0 +1,108 @@
+name: Deploy PWA to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-pwa
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.5'
+          channel: stable
+          cache: true
+
+      - name: Read pinned feedback dependency
+        id: feedback
+        run: |
+          python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          text = Path('app/pubspec.yaml').read_text()
+          match = re.search(r'(?m)^  app_feedback:\n    git:\n      url: https://github.com/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)\.git\n      ref: ([0-9a-f]{40})\s*$', text)
+          if not match:
+              raise SystemExit('Expected app_feedback pinned to a full GitHub commit SHA.')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'repository={match[1]}\nref={match[2]}\n')
+          PY
+
+      - name: Checkout shared feedback package
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.feedback.outputs.repository }}
+          ref: ${{ steps.feedback.outputs.ref }}
+          path: .dependencies/app-feedback
+          ssh-key: ${{ secrets.APP_FEEDBACK_DEPLOY_KEY }}
+          persist-credentials: false
+
+      - name: Configure dependency and public environment
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          Path('app/pubspec_overrides.yaml').write_text(
+              'dependency_overrides:\n  app_feedback:\n    path: ../.dependencies/app-feedback\n')
+          url = os.environ.get('SUPABASE_URL', '').strip()
+          key = os.environ.get('SUPABASE_PUBLISHABLE_KEY', '').strip()
+          if bool(url) != bool(key):
+              raise SystemExit('Set both Supabase variables or neither.')
+          if any(c in url + key for c in '\r\n'):
+              raise SystemExit('Supabase variables must be single-line values.')
+          if key and not key.startswith('sb_publishable_'):
+              raise SystemExit('Use a Supabase publishable key (sb_publishable_), never a secret key.')
+          text = Path('app/env.example').read_text()
+          text = text.replace('SUPABASE_URL=', f'SUPABASE_URL={url}')
+          text = text.replace('SUPABASE_PUBLISHABLE_KEY=', f'SUPABASE_PUBLISHABLE_KEY={key}')
+          Path('app/.env').write_text(text)
+          PY
+
+      - name: Install Flutter dependencies
+        working-directory: app
+        run: flutter pub get
+
+      - name: Test app
+        working-directory: app
+        run: flutter test
+
+      - name: Build web app
+        working-directory: app
+        run: flutter build web --release --base-href /flash-cards/ --no-web-resources-cdn
+
+      - name: Prepare offline cache
+        run: python3 tool/prepare_pwa.py app/build/web
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Verify PWA online and offline
+        run: npm run test:pwa
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: app/build/web
