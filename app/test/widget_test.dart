@@ -2,7 +2,7 @@ import 'package:app/ui/app.dart' show App;
 import 'package:app/models/summary_run.dart' show SummaryRun;
 import 'package:app/services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
-import 'package:app/services/feedback/feedback_sender.dart'
+import 'package:app_feedback/app_feedback.dart'
     show FeedbackSender, UnavailableFeedbackSender;
 import 'package:app/state/history_notifier.dart' show HistoryNotifier;
 import 'package:app/state/runner/runner_notifier.dart' show RunnerNotifier;

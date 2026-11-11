@@ -1,5 +1,6 @@
 import 'dart:async' show StreamSubscription;
 
+import 'package:app_feedback/app_feedback.dart' show FeedbackSender;
 import 'package:flutter/material.dart'
     show BuildContext, State, StatefulWidget, Widget;
 import 'package:supabase_flutter/supabase_flutter.dart' show SupabaseClient;
@@ -9,7 +10,6 @@ import '../app_provider_scope.dart' show AppProviderScope;
 import '../../models/llm_provider_type.dart' show LLMProviderType;
 import '../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
-import '../../services/feedback/feedback_sender.dart' show FeedbackSender;
 import '../../state/settings_notifier.dart' show SettingsNotifier;
 import 'supabase_auth_screen.dart' show SupabaseAuthScreen;
 

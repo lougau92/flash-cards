@@ -1,5 +1,6 @@
 import 'dart:async' show unawaited;
 
+import 'package:app_feedback/app_feedback.dart' show FeedbackSender;
 import 'package:flutter/material.dart'
     show
         AppBar,
@@ -31,7 +32,6 @@ import 'package:flutter/material.dart'
 import 'package:supabase_flutter/supabase_flutter.dart' show SupabaseClient;
 
 import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
-import '../../services/feedback/feedback_sender.dart' show FeedbackSender;
 import '../widgets/auth_support_menu.dart' show authSupportMenu;
 
 class SupabaseAuthScreen extends StatefulWidget {

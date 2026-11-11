@@ -1,6 +1,7 @@
 import 'dart:convert' show utf8;
 import 'dart:typed_data' show Uint8List;
 
+import 'package:app_feedback/app_feedback.dart' show FeedbackSender;
 import 'package:file_picker/file_picker.dart' show FilePicker, FileType;
 import 'package:flutter/material.dart'
     show
@@ -26,8 +27,7 @@ import 'package:flutter/material.dart'
         showDialog;
 
 import '../../../services/diagnostics/app_error_log.dart' show AppErrorLog;
-import '../../../services/feedback/feedback_sender.dart' show FeedbackSender;
-import '../feedback/sheet.dart' show feedbackButton;
+import '../../widgets/feedback.dart' show appFeedbackButton;
 import 'entry_card.dart' show ErrorEntryCard;
 
 Widget errorLogButton(BuildContext context, FeedbackSender sender) =>
@@ -55,7 +55,7 @@ class ErrorLogScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('Error log (${log.entries.length})'),
           actions: [
-            feedbackButton(context, sender: feedbackSender),
+            appFeedbackButton(sender: feedbackSender),
             IconButton(
               tooltip: 'Export errors as JSON',
               onPressed: log.entries.isEmpty ? null : () => _export(context),

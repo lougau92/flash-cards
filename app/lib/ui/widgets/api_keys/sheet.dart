@@ -1,5 +1,6 @@
 import 'dart:async' show unawaited;
 
+import 'package:app_feedback/app_feedback.dart' show FeedbackSender;
 import 'package:flutter/material.dart'
     show
         BorderRadius,
@@ -18,9 +19,8 @@ import 'package:flutter/material.dart'
 import 'package:provider/provider.dart' show ReadContext, WatchContext;
 import '../../../models/llm_provider_type.dart' show LLMProviderType;
 import '../../../services/diagnostics/app_error_log.dart' show AppErrorLog;
-import '../../../services/feedback/feedback_sender.dart' show FeedbackSender;
 import '../../../state/settings_notifier.dart' show SettingsNotifier;
-import '../../screens/feedback/sheet.dart' show showFeedbackSheet;
+import '../feedback.dart' show showAppFeedbackSheet;
 import 'form.dart' show ApiKeySettingsForm;
 
 Future<void> showApiKeySettingsSheet(BuildContext context) {
@@ -111,7 +111,7 @@ class _ApiKeySettingsSheetState extends State<ApiKeySettingsSheet> {
       onToggleReveal: _toggleReveal,
       onSave: _saveAll,
       onClose: () => Navigator.of(context).pop(),
-      onFeedback: () => showFeedbackSheet(
+      onFeedback: () => showAppFeedbackSheet(
         context,
         sender: widget.feedbackSender,
       ),

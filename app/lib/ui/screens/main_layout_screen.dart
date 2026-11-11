@@ -1,3 +1,4 @@
+import 'package:app_feedback/app_feedback.dart' show FeedbackSender;
 import 'package:flutter/material.dart'
     show
         AppBar,
@@ -29,9 +30,8 @@ import 'package:provider/provider.dart' show ReadContext, WatchContext;
 import '../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
 import '../widgets/api_keys/sheet.dart' show showApiKeySettingsSheet;
-import '../../services/feedback/feedback_sender.dart' show FeedbackSender;
 import '../../state/settings_notifier.dart' show SettingsNotifier;
-import 'feedback/sheet.dart' show showFeedbackSheet;
+import '../widgets/feedback.dart' show showAppFeedbackSheet;
 import 'history/screen.dart' show HistoryScreen;
 import 'error_log/screen.dart' show ErrorLogScreen;
 import 'runner_screen.dart' show RunnerScreen;
@@ -152,7 +152,7 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
         context.read<SettingsNotifier>().toggleRawOutputs();
         break;
       case _MainMenuAction.feedback:
-        showFeedbackSheet(context, sender: sender);
+        showAppFeedbackSheet(context, sender: sender);
         break;
       case _MainMenuAction.errors:
         Navigator.of(context).push<void>(MaterialPageRoute<void>(

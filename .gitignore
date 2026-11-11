@@ -27,3 +27,14 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# Local CLI binaries and Supabase CLI-generated metadata
+.tools/
+supabase/.temp/
+
+# Python helper caches
+__pycache__/
+
+# Local shared-package development and CI checkouts
+**/pubspec_overrides.yaml
+.dependencies/

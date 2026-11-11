@@ -1,5 +1,7 @@
 import 'dart:async' show unawaited;
 
+import 'package:app_feedback/app_feedback.dart'
+    show SupabaseFeedbackSender, UnavailableFeedbackSender;
 import 'package:flutter/material.dart'
     show WidgetsFlutterBinding, debugPrint, runApp;
 import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
@@ -7,9 +9,6 @@ import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
 
 import 'models/llm_provider_type.dart' show LLMProviderType;
 import 'services/diagnostics/app_error_log.dart' show AppErrorLog;
-import 'services/feedback/feedback_sender.dart' show UnavailableFeedbackSender;
-import 'services/feedback/supabase_feedback_service.dart'
-    show SupabaseFeedbackService;
 import 'services/storage/local_run_storage.dart' show LocalRunStorage;
 import 'services/storage/supabase_run_storage.dart' show SupabaseRunStorage;
 import 'state/settings_notifier.dart' show SettingsNotifier;
@@ -87,7 +86,7 @@ abstract final class AppBootstrap {
       publishableKey: configuration.publishableKey,
     );
     final client = Supabase.instance.client;
-    final feedbackSender = SupabaseFeedbackService(client);
+    final feedbackSender = SupabaseFeedbackSender(client, appId: 'flash-cards');
     final settings = await _loadSettings();
     runApp(
       SupabaseAuthGate(

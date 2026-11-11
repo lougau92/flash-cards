@@ -56,6 +56,15 @@ Feedback is stored in the `app_feedback` table with row-level security. Signed-i
 users and anonymous users can submit feedback; the app cannot read or edit the
 inbox. Anonymous feedback sessions are created on first submission.
 
+The form and sender come from the reusable `app_feedback` Git dependency.
+An ignored local `pubspec_overrides.yaml` points directly to `../../app-feedback`
+during development, so shared changes require no copying. This app supplies the `flash-cards` app ID and its
+local error-log callback. Apply `202611110001_label_feedback_inboxes.sql` to an
+existing backend before using the extracted sender. The additive migration
+labels existing rows and preserves the `flash-cards` default for older builds;
+new apps explicitly supply their own app ID. Client permissions remain
+insert-only. The repository-root `feedback.config.json` selects the admin inbox.
+
 ## Model catalog
 
 The model picker can sort by name and by metadata returned from a provider,
