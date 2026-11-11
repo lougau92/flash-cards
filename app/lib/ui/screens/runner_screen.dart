@@ -19,6 +19,8 @@ import '../widgets/prompts/editor.dart' show PromptEditor;
 import '../widgets/provider_model/selector.dart' show ProviderModelSelector;
 import '../widgets/runner/output_panel.dart' show RunOutputPanel;
 import '../widgets/runner/summary_button.dart' show RunSummaryButton;
+import '../widgets/runner/random_comparison_button.dart'
+    show RandomComparisonButton;
 
 class RunnerScreen extends StatelessWidget {
   final StorageServiceInterface storageService;
@@ -39,6 +41,8 @@ class RunnerScreen extends StatelessWidget {
           const ProviderModelSelector(),
           const SizedBox(height: 16),
           RunSummaryButton(storageService: storageService),
+          const SizedBox(height: 8),
+          RandomComparisonButton(storageService: storageService),
           const SizedBox(height: 8),
           Text(
             'Source text and prompts are sent to the selected provider and saved to the configured run history.',

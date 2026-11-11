@@ -1,4 +1,5 @@
 import 'dart:async' show unawaited;
+import 'dart:math' show Random;
 
 import 'package:flutter/foundation.dart' show ChangeNotifier;
 
@@ -25,6 +26,7 @@ import '../../services/diagnostics/app_error_log.dart' show AppErrorLog;
 part 'provider_actions.dart';
 part 'summary_actions.dart';
 part 'context_actions.dart';
+part 'random_comparison_actions.dart';
 
 class RunnerNotifier extends ChangeNotifier {
   RunnerNotifier({
