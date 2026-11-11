@@ -1,6 +1,8 @@
 import 'llm_provider_type.dart' show LLMProviderType;
 
 class SummaryRequest {
+  static const defaultMaxTokens = 4000;
+
   final String sourceText;
   final String? inputFileName;
   final String systemPrompt;
@@ -16,7 +18,7 @@ class SummaryRequest {
     required this.systemPrompt,
     required this.instructionPrompt,
     this.temperature = 0.7,
-    this.maxTokens = 1000,
+    this.maxTokens = defaultMaxTokens,
     required this.targetModelId,
     required this.providerType,
   });

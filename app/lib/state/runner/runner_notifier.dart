@@ -43,7 +43,7 @@ class RunnerNotifier extends ChangeNotifier {
   LLMModelInfo? _selectedModel;
   List<LLMModelInfo> _availableModels = const [];
   double _temperature = 0.7;
-  int _maxTokens = 1000;
+  int _maxTokens = SummaryRequest.defaultMaxTokens;
   bool _isLoadingModels = false;
   bool _isExecuting = false;
   bool _disposed = false;
