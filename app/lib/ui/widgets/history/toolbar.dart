@@ -3,6 +3,7 @@ import 'package:flutter/material.dart'
         AppBar,
         Badge,
         BuildContext,
+        CheckedPopupMenuItem,
         Colors,
         EdgeInsets,
         Icon,
@@ -28,10 +29,14 @@ class HistoryToolbar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.selectionCount,
     required this.onClearAll,
+    required this.showFailedRuns,
+    required this.onToggleFailedRuns,
   });
 
   final int selectionCount;
   final VoidCallback onClearAll;
+  final bool showFailedRuns;
+  final VoidCallback onToggleFailedRuns;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -55,10 +60,19 @@ class HistoryToolbar extends StatelessWidget implements PreferredSizeWidget {
           PopupMenuButton<String>(
             tooltip: 'History actions',
             onSelected: (value) {
-              if (value == 'clear') onClearAll();
+              if (value == 'clear') {
+                onClearAll();
+              } else {
+                onToggleFailedRuns();
+              }
             },
-            itemBuilder: (context) => const [
-              PopupMenuItem(
+            itemBuilder: (context) => [
+              CheckedPopupMenuItem<String>(
+                value: 'failed',
+                checked: showFailedRuns,
+                child: const Text('Show failed runs'),
+              ),
+              const PopupMenuItem<String>(
                 value: 'clear',
                 child: ListTile(
                   contentPadding: EdgeInsets.zero,

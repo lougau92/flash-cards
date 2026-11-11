@@ -65,6 +65,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
       appBar: HistoryToolbar(
         selectionCount: history.comparisonSelectionCount,
         onClearAll: () => _confirmClearAll(history),
+        showFailedRuns: history.showFailedRuns,
+        onToggleFailedRuns: () =>
+            history.setShowFailedRuns(!history.showFailedRuns),
       ),
       body: Column(
         children: [

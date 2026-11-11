@@ -32,6 +32,8 @@ import '../../services/storage/storage_service_interface.dart'
 import '../widgets/api_keys/sheet.dart' show showApiKeySettingsSheet;
 import '../../state/settings_notifier.dart' show SettingsNotifier;
 import '../widgets/feedback.dart' show showAppFeedbackSheet;
+import '../widgets/runner/completion_listener.dart'
+    show SummaryCompletionListener;
 import 'history/screen.dart' show HistoryScreen;
 import 'error_log/screen.dart' show ErrorLogScreen;
 import 'runner_screen.dart' show RunnerScreen;
@@ -88,7 +90,9 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
         ),
         actions: [_appBarMenu(context)],
       ),
-      body: IndexedStack(index: _currentIndex, children: _screens),
+      body: SummaryCompletionListener(
+        child: IndexedStack(index: _currentIndex, children: _screens),
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: (i) => setState(() => _currentIndex = i),

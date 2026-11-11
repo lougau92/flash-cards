@@ -3,7 +3,7 @@ import 'dart:async' show unawaited;
 import 'package:flutter/foundation.dart' show ChangeNotifier, debugPrint;
 
 import '../models/llm_provider_type.dart' show LLMProviderType;
-import '../models/summary_run.dart' show SummaryRun;
+import '../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 import '../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
 import '../services/diagnostics/app_error_log.dart' show AppErrorLog;
@@ -11,6 +11,7 @@ import '../services/diagnostics/app_error_log.dart' show AppErrorLog;
 class HistoryNotifier extends ChangeNotifier {
   List<SummaryRun> _allRuns = const [];
   bool _isLoading = false;
+  bool _showFailedRuns = false;
   String _searchQuery = '';
   LLMProviderType? _providerFilter;
   String? _loadError;
@@ -18,6 +19,7 @@ class HistoryNotifier extends ChangeNotifier {
 
   List<SummaryRun> get allRuns => List.unmodifiable(_allRuns);
   bool get isLoading => _isLoading;
+  bool get showFailedRuns => _showFailedRuns;
   String get searchQuery => _searchQuery;
   LLMProviderType? get providerFilter => _providerFilter;
   String? get loadError => _loadError;
@@ -28,9 +30,14 @@ class HistoryNotifier extends ChangeNotifier {
   bool isSelectedForComparison(String runId) =>
       _selectedRunIdsForComparison.contains(runId);
 
+  void _notify() => notifyListeners();
+
   List<SummaryRun> get filteredRuns {
     final query = _searchQuery.trim().toLowerCase();
     return _allRuns.where((run) {
+      if (!_showFailedRuns && run.status != SummaryRunStatus.success) {
+        return false;
+      }
       if (_providerFilter != null &&
           run.request.providerType != _providerFilter) {
         return false;
@@ -48,7 +55,9 @@ class HistoryNotifier extends ChangeNotifier {
   }
 
   List<SummaryRun> get comparisonRuns => _allRuns
-      .where((run) => _selectedRunIdsForComparison.contains(run.id))
+      .where((run) =>
+          (_showFailedRuns || run.status == SummaryRunStatus.success) &&
+          _selectedRunIdsForComparison.contains(run.id))
       .toList();
 
   Future<void> loadHistory(StorageServiceInterface storageService) async {
@@ -98,6 +107,17 @@ class HistoryNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setShowFailedRuns(bool show) {
+    if (_showFailedRuns == show) return;
+    _showFailedRuns = show;
+    if (!show) {
+      _selectedRunIdsForComparison.removeWhere((id) => _allRuns.any(
+            (run) => run.id == id && run.status != SummaryRunStatus.success,
+          ));
+    }
+    notifyListeners();
+  }
+
   /// Returns false when adding the run would exceed the four-run comparison limit.
   bool toggleRunSelectionForComparison(String runId) {
     if (_selectedRunIdsForComparison.remove(runId)) {
@@ -105,6 +125,12 @@ class HistoryNotifier extends ChangeNotifier {
       return true;
     }
     if (_selectedRunIdsForComparison.length >= 4) return false;
+    final index = _allRuns.indexWhere((run) => run.id == runId);
+    if (index < 0 ||
+        (!_showFailedRuns &&
+            _allRuns[index].status != SummaryRunStatus.success)) {
+      return false;
+    }
 
     _selectedRunIdsForComparison.add(runId);
     notifyListeners();
@@ -115,5 +141,39 @@ class HistoryNotifier extends ChangeNotifier {
     if (_selectedRunIdsForComparison.isEmpty) return;
     _selectedRunIdsForComparison.clear();
     notifyListeners();
+  }
+}
+
+extension HistoryScoringActions on HistoryNotifier {
+  Future<void> setRunScore(
+    String runId,
+    String criterion,
+    int? score,
+    StorageServiceInterface storageService,
+  ) async {
+    final index = _allRuns.indexWhere((run) => run.id == runId);
+    if (index < 0 || _allRuns[index].status != SummaryRunStatus.success) return;
+    final previous = _allRuns[index];
+    final scores = Map<String, int>.from(previous.scores);
+    if (score == null) {
+      scores.remove(criterion);
+    } else {
+      scores[criterion] = score;
+    }
+    final updated = previous.copyWith(scores: scores);
+    _allRuns[index] = updated;
+    _notify();
+    try {
+      await storageService.saveRun(updated);
+    } catch (error, stackTrace) {
+      _allRuns[index] = previous;
+      _notify();
+      unawaited(AppErrorLog.instance.record(
+        error,
+        source: 'Saving run score',
+        stackTrace: stackTrace,
+      ));
+      rethrow;
+    }
   }
 }

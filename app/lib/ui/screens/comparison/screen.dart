@@ -3,35 +3,44 @@ import 'package:flutter/material.dart'
         AppBar,
         BuildContext,
         Center,
-        Colors,
-        Column,
-        EdgeInsets,
-        ElevatedButton,
+        CheckedPopupMenuItem,
         Icon,
         IconButton,
         Icons,
-        MainAxisAlignment,
-        Navigator,
-        Padding,
+        PopupMenuButton,
         Scaffold,
-        SizedBox,
-        StatelessWidget,
+        ScaffoldMessenger,
+        SnackBar,
+        State,
+        StatefulWidget,
         Text,
-        TextAlign,
-        TextStyle,
         Widget;
-import 'package:provider/provider.dart' show WatchContext;
-import '../../../state/history_notifier.dart' show HistoryNotifier;
+import 'package:provider/provider.dart' show ReadContext, WatchContext;
+
+import '../../../services/storage/storage_service_interface.dart'
+    show StorageServiceInterface;
+import '../../../state/history_notifier.dart'
+    show HistoryNotifier, HistoryScoringActions;
+import '../../widgets/comparison/section.dart'
+    show ComparisonSection, ComparisonSectionX;
 import '../../widgets/comparison/view.dart' show ComparisonView;
 
-class ComparisonScreen extends StatelessWidget {
+class ComparisonScreen extends StatefulWidget {
   const ComparisonScreen({super.key});
+
+  @override
+  State<ComparisonScreen> createState() => _ComparisonScreenState();
+}
+
+class _ComparisonScreenState extends State<ComparisonScreen> {
+  final Set<ComparisonSection> _visibleSections =
+      Set.of(ComparisonSection.values);
+  final Set<ComparisonSection> _linkedSections = {};
 
   @override
   Widget build(BuildContext context) {
     final history = context.watch<HistoryNotifier>();
     final runs = history.comparisonRuns;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Compare Runs (${runs.length})'),
@@ -39,36 +48,72 @@ class ComparisonScreen extends StatelessWidget {
           if (runs.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.clear_all),
-              tooltip: 'Clear Selection',
-              onPressed: () => history.clearComparisonSelection(),
+              tooltip: 'Clear selection',
+              onPressed: history.clearComparisonSelection,
             ),
+          PopupMenuButton<ComparisonSection>(
+            tooltip: 'Show or hide sections',
+            onSelected: _toggleSection,
+            itemBuilder: (context) => ComparisonSection.values
+                .map((section) => CheckedPopupMenuItem<ComparisonSection>(
+                      value: section,
+                      checked: _visibleSections.contains(section),
+                      child: Text(section.label),
+                    ))
+                .toList(),
+          ),
         ],
       ),
-      body: runs.length < 2
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.compare_arrows,
-                        size: 64, color: Colors.grey),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Select 2 to 4 runs from History to compare them side-by-side.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Back to History'),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : ComparisonView(runs: runs),
+      body: runs.isEmpty
+          ? const Center(child: Text('Select successful runs from history.'))
+          : ComparisonView(
+              runs: runs,
+              visibleSections: _visibleSections,
+              linkedSections: _linkedSections,
+              onToggleLink: _toggleLinkedSection,
+              onScoreChanged: (runId, criterion, score) =>
+                  _saveScore(context, runId, criterion, score),
+            ),
     );
+  }
+
+  void _toggleSection(ComparisonSection section) {
+    if (_visibleSections.contains(section) && _visibleSections.length == 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Keep at least one section visible.')),
+      );
+      return;
+    }
+    setState(() {
+      if (!_visibleSections.add(section)) _visibleSections.remove(section);
+    });
+  }
+
+  void _toggleLinkedSection(ComparisonSection section) {
+    setState(() {
+      if (!_linkedSections.add(section)) _linkedSections.remove(section);
+    });
+  }
+
+  Future<void> _saveScore(
+    BuildContext context,
+    String runId,
+    String criterion,
+    int? score,
+  ) async {
+    try {
+      await context.read<HistoryNotifier>().setRunScore(
+            runId,
+            criterion,
+            score,
+            context.read<StorageServiceInterface>(),
+          );
+    } catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not save this run score.')),
+        );
+      }
+    }
   }
 }

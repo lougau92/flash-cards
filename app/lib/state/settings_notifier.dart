@@ -69,9 +69,8 @@ class SettingsNotifier extends ChangeNotifier {
       setApiKeys({provider: key});
 
   Future<void> toggleThemeMode() async {
-    final nextMode = _themeMode == ThemeMode.light
-        ? ThemeMode.dark
-        : ThemeMode.light;
+    final nextMode =
+        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     final saved = await (await SharedPreferences.getInstance()).setBool(
       'use_dark_theme',
       nextMode == ThemeMode.dark,

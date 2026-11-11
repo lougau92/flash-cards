@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart' show ConstrainedBox;
 import 'package:flutter/material.dart'
     show
         BuildContext,
         Column,
+        Color,
         CrossAxisAlignment,
         FontStyle,
         FontWeight,
@@ -16,8 +18,14 @@ import 'package:flutter/material.dart'
         Widget,
         Wrap,
         WrapCrossAlignment;
+import 'package:flutter/widgets.dart'
+    show BoxConstraints, SingleChildScrollView;
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart'
+    show MarkdownBody;
+import 'package:provider/provider.dart' show WatchContext;
 
 import '../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
+import '../../../state/settings_notifier.dart' show SettingsNotifier;
 
 class RunCardResult extends StatelessWidget {
   const RunCardResult({super.key, required this.run});
@@ -104,16 +112,46 @@ class _RunTextSummary extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        Text(
-          success
-              ? run.outputText ?? 'Empty output'
-              : run.errorMessage ?? 'Unknown error',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              fontSize: 13, color: success ? colors.onSurface : colors.error),
-        ),
+        _outputPreview(context, colors.onSurface, colors.error),
       ],
+    );
+  }
+
+  Widget _outputPreview(
+    BuildContext context,
+    Color outputColor,
+    Color errorColor,
+  ) {
+    final output = success
+        ? run.outputText ?? 'Empty output'
+        : run.errorMessage ?? 'Unknown error';
+
+    // Raw / error mode: plain two-line ellipsized text.
+    if (!success || context.watch<SettingsNotifier>().showRawOutputs) {
+      return Text(
+        output,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          fontSize: 13,
+          color: success ? outputColor : errorColor,
+        ),
+      );
+    }
+
+    // Markdown mode: scrollable preview capped at 144 px.
+    final preview = output.length > 220
+        ? '${output.substring(0, 220).trimRight()}…'
+        : output;
+
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxHeight: 144),
+      child: SingleChildScrollView(
+        child: MarkdownBody(
+          data: preview,
+          selectable: true,
+        ),
+      ),
     );
   }
 }
