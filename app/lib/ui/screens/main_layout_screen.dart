@@ -8,15 +8,12 @@ import 'package:flutter/material.dart'
         Icon,
         IconData,
         Icons,
-        IndexedStack,
         MaterialPageRoute,
-        NavigationBar,
         NavigationDestination,
         Navigator,
         PopupMenuButton,
         PopupMenuItem,
         Row,
-        Scaffold,
         SizedBox,
         State,
         StatefulWidget,
@@ -34,6 +31,7 @@ import '../../state/settings_notifier.dart' show SettingsNotifier;
 import '../widgets/feedback.dart' show showAppFeedbackSheet;
 import '../widgets/runner/completion_listener.dart'
     show SummaryCompletionListener;
+import '../widgets/swipe_navigation.dart' show SwipeNavigation;
 import 'history/screen.dart' show HistoryScreen;
 import 'error_log/screen.dart' show ErrorLogScreen;
 import 'runner_screen.dart' show RunnerScreen;
@@ -67,7 +65,6 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
   ];
 
   late final List<Widget> _screens;
-  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -80,23 +77,19 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'LLM Summary Lab',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        actions: [_appBarMenu(context)],
-      ),
-      body: SummaryCompletionListener(
-        child: IndexedStack(index: _currentIndex, children: _screens),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (i) => setState(() => _currentIndex = i),
+    return SummaryCompletionListener(
+      child: SwipeNavigation(
+        screens: _screens,
         destinations: _destinations,
+        appBar: AppBar(
+          title: const Text(
+            'LLM Summary Lab',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          actions: [_appBarMenu(context)],
+        ),
       ),
     );
   }
