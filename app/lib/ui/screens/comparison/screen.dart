@@ -1,3 +1,4 @@
+import 'package:app_feedback/app_feedback.dart' show FeedbackSender;
 import 'package:flutter/material.dart'
     show
         AppBar,
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart'
         State,
         StatefulWidget,
         Text,
+        TextOverflow,
         Widget;
 import 'package:provider/provider.dart' show ReadContext, WatchContext;
 
@@ -24,6 +26,7 @@ import '../../../state/history_notifier.dart'
 import '../../widgets/comparison/section.dart'
     show ComparisonSection, ComparisonSectionX;
 import '../../widgets/comparison/view.dart' show ComparisonView;
+import '../../widgets/feedback.dart' show appFeedbackButton;
 
 class ComparisonScreen extends StatefulWidget {
   const ComparisonScreen({super.key});
@@ -43,8 +46,13 @@ class _ComparisonScreenState extends State<ComparisonScreen> {
     final runs = history.comparisonRuns;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compare Runs (${runs.length})'),
+        title: Text(
+          'Compare Runs (${runs.length})',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         actions: [
+          appFeedbackButton(sender: context.read<FeedbackSender>()),
           if (runs.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.clear_all),
