@@ -16,6 +16,7 @@ class SummaryRun {
   final String? errorMessage;
   final String? servedModelId;
   final String? finishReason;
+  final Map<String, int> scores;
 
   const SummaryRun({
     required this.id,
@@ -28,7 +29,22 @@ class SummaryRun {
     this.errorMessage,
     this.servedModelId,
     this.finishReason,
+    this.scores = const {},
   });
+
+  SummaryRun copyWith({Map<String, int>? scores}) => SummaryRun(
+        id: id,
+        timestamp: timestamp,
+        request: request,
+        outputText: outputText,
+        executionTimeMs: executionTimeMs,
+        tokenUsage: tokenUsage,
+        status: status,
+        errorMessage: errorMessage,
+        servedModelId: servedModelId,
+        finishReason: finishReason,
+        scores: scores ?? this.scores,
+      );
 
   Map<String, dynamic> toJson() {
     return {
@@ -42,6 +58,7 @@ class SummaryRun {
       'errorMessage': errorMessage,
       'servedModelId': servedModelId,
       'finishReason': finishReason,
+      'scores': scores,
     };
   }
 
@@ -64,6 +81,10 @@ class SummaryRun {
       errorMessage: json['errorMessage'] as String?,
       servedModelId: json['servedModelId'] as String?,
       finishReason: json['finishReason'] as String?,
+      scores: (json['scores'] as Map?)?.map<String, int>(
+            (key, value) => MapEntry(key.toString(), (value as num).toInt()),
+          ) ??
+          const {},
     );
   }
 }

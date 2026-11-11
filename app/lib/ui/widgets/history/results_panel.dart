@@ -10,7 +10,7 @@ import 'package:flutter/material.dart'
         ValueChanged,
         Widget;
 
-import '../../../models/summary_run.dart' show SummaryRun;
+import '../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
 import '../../../services/storage/storage_service_interface.dart'
     show StorageServiceInterface;
 import '../../../state/history_notifier.dart' show HistoryNotifier;
@@ -33,8 +33,9 @@ class HistoryResultsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (history.isLoading)
+    if (history.isLoading) {
       return const Center(child: CircularProgressIndicator());
+    }
     if (history.loadError != null) {
       return HistoryEmptyState(
         icon: Icons.error_outline,
@@ -44,11 +45,11 @@ class HistoryResultsPanel extends StatelessWidget {
       );
     }
     if (history.filteredRuns.isEmpty) {
+      final allRunsFailed = history.allRuns.isNotEmpty &&
+          history.allRuns.every((run) => run.status == SummaryRunStatus.error);
       return HistoryEmptyState(
         icon: Icons.history,
-        message: history.allRuns.isEmpty
-            ? 'No historical runs saved yet.'
-            : 'No runs match the current filters.',
+        message: _emptyMessage(history, allRunsFailed),
       );
     }
     return RefreshIndicator(
@@ -58,6 +59,16 @@ class HistoryResultsPanel extends StatelessWidget {
         itemBuilder: (context, index) => _runCard(history.filteredRuns[index]),
       ),
     );
+  }
+
+  String _emptyMessage(HistoryNotifier history, bool allRunsFailed) {
+    if (history.allRuns.isEmpty) return 'No historical runs saved yet.';
+    if (allRunsFailed &&
+        history.searchQuery.isEmpty &&
+        history.providerFilter == null) {
+      return 'No successful runs yet. Failed attempts are recorded in the error log.';
+    }
+    return 'No runs match the current filters.';
   }
 
   Widget _runCard(SummaryRun run) => RunCard(

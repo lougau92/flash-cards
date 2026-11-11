@@ -1,3 +1,5 @@
+import 'dart:convert' show JsonEncoder;
+
 import 'package:flutter/material.dart'
     show
         BuildContext,
@@ -7,12 +9,19 @@ import 'package:flutter/material.dart'
         EdgeInsets,
         ExpansionTile,
         FontWeight,
+        Icon,
+        IconButton,
+        Icons,
         Padding,
+        ScaffoldMessenger,
         SelectableText,
+        SnackBar,
         StatelessWidget,
         Text,
         TextStyle,
         Widget;
+
+import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 
 import '../../../models/app_error_entry.dart' show AppErrorEntry;
 
@@ -26,6 +35,11 @@ class ErrorEntryCard extends StatelessWidget {
         child: ExpansionTile(
           title: Text(entry.source),
           subtitle: Text('${_time(entry.timestamp)} · ${entry.message}'),
+          trailing: IconButton(
+            icon: const Icon(Icons.copy),
+            tooltip: 'Copy error',
+            onPressed: () => _copyToClipboard(context),
+          ),
           childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           children: [
             if (entry.context case final value?)
@@ -38,6 +52,22 @@ class ErrorEntryCard extends StatelessWidget {
       );
 
   String _time(DateTime timestamp) => timestamp.toLocal().toIso8601String();
+
+  Future<void> _copyToClipboard(BuildContext context) async {
+    const encoder = JsonEncoder.withIndent('  ');
+    final text = encoder.convert(entry.toJson());
+
+    await Clipboard.setData(ClipboardData(text: text));
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error copied to clipboard'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
 }
 
 class AlignText extends StatelessWidget {

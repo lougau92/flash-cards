@@ -71,6 +71,11 @@ class _RunMetricsRow extends StatelessWidget {
             '• ${run.tokenUsage!['total_tokens'] ?? 0} tokens',
             style: TextStyle(fontSize: 12, color: colors.onSurfaceVariant),
           ),
+        if (run.scores['overall'] case final score?)
+          Text(
+            'Score: $score/5',
+            style: TextStyle(fontSize: 12, color: colors.primary),
+          ),
       ],
     );
   }

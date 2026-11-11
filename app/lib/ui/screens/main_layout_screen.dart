@@ -2,6 +2,7 @@ import 'package:flutter/material.dart'
     show
         AppBar,
         BuildContext,
+        CheckedPopupMenuItem,
         FontWeight,
         Icon,
         IconData,
@@ -110,8 +111,15 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
           isLight ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
           isLight ? 'Switch to dark mode' : 'Switch to light mode',
         ),
-        _menuItem(_MainMenuAction.feedback, Icons.feedback_outlined, 'Feedback'),
-        _menuItem(_MainMenuAction.errors, Icons.bug_report_outlined, 'Error log'),
+        CheckedPopupMenuItem<_MainMenuAction>(
+          value: _MainMenuAction.toggleRawOutput,
+          checked: settings.showRawOutputs,
+          child: const Text('View output as raw text'),
+        ),
+        _menuItem(
+            _MainMenuAction.feedback, Icons.feedback_outlined, 'Feedback'),
+        _menuItem(
+            _MainMenuAction.errors, Icons.bug_report_outlined, 'Error log'),
         _menuItem(_MainMenuAction.apiKeys, Icons.vpn_key_outlined, 'API keys'),
         if (widget.onSignOut != null)
           _menuItem(_MainMenuAction.signOut, Icons.logout, 'Sign out'),
@@ -140,6 +148,9 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
       case _MainMenuAction.toggleTheme:
         context.read<SettingsNotifier>().toggleThemeMode();
         break;
+      case _MainMenuAction.toggleRawOutput:
+        context.read<SettingsNotifier>().toggleRawOutputs();
+        break;
       case _MainMenuAction.feedback:
         showFeedbackSheet(context, sender: sender);
         break;
@@ -158,4 +169,11 @@ class _MainLayoutScreenState extends State<MainLayoutScreen> {
   }
 }
 
-enum _MainMenuAction { toggleTheme, feedback, errors, apiKeys, signOut }
+enum _MainMenuAction {
+  toggleTheme,
+  toggleRawOutput,
+  feedback,
+  errors,
+  apiKeys,
+  signOut,
+}

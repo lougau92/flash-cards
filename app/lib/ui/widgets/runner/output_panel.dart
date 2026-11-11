@@ -24,8 +24,12 @@ import 'package:flutter/material.dart'
         VisualDensity,
         Widget,
         Wrap;
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart'
+    show MarkdownBody;
+import 'package:provider/provider.dart' show WatchContext;
 
 import '../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
+import '../../../state/settings_notifier.dart' show SettingsNotifier;
 
 class RunOutputPanel extends StatelessWidget {
   const RunOutputPanel({super.key, required this.run});
@@ -106,16 +110,20 @@ class _OutputText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    return SelectableText(
-      success
-          ? run.outputText ?? 'No response content returned.'
-          : run.errorMessage ?? 'An unknown error occurred.',
-      style: TextStyle(
-        fontSize: success ? 14 : 13,
-        height: success ? 1.4 : null,
-        color: success ? null : colors.onErrorContainer,
-      ),
-    );
+    final output = success
+        ? run.outputText ?? 'No response content returned.'
+        : run.errorMessage ?? 'An unknown error occurred.';
+    if (!success || context.watch<SettingsNotifier>().showRawOutputs) {
+      return SelectableText(
+        output,
+        style: TextStyle(
+          fontSize: success ? 14 : 13,
+          height: 1.4,
+          color: success ? null : colors.onErrorContainer,
+        ),
+      );
+    }
+    return MarkdownBody(data: output, selectable: true);
   }
 }
 

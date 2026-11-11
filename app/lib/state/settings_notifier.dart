@@ -15,10 +15,12 @@ class SettingsNotifier extends ChangeNotifier {
   bool _isLoaded = false;
   String? _loadError;
   ThemeMode _themeMode = ThemeMode.light;
+  bool _showRawOutputs = false;
 
   bool get isLoaded => _isLoaded;
   String? get loadError => _loadError;
   ThemeMode get themeMode => _themeMode;
+  bool get showRawOutputs => _showRawOutputs;
 
   bool usesBuiltInApiKey(LLMProviderType provider) =>
       _builtInKeys.contains(provider);
@@ -40,6 +42,7 @@ class SettingsNotifier extends ChangeNotifier {
       _themeMode = preferences.getBool('use_dark_theme') == true
           ? ThemeMode.dark
           : ThemeMode.light;
+      _showRawOutputs = preferences.getBool('show_raw_outputs') ?? false;
       for (final provider in LLMProviderType.values) {
         final keyName = _keyFor(provider);
         final savedKey = preferences.getString(keyName)?.trim() ?? '';
@@ -75,6 +78,17 @@ class SettingsNotifier extends ChangeNotifier {
     );
     if (!saved) throw StateError('Could not save the theme preference.');
     _themeMode = nextMode;
+    notifyListeners();
+  }
+
+  Future<void> toggleRawOutputs() async {
+    final nextValue = !_showRawOutputs;
+    final saved = await (await SharedPreferences.getInstance()).setBool(
+      'show_raw_outputs',
+      nextValue,
+    );
+    if (!saved) throw StateError('Could not save the output display setting.');
+    _showRawOutputs = nextValue;
     notifyListeners();
   }
 

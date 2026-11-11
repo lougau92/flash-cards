@@ -4,6 +4,7 @@ import 'package:flutter/material.dart'
         BorderRadius,
         BoxDecoration,
         BuildContext,
+        Color,
         Column,
         Container,
         CrossAxisAlignment,
@@ -16,8 +17,12 @@ import 'package:flutter/material.dart'
         TextStyle,
         Theme,
         Widget;
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart'
+    show MarkdownBody;
+import 'package:provider/provider.dart' show WatchContext;
 
 import '../../../models/summary_run.dart' show SummaryRun, SummaryRunStatus;
+import '../../../state/settings_notifier.dart' show SettingsNotifier;
 
 class ComparisonOutputPanel extends StatelessWidget {
   const ComparisonOutputPanel({super.key, required this.run});
@@ -46,19 +51,26 @@ class ComparisonOutputPanel extends StatelessWidget {
               color: success ? colors.outlineVariant : colors.error,
             ),
           ),
-          child: SelectableText(
-            success
-                ? run.outputText ?? 'No response content returned.'
-                : run.errorMessage ?? 'Execution error occurred.',
-            maxLines: 18,
-            style: TextStyle(
-              fontSize: 13,
-              height: 1.4,
-              color: success ? colors.onSurface : colors.onErrorContainer,
-            ),
-          ),
+          child: _outputContent(context, success, colors.onErrorContainer),
         ),
       ],
     );
+  }
+
+  Widget _outputContent(BuildContext context, bool success, Color errorText) {
+    final text = success
+        ? run.outputText ?? 'No response content returned.'
+        : run.errorMessage ?? 'Execution error occurred.';
+    if (!success || context.watch<SettingsNotifier>().showRawOutputs) {
+      return SelectableText(
+        text,
+        style: TextStyle(
+          fontSize: 13,
+          height: 1.4,
+          color: success ? null : errorText,
+        ),
+      );
+    }
+    return MarkdownBody(data: text, selectable: true);
   }
 }
